@@ -11,17 +11,24 @@ int main(int argc, char *argv[])
 {
     QApplication prog(argc, argv);
 
-    QWidget *mainWindow = new QWidget;
+    QTabWidget *tabWidget = new QTabWidget;
+
+    QWidget *customWindow = new QWidget;
+    QWidget *templateWindow = new QWidget;
 
     //Window properties
-    mainWindow->setWindowTitle("GCG Splash");
-    mainWindow->setMinimumSize(600, 400);
+    customWindow->setWindowTitle("G-Code Generator");
+    templateWindow->setWindowTitle("Custom G-Code Generator");
+    tabWidget->setMinimumSize(500, 300);
+
 
     //Label creation
-    QLabel *titleLabel = new QLabel;
+    QLabel *customLabel = new QLabel;
+    QLabel *templateLabel = new QLabel;
 
     //Label text
-    titleLabel->setText("G-Code Generator");
+    customLabel->setText("Custom Print");
+    templateLabel->setText("Template tab");
 
     //Field creation
     QLineEdit *nameEdit = new QLineEdit;
@@ -31,10 +38,12 @@ int main(int argc, char *argv[])
     QSpinBox *positionEdit = new QSpinBox;
     QComboBox *materialEdit = new QComboBox;
 
-    QPushButton *nextButton = new QPushButton;
+    QPushButton *nextCustom = new QPushButton;
 
     //Constraints/properties
-    titleLabel->setAlignment(Qt::Alignment(5));
+    templateLabel->setAlignment(Qt::Alignment(5));
+
+    customLabel->setAlignment(Qt::Alignment(5));
     heightEdit->setRange(1, 7);
     widthEdit->setRange(1, 7);
     positionEdit->setRange(1, 4);
@@ -42,23 +51,37 @@ int main(int argc, char *argv[])
     materialEdit->addItem("HPR");
     materialEdit->addItem("ABTS");
     dateEdit->setDate(QDate::currentDate());
-    nextButton->setMaximumSize(50, 20);
-    nextButton->setText("Next");
+    nextCustom->setMaximumSize(50, 20);
+    nextCustom->setText("Next");
 
     QFormLayout *formLayout = new QFormLayout;
+    QHBoxLayout *horizontalLayout = new QHBoxLayout;
 
-    formLayout->addWidget(titleLabel);
-
+    formLayout->addWidget(customLabel);
 
     formLayout->addRow("&Name:", nameEdit);
     formLayout->addRow("&Date:", dateEdit);
     formLayout->addRow("&Height:", heightEdit);
     formLayout->addRow("&Width:", widthEdit);
     formLayout->addRow("&Position:", positionEdit);
-    formLayout->addRow("&Name:", materialEdit);
+    formLayout->addRow("&Material:", materialEdit);
+    formLayout->addWidget(nextCustom);
 
-    mainWindow->setLayout(formLayout);
-    mainWindow->show();
+    horizontalLayout->addWidget(templateLabel);
+
+    templateWindow->setLayout(horizontalLayout);
+    customWindow->setLayout(formLayout);
+
+    tabWidget->addTab(templateWindow, "Template");
+    tabWidget->addTab(customWindow, "Custom");
+
+    //need to add in functionality for closing
+    //and frameless dragging  before removal
+    //tabWidget->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+
+    tabWidget->show();
 
     return prog.exec();
 }
+
+
