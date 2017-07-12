@@ -1,11 +1,11 @@
 #include <QApplication>
-#include <QVBoxLayout>
 #include <QLabel>
 #include <QSpinBox>
 #include <QLineEdit>
 #include <QComboBox>
 #include <QPushButton>
 #include <QDateEdit>
+#include <QFormLayout>
 
 int main(int argc, char *argv[])
 {
@@ -13,26 +13,17 @@ int main(int argc, char *argv[])
 
     QWidget *mainWindow = new QWidget;
 
-    mainWindow->setWindowTitle("G-Code Generator");
+    //Window properties
+    mainWindow->setWindowTitle("GCG Splash");
+    mainWindow->setMinimumSize(600, 400);
 
-    //label creation
-    QLabel *titleLabel = new QLabel; //lineEdit
-    QLabel *nameLabel = new QLabel;     //lineEdit
-    QLabel *dateLabel = new QLabel; //dateEdit
-    QLabel *heightLabel = new QLabel;   //spinbox 1-7
-    QLabel *widthLabel = new QLabel;    //spinbox 1-7
-    QLabel *positionLabel = new QLabel; //spinbox 1-4
-    QLabel *materialLabel = new QLabel; //comboBox 3
+    //Label creation
+    QLabel *titleLabel = new QLabel;
 
+    //Label text
     titleLabel->setText("G-Code Generator");
-    nameLabel->setText("Name:");
-    dateLabel->setText("Date:");
-    heightLabel->setText("Height:");
-    widthLabel->setText("Width:");
-    positionLabel->setText("Position:");
-    materialLabel->setText("Material:");
 
-    //data edit
+    //Field creation
     QLineEdit *nameEdit = new QLineEdit;
     QDateEdit *dateEdit = new QDateEdit;
     QSpinBox *heightEdit = new QSpinBox;
@@ -40,7 +31,10 @@ int main(int argc, char *argv[])
     QSpinBox *positionEdit = new QSpinBox;
     QComboBox *materialEdit = new QComboBox;
 
-    //Constraints
+    QPushButton *nextButton = new QPushButton;
+
+    //Constraints/properties
+    titleLabel->setAlignment(Qt::Alignment(5));
     heightEdit->setRange(1, 7);
     widthEdit->setRange(1, 7);
     positionEdit->setRange(1, 4);
@@ -48,39 +42,23 @@ int main(int argc, char *argv[])
     materialEdit->addItem("HPR");
     materialEdit->addItem("ABTS");
     dateEdit->setDate(QDate::currentDate());
+    nextButton->setMaximumSize(50, 20);
+    nextButton->setText("Next");
+
+    QFormLayout *formLayout = new QFormLayout;
+
+    formLayout->addWidget(titleLabel);
 
 
-    QVBoxLayout *layout = new QVBoxLayout;
+    formLayout->addRow("&Name:", nameEdit);
+    formLayout->addRow("&Date:", dateEdit);
+    formLayout->addRow("&Height:", heightEdit);
+    formLayout->addRow("&Width:", widthEdit);
+    formLayout->addRow("&Position:", positionEdit);
+    formLayout->addRow("&Name:", materialEdit);
 
-    layout->addWidget(titleLabel);
-
-
-    layout->addWidget(nameLabel);
-    layout->addWidget(nameEdit);
-
-    layout->addWidget(dateLabel);
-    layout->addWidget(dateEdit);
-
-    layout->addWidget(heightLabel);
-    layout->addWidget(heightEdit);
-
-    layout->addWidget(widthLabel);
-    layout->addWidget(widthEdit);
-
-    layout->addWidget(positionLabel);
-    layout->addWidget(positionEdit);
-
-    layout->addWidget(materialLabel);
-    layout->addWidget(materialEdit);
-
-
-    mainWindow->setLayout(layout);
-
+    mainWindow->setLayout(formLayout);
     mainWindow->show();
-
-
-
-
 
     return prog.exec();
 }
