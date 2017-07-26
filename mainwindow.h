@@ -1,22 +1,36 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <QDialog>
 
-namespace Ui {
-class MainWindow;
-}
+class QPushButton;
+class QStackedWidget;
 
-class MainWindow : public QMainWindow
+class PageOne;
+class PageTwo;
+class PageThree;
+
+class Wizard : public QDialog
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+  Wizard();
+
+private slots:
+  void doNext();
+  void doPrev();
 
 private:
-    Ui::MainWindow *ui;
+  QPushButton *next;
+  QPushButton *previous;
+
+  QStackedWidget *pages;
+
+  PageOne *pageOne;
+  PageTwo *pageTwo;
+  PageThree *pageThree;
 };
 
-#endif // MAINWINDOW_H
+#endif //
+

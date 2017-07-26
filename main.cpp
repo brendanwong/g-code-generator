@@ -1,27 +1,14 @@
-#include "mainwindow.h"
 #include <QApplication>
 
-void mainWindow(QTabWidget *tabWidget);
-void customTab(QWidget *customWindow, QTabWidget *tabWidget);
-void templateTab(QWidget *templateTab, QTabWidget *tabWidget);
+#include "mainwindow.h"
 
-int main(int argc, char *argv[])
+int main( int argc, char **argv )
 {
-    QApplication prog(argc, argv);
+  QApplication app( argc, argv );
 
-    QTabWidget *tabWidget = new QTabWidget;
+  Wizard wizardWindow;
+  wizardWindow.setMinimumSize(500, 500);
+  wizardWindow.show();
 
-    mainWindow(tabWidget);
-
-    QWidget *customWindow = new QWidget;
-    QWidget *templateWindow = new QWidget;
-
-    customTab(customWindow, tabWidget);
-    templateTab(templateWindow, tabWidget);
-
-
-
-    tabWidget->show();
-
-    return prog.exec();
+  return app.exec();
 }
