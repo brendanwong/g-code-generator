@@ -15,6 +15,8 @@
 #include <QCheckBox>
 #include <QLabel>
 
+
+
 class PageOne : public QWidget
 {
     Q_OBJECT
@@ -33,6 +35,5 @@ public:
     QComboBox *materialEdit;
     QPushButton *nextButton;
 };
-
 
 #endif //PAGEONE_H

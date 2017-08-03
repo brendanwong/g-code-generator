@@ -3,6 +3,8 @@
 #include "pagetwo.h"
 #include "pagethree.h"
 
+#include "globals.h"
+
 
 Wizard::Wizard() : QDialog()
 {
@@ -32,7 +34,7 @@ Wizard::Wizard() : QDialog()
     pages->addWidget(pageTwo = new PageTwo(pages));
     pages->addWidget(pageThree = new PageThree(pages));
 
-    connect(pageOne->acceptDeal, SIGNAL(toggled(bool)), next, SLOT(setEnabled(bool)));
+    connect(pageOne->acceptDeal, SIGNAL(toggled(bool)), next,       SLOT(setEnabled(bool)));
 
     connect(next, SIGNAL(clicked(bool)), this, SLOT(saveFormInfo()));
 }
@@ -56,7 +58,7 @@ void Wizard::saveFormInfo()
     monthString = QString::number(monthInput);
     dayString = QString::number(dayInput);
 
-
+    global = nameInput;
 
 }
 

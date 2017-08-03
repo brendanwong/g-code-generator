@@ -28,6 +28,7 @@
 #include "pagetwo.h"
 #include "pagethree.h"
 
+
 class Wizard : public QDialog
 {
     Q_OBJECT
@@ -47,6 +48,8 @@ public:
     QString yearString;
     QString monthString;
     QString dayString;
+
+
 
 private slots:
     void doNext();

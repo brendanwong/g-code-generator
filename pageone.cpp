@@ -1,6 +1,8 @@
 #include "wizard.h"
 #include "pageone.h"
 
+#include "globals.h"
+
 PageOne::PageOne(QWidget *parent) : QWidget(parent)
 {
     QTabWidget *tabWidget = new QTabWidget(this);

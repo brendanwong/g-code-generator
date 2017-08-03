@@ -1,6 +1,8 @@
 #include "pagetwo.h"
 #include "wizard.h"
 
+#include "globals.h"
+
 PageTwo::PageTwo(QWidget *parent) : QWidget(parent)
 {
     QFormLayout *layout = new QFormLayout( this );

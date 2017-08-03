@@ -1,7 +1,7 @@
 #include <QApplication>
 
 #include "wizard.h"
-#include "pageone.h"
+
 
 int main( int argc, char *argv[] )
 {
