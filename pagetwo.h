@@ -6,15 +6,13 @@
 #include <QLabel>
 #include <QTextEdit>
 
-
 class PageTwo : public QWidget
 {
     Q_OBJECT
 public:
     PageTwo(QWidget *parent = 0);
+private:
     void displayOutput(QFormLayout *layout);
 };
-
-
 
 #endif // PAGETWO_H

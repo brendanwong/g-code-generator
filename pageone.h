@@ -15,8 +15,6 @@
 #include <QCheckBox>
 #include <QLabel>
 
-
-
 class PageOne : public QWidget
 {
     Q_OBJECT

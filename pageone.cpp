@@ -1,7 +1,6 @@
 #include "wizard.h"
 #include "pageone.h"
 
-#include "globals.h"
 
 PageOne::PageOne(QWidget *parent) : QWidget(parent)
 {
@@ -46,13 +45,6 @@ void PageOne::customTab(QTabWidget *tabWidget)
     customWindow->setLayout(formLayout);
 
     tabWidget->addTab(customWindow, "Custom");
-
-
-
-    //registerField("nameEdit", nameEdit);
-
-
-
 }
 
 void PageOne::templateTab(QTabWidget *tabWidget)

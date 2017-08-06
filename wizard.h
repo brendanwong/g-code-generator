@@ -1,28 +1,11 @@
 #ifndef WIZARD_H
 #define WIZARD_H
 
-#include <QWidget>
-#include <QCheckBox>
-#include <QTextEdit>
-#include <QLabel>
-#include <QStackedWidget>
-#include <QPushButton>
 #include <QGridLayout>
-#include <QMessageBox>
-#include <QApplication>
-#include <QLabel>
-#include <QSpinBox>
-#include <QLineEdit>
-#include <QComboBox>
 #include <QPushButton>
-#include <QDateEdit>
-#include <QFormLayout>
-#include <QMessageBox>
-#include <QVBoxLayout>
-#include <QDate>
-#include <QListWidget>
-#include <QWizardPage>
 #include <QDialog>
+#include <QStackedWidget>
+#include <QMessageBox>
 
 #include "pageone.h"
 #include "pagetwo.h"
@@ -49,12 +32,13 @@ public:
     QString monthString;
     QString dayString;
 
-
+    QString output = "";
 
 private slots:
     void doNext();
     void doPrev();
     void saveFormInfo();
+    void generateCode();
 
 private:
     QPushButton *next;
@@ -65,8 +49,6 @@ private:
     PageOne *pageOne;
     PageTwo *pageTwo;
     PageThree *pageThree;
-
-
 };
 
 #endif //WIZARD_H

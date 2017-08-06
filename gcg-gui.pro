@@ -34,7 +34,8 @@ HEADERS += \
     wizard.h \
     pageone.h \
     pagetwo.h \
-    pagethree.h
+    pagethree.h \
+    constants.h
 
 FORMS += \
         mainwindow.ui

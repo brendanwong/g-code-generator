@@ -3,8 +3,6 @@
 
 #include <QGridLayout>
 
-
-
 class PageThree : public QWidget
 {
 public:
