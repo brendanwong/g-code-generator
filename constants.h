@@ -2,6 +2,7 @@
 #define CONSTANTS_H
 
 #include <QString>
+
 static const QString FR_EXTRUDE = "200";
 static const QString FR_MOVE_XY = "6000";
 static const QString DWELL = "1000";
@@ -30,10 +31,6 @@ static const QString COORD_2 = "130";
 static const int X_BORDER = 40;
 static const int Y_BORDER = 40;
 static const int DISH_DIAMETER = 100;
-
-
-
-
 
 
 #endif // CONSTANTS_H

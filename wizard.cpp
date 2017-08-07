@@ -35,7 +35,17 @@ Wizard::Wizard() : QDialog()
     connect(pageOne->acceptDeal, SIGNAL(toggled(bool)), next, SLOT(setEnabled(bool)));
 
     connect(next, SIGNAL(clicked(bool)), this, SLOT(saveFormInfo()));
+    connect(this, SIGNAL(emitOutput(QString)), this, SLOT(makeMessageBox(QString)));
+
 }
+
+void Wizard::makeMessageBox(QString output)
+{
+    QMessageBox a;
+    a.setText(output);
+    a.exec();
+}
+
 
 void Wizard::saveFormInfo()
 {
@@ -47,9 +57,6 @@ void Wizard::saveFormInfo()
     widthInput = pageOne->widthEdit->value();
     positionInput = pageOne->positionEdit->value();
     materialInput = pageOne->materialEdit->currentIndex();
-    //0 = calcium carbonate
-    //1 = HPR
-    //2 = ABTS
 
     //String conversion for later use
     yearString = QString::number(yearInput);
@@ -70,12 +77,30 @@ void Wizard::generateCode()
     int Y_MOVE = DISH_DIAMETER - Y_BORDER;
     Y_MOVE = Y_MOVE / heightInput;
 
+    QString materialString;
+    switch(materialInput)
+    {
+    case 0:
+        materialString =  "CaCl2";
+        break;
+    case 1:
+        materialString = "HPR";
+        break;
+    case 2:
+        materialString =  "ABTS";
+        break;
+    }
+
+    output += "(Name: " + nameInput + ")\n";
+    output += "(Material: " + materialString + ")\n";
+    output += "(Position: " + QString::number(positionInput) + ")\n";
+    output += "(Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + ")\n";
+    output += "(Date: " + monthString + "/" + dayString + "/" + yearString + ")\n\n";
 
     //Begin building gcode
 
     output += "G90\n";
     output += "G1 Z" + DISH_HEIGHT + " F1000\n";
-
 
     switch(positionInput)
     {
@@ -150,7 +175,6 @@ void Wizard::generateCode()
         output += "M84\n";
         break;
 
-
         // 1% HPR Alginate Mixture
     case 1:
         for (int row = 0; row < heightInput; row++)
@@ -178,7 +202,7 @@ void Wizard::generateCode()
         }
         output += "G90\n";
         output += "G1 Z" + DISH_HEIGHT + " F1000\n";
-        output += "G1 E-.5 F50\n"; //reverse extrude
+        output += "G1 E-.5 F50\n"; //reverse extrude to prevent dribbling
         output += "G1 X100 Y10 F6000\n";
         output += "M84\n";
         break;
@@ -208,32 +232,10 @@ void Wizard::generateCode()
             else
                 output += "\n\n";
         }
-
         break;
     }
 
-
-
-
-
-
-    QMessageBox a;
-    a.setText(output);
-    a.exec();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    emit emitOutput(output);
 }
 
 void Wizard::doNext()
@@ -252,7 +254,6 @@ void Wizard::doNext()
         accept();
         return;
     }
-
     pages->setCurrentIndex(pages->currentIndex() + 1);
 }
 
@@ -263,16 +264,12 @@ void Wizard::doPrev()
     case 1:
         previous->setEnabled(false);
         next->setEnabled(pageOne->acceptDeal->isChecked());
-
         connect(pageOne->acceptDeal, SIGNAL(toggled(bool)), next, SLOT(setEnabled(bool)));
-
         break;
     case 2:
         next->setText(tr("Next"));
-
         break;
     }
-
     pages->setCurrentIndex(pages->currentIndex() - 1);
 }
 

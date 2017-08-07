@@ -1,6 +1,7 @@
 #include "pagetwo.h"
 #include "wizard.h"
 
+
 PageTwo::PageTwo(QWidget *parent) : QWidget(parent)
 {
     QFormLayout *layout = new QFormLayout( this );
@@ -19,7 +20,9 @@ void PageTwo::displayOutput(QFormLayout *layout)
 
     textEdit->setPlaceholderText("code should go here");
 
-    QString hola = "ayyyyyyy";
+
+
+    QString hola = "ayy";
 
     textEdit->setText(hola);
 

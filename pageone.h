@@ -7,7 +7,6 @@
 #include <QDateEdit>
 #include <QSpinBox>
 #include <QComboBox>
-#include <QPushButton>
 #include <QWizardPage>
 #include <QDate>
 #include <QFormLayout>
@@ -31,7 +30,6 @@ public:
     QSpinBox *widthEdit;
     QSpinBox *positionEdit;
     QComboBox *materialEdit;
-    QPushButton *nextButton;
 };
 
 #endif //PAGEONE_H

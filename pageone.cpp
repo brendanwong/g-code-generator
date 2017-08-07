@@ -20,7 +20,6 @@ void PageOne::customTab(QTabWidget *tabWidget)
     widthEdit = new QSpinBox;
     positionEdit = new QSpinBox;
     materialEdit = new QComboBox;
-    nextButton = new QPushButton;
     QWizardPage *customWindow = new QWizardPage;
 
     heightEdit->setRange(1, 8);
@@ -30,7 +29,6 @@ void PageOne::customTab(QTabWidget *tabWidget)
     materialEdit->addItem("HPR");
     materialEdit->addItem("ABTS");
     dateEdit->setDate(QDate::currentDate());
-    nextButton->setText("Next");
 
     QFormLayout *formLayout = new QFormLayout;
 
@@ -40,7 +38,6 @@ void PageOne::customTab(QTabWidget *tabWidget)
     formLayout->addRow("&Width:", widthEdit);
     formLayout->addRow("&Position:", positionEdit);
     formLayout->addRow("&Material:", materialEdit);
-    formLayout->addWidget(nextButton);
 
     customWindow->setLayout(formLayout);
 

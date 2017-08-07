@@ -11,7 +11,6 @@
 #include "pagetwo.h"
 #include "pagethree.h"
 
-
 class Wizard : public QDialog
 {
     Q_OBJECT
@@ -39,6 +38,11 @@ private slots:
     void doPrev();
     void saveFormInfo();
     void generateCode();
+    void makeMessageBox(QString output);
+
+
+signals:
+    void emitOutput(const QString &output);
 
 private:
     QPushButton *next;
