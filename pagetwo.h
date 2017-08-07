@@ -11,8 +11,17 @@ class PageTwo : public QWidget
     Q_OBJECT
 public:
     PageTwo(QWidget *parent = 0);
+
+public slots:
+    void onNewOutput(const QString output);
+
 private:
-    void displayOutput(QFormLayout *layout);
+    QFormLayout *layout;
+    QTextEdit *textEdit;
+
+
+
+
 };
 
 #endif // PAGETWO_H

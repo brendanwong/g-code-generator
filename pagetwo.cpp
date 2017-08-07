@@ -4,27 +4,24 @@
 
 PageTwo::PageTwo(QWidget *parent) : QWidget(parent)
 {
-    QFormLayout *layout = new QFormLayout( this );
+    layout = new QFormLayout( this );
     QLabel *label = new QLabel;
 
     label->setText("THIS is the output. it is selectable");
     layout->addWidget(label);
 
-    displayOutput(layout);
+
 }
 
-void PageTwo::displayOutput(QFormLayout *layout)
+void PageTwo::onNewOutput(const QString output)
 {
-    QTextEdit *textEdit = new QTextEdit;
+    textEdit = new QTextEdit;
     textEdit->setReadOnly(true);
 
     textEdit->setPlaceholderText("code should go here");
 
-
-
-    QString hola = "ayy";
-
-    textEdit->setText(hola);
+    textEdit->setText(output);
 
     layout->addWidget(textEdit);
 }
+

@@ -35,8 +35,7 @@ Wizard::Wizard() : QDialog()
     connect(pageOne->acceptDeal, SIGNAL(toggled(bool)), next, SLOT(setEnabled(bool)));
 
     connect(next, SIGNAL(clicked(bool)), this, SLOT(saveFormInfo()));
-    connect(this, SIGNAL(emitOutput(QString)), this, SLOT(makeMessageBox(QString)));
-
+    connect(this, SIGNAL(emitOutput(QString)), pageTwo, SLOT(onNewOutput(QString)));
 }
 
 void Wizard::makeMessageBox(QString output)
