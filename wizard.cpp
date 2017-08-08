@@ -26,9 +26,24 @@ Wizard::Wizard() : QDialog()
     buttonLayout->addWidget(cancel);
 
     //sidebar, to hold logo and links
+    QWidget *sidebar = new QWidget;
+    sidebar->setMinimumWidth(150);
+    sidebar->setMaximumWidth(150);
+    sidebar->setStyleSheet("background-color:#252525;");
+    sidebarLayout->addWidget(sidebar);
+
     QLabel *label = new QLabel;
-    label->setText("placeholder for sidebar");
-    sidebarLayout->addWidget(label);
+    //label->setText("placeholder for sidebar");
+    label->setStyleSheet("color:#ffffff;");
+    QPixmap image("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/se3d_small.jpg");
+    label->setPixmap(image);
+
+    QVBoxLayout *sidebarInside = new QVBoxLayout;
+    sidebarInside->addWidget(label);
+    sidebar->setLayout(sidebarInside);
+
+
+
 
     //right half layout, holds navigation and pages
     rightLayout->addLayout(topLayout);
@@ -78,11 +93,10 @@ void Wizard::saveFormInfo()
 void Wizard::generateCode()
 {
     int calc;
-
     int X_MOVE = DISH_DIAMETER - X_BORDER;
-    X_MOVE = X_MOVE / widthInput;
-
     int Y_MOVE = DISH_DIAMETER - Y_BORDER;
+
+    X_MOVE = X_MOVE / widthInput;
     Y_MOVE = Y_MOVE / heightInput;
 
     QString materialString;
@@ -99,6 +113,7 @@ void Wizard::generateCode()
         break;
     }
 
+    //Commented confirmation of inputs
     output += "(Name: " + nameInput + ")\n";
     output += "(Material: " + materialString + ")\n";
     output += "(Position: " + QString::number(positionInput) + ")\n";
@@ -106,7 +121,6 @@ void Wizard::generateCode()
     output += "(Date: " + monthString + "/" + dayString + "/" + yearString + ")\n\n";
 
     //Begin building gcode
-
     output += "G90\n";
     output += "G1 Z" + DISH_HEIGHT + " F1000\n";
 
@@ -142,7 +156,6 @@ void Wizard::generateCode()
     }
 
     //Relative positioning start
-
     output += "\nG91\n\n";
 
     switch(materialInput)
@@ -287,6 +300,6 @@ void Wizard::mousePressEvent(QMouseEvent *event) {
 }
 
 void Wizard::mouseMoveEvent(QMouseEvent *event) {
-    move(event->globalX()-m_nMouseClick_X_Coordinate,event->globalY()-m_nMouseClick_Y_Coordinate);
+    move(event->globalX()-m_nMouseClick_X_Coordinate, event->globalY()-m_nMouseClick_Y_Coordinate);
 }
 

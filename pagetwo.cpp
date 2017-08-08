@@ -15,6 +15,7 @@ void PageTwo::onNewOutput(const QString output)
 {
     textEdit = new QTextEdit;
     textEdit->setReadOnly(true);
+    textEdit->setMinimumSize(300, 300);
     textEdit->setPlaceholderText("Output code should go here");
 
     textEdit->setText(output);
