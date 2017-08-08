@@ -6,20 +6,37 @@
 
 Wizard::Wizard() : QDialog()
 {
-    QGridLayout *layout = new QGridLayout(this);
-
     QPushButton *cancel = new QPushButton(tr("Cancel"));
     next = new QPushButton(tr("Next"));
     previous = new QPushButton(tr("Previous"));
-
     pages = new QStackedWidget();
 
-    layout->addWidget(pages, 0, 0, 1, 5);
-    layout->setColumnMinimumWidth(0, 50);
-    layout->addWidget(previous, 1, 1);
-    layout->addWidget(next, 1, 2);
-    layout->setColumnMinimumWidth(3, 5);
-    layout->addWidget(cancel, 1, 4);
+    QHBoxLayout *mainLayout = new QHBoxLayout(this);
+    QVBoxLayout *sidebarLayout = new QVBoxLayout;
+    QVBoxLayout *rightLayout = new QVBoxLayout;
+    QHBoxLayout *topLayout = new QHBoxLayout;
+    QHBoxLayout *buttonLayout = new QHBoxLayout;
+
+    //top right layout, pages
+    topLayout->addWidget(pages);
+
+    //bottom right layout, navigation buttons
+    buttonLayout->addWidget(previous);
+    buttonLayout->addWidget(next);
+    buttonLayout->addWidget(cancel);
+
+    //sidebar, to hold logo and links
+    QLabel *label = new QLabel;
+    label->setText("placeholder for sidebar");
+    sidebarLayout->addWidget(label);
+
+    //right half layout, holds navigation and pages
+    rightLayout->addLayout(topLayout);
+    rightLayout->addLayout(buttonLayout);
+
+    //main layout, holds both the sidebar and right layout
+    mainLayout->addLayout(sidebarLayout);
+    mainLayout->addLayout(rightLayout);
 
     previous->setEnabled(false);
     next->setEnabled(false);
@@ -37,14 +54,6 @@ Wizard::Wizard() : QDialog()
     connect(next, SIGNAL(clicked(bool)), this, SLOT(saveFormInfo()));
     connect(this, SIGNAL(emitOutput(QString)), pageTwo, SLOT(onNewOutput(QString)));
 }
-
-void Wizard::makeMessageBox(QString output)
-{
-    QMessageBox a;
-    a.setText(output);
-    a.exec();
-}
-
 
 void Wizard::saveFormInfo()
 {
@@ -270,5 +279,14 @@ void Wizard::doPrev()
         break;
     }
     pages->setCurrentIndex(pages->currentIndex() - 1);
+}
+
+void Wizard::mousePressEvent(QMouseEvent *event) {
+    m_nMouseClick_X_Coordinate = event->x();
+    m_nMouseClick_Y_Coordinate = event->y();
+}
+
+void Wizard::mouseMoveEvent(QMouseEvent *event) {
+    move(event->globalX()-m_nMouseClick_X_Coordinate,event->globalY()-m_nMouseClick_Y_Coordinate);
 }
 

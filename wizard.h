@@ -6,6 +6,7 @@
 #include <QDialog>
 #include <QStackedWidget>
 #include <QMessageBox>
+#include <QMouseEvent>
 
 #include "pageone.h"
 #include "pagetwo.h"
@@ -17,6 +18,30 @@ class Wizard : public QDialog
 
 public:
     Wizard();
+
+private slots:
+    void doNext();
+    void doPrev();
+    void saveFormInfo();
+    void generateCode();
+
+signals:
+    void emitOutput(const QString &output);
+
+private:
+    QPushButton *next;
+    QPushButton *previous;
+
+    QStackedWidget *pages;
+
+    PageOne *pageOne;
+    PageTwo *pageTwo;
+    PageThree *pageThree;
+
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    int m_nMouseClick_X_Coordinate;
+    int m_nMouseClick_Y_Coordinate;
 
     QString nameInput;
     int yearInput;
@@ -33,26 +58,6 @@ public:
 
     QString output = "";
 
-private slots:
-    void doNext();
-    void doPrev();
-    void saveFormInfo();
-    void generateCode();
-    void makeMessageBox(QString output);
-
-
-signals:
-    void emitOutput(const QString &output);
-
-private:
-    QPushButton *next;
-    QPushButton *previous;
-
-    QStackedWidget *pages;
-
-    PageOne *pageOne;
-    PageTwo *pageTwo;
-    PageThree *pageThree;
 };
 
 #endif //WIZARD_H

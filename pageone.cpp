@@ -34,8 +34,8 @@ void PageOne::customTab(QTabWidget *tabWidget)
 
     formLayout->addRow("&Name:", nameEdit);
     formLayout->addRow("&Date:", dateEdit);
-    formLayout->addRow("&Height:", heightEdit);
     formLayout->addRow("&Width:", widthEdit);
+    formLayout->addRow("&Height:", heightEdit);
     formLayout->addRow("&Position:", positionEdit);
     formLayout->addRow("&Material:", materialEdit);
 
@@ -51,5 +51,5 @@ void PageOne::templateTab(QTabWidget *tabWidget)
     acceptDeal = new QCheckBox( tr("I accept") );
     layout->addWidget( acceptDeal, 1, 1 );
     templateWindow->setLayout(layout);
-    tabWidget->addTab(templateWindow, "Template");
+    tabWidget->addTab(templateWindow, "Templates");
 }
