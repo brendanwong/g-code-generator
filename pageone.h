@@ -19,8 +19,6 @@ class PageOne : public QWidget
     Q_OBJECT
 public:
     PageOne(QWidget *parent = 0);
-    void customTab(QTabWidget *tabWidget);
-    void templateTab(QTabWidget *tabWidget);
 
     QCheckBox *acceptDeal;
     QLabel *customLabel;
@@ -30,6 +28,10 @@ public:
     QSpinBox *widthEdit;
     QSpinBox *positionEdit;
     QComboBox *materialEdit;
+
+private:
+    void customTab(QTabWidget *tabWidget);
+    void templateTab(QTabWidget *tabWidget);
 };
 
 #endif //PAGEONE_H

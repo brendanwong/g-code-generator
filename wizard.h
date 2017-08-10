@@ -12,6 +12,7 @@
 #include "pagetwo.h"
 #include "pagethree.h"
 
+
 class Wizard : public QDialog
 {
     Q_OBJECT
@@ -23,16 +24,19 @@ private slots:
     void doNext();
     void doPrev();
     void saveFormInfo();
+
+private:
     void generateCode();
+    void buildSideBar(QHBoxLayout *mainLayout);
 
 signals:
     void emitOutput(const QString &output);
 
 private:
+    QStackedWidget *pages;
     QPushButton *next;
     QPushButton *previous;
-
-    QStackedWidget *pages;
+    QPushButton *cancel;
 
     PageOne *pageOne;
     PageTwo *pageTwo;
@@ -57,7 +61,6 @@ private:
     QString dayString;
 
     QString output = "";
-
 };
 
 #endif //WIZARD_H

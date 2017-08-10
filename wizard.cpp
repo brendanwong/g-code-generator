@@ -4,57 +4,44 @@
 #include "pagethree.h"
 #include "constants.h"
 
+
 Wizard::Wizard() : QDialog()
 {
-    QPushButton *cancel = new QPushButton(tr("Cancel"));
+    cancel = new QPushButton(tr("Cancel"));
     next = new QPushButton(tr("Next"));
     previous = new QPushButton(tr("Previous"));
     pages = new QStackedWidget();
 
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
-    QVBoxLayout *sidebarLayout = new QVBoxLayout;
     QVBoxLayout *rightLayout = new QVBoxLayout;
-    QHBoxLayout *topLayout = new QHBoxLayout;
+    QHBoxLayout *pageLayout = new QHBoxLayout;
     QHBoxLayout *buttonLayout = new QHBoxLayout;
 
     //top right layout, pages
-    topLayout->addWidget(pages);
+    pageLayout->addWidget(pages);
 
     //bottom right layout, navigation buttons
-    buttonLayout->addWidget(previous);
-    buttonLayout->addWidget(next);
-    buttonLayout->addWidget(cancel);
+    next->setMinimumWidth(100);
+    previous->setMinimumWidth(100);
+    cancel->setMinimumWidth(100);
 
-    //sidebar, to hold logo and links
-    QWidget *sidebar = new QWidget;
-    sidebar->setMinimumWidth(150);
-    sidebar->setMaximumWidth(150);
-    sidebar->setStyleSheet("background-color:#252525;");
-    sidebarLayout->addWidget(sidebar);
+    buttonLayout->addWidget(previous, 0, Qt::AlignLeft);
+    buttonLayout->addWidget(next, 0, Qt::AlignLeft);
+    buttonLayout->addWidget(cancel, 0, Qt::AlignRight);
 
-    QLabel *label = new QLabel;
-    //label->setText("placeholder for sidebar");
-    label->setStyleSheet("color:#ffffff;");
-    QPixmap image("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/se3d_small.jpg");
-    label->setPixmap(image);
-
-    QVBoxLayout *sidebarInside = new QVBoxLayout;
-    sidebarInside->addWidget(label);
-    sidebar->setLayout(sidebarInside);
-
-
-
+    buildSideBar(mainLayout);
 
     //right half layout, holds navigation and pages
-    rightLayout->addLayout(topLayout);
+    rightLayout->addLayout(pageLayout);
     rightLayout->addLayout(buttonLayout);
-
-    //main layout, holds both the sidebar and right layout
-    mainLayout->addLayout(sidebarLayout);
+    //main layout, holds errthangggg
     mainLayout->addLayout(rightLayout);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+    //pages->setStyleSheet("QStackedWidget {background-color:#ffffff;}");
+    //this->setStyleSheet("Wizard {background-color:#ffffff;}");
+
 
     previous->setEnabled(false);
-    next->setEnabled(false);
 
     connect(next, SIGNAL(clicked()), this, SLOT(doNext()));
     connect(previous, SIGNAL(clicked()), this, SLOT(doPrev()));
@@ -64,11 +51,56 @@ Wizard::Wizard() : QDialog()
     pages->addWidget(pageTwo = new PageTwo(pages));
     pages->addWidget(pageThree = new PageThree(pages));
 
-    connect(pageOne->acceptDeal, SIGNAL(toggled(bool)), next, SLOT(setEnabled(bool)));
-
     connect(next, SIGNAL(clicked(bool)), this, SLOT(saveFormInfo()));
     connect(this, SIGNAL(emitOutput(QString)), pageTwo, SLOT(onNewOutput(QString)));
 }
+
+
+
+
+void Wizard::buildSideBar(QHBoxLayout *mainLayout)
+{
+    QVBoxLayout *layout = new QVBoxLayout;
+    //sidebar, to hold logo and links
+
+    QLabel *logo = new QLabel;
+    logo->setStyleSheet("color:#ffffff;");
+    logo->setText("logo");
+    //QPixmap image("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/se3d_small.jpg");
+    //logo->setPixmap(image);
+
+    QLabel *secondLabel = new QLabel;
+    secondLabel->setText("<a style = 'text-decoration:none' href=\"www.se3d.com/r3bel-x\">About</a>");
+    secondLabel->setTextFormat(Qt::RichText);
+    secondLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
+    secondLabel->setOpenExternalLinks(true);
+    secondLabel->setStyleSheet("color:#ffffff");
+
+
+    QLabel *third = new QLabel;
+    third->setText("Visit Us");
+    third->setStyleSheet("color:#ffffff");
+
+    QLabel *fourth = new QLabel;
+    fourth->setText("Request a Demo");
+    fourth->setStyleSheet("color:#ffffff");
+
+    layout->addWidget(logo, 0, Qt::AlignCenter);
+    layout->addWidget(secondLabel, 0 , Qt::AlignCenter);
+    layout->addWidget(third, 0 , Qt::AlignCenter);
+    layout->addWidget(fourth, 0 , Qt::AlignCenter);
+
+    QWidget *background = new QWidget;
+    background->setLayout(layout);
+    background->setStyleSheet("QWidget {background-color:#252525;}");
+
+    mainLayout->addWidget(background);
+
+}
+
+
+
+
 
 void Wizard::saveFormInfo()
 {
@@ -89,6 +121,10 @@ void Wizard::saveFormInfo()
     generateCode();
 
 }
+
+
+
+
 
 void Wizard::generateCode()
 {
@@ -259,13 +295,16 @@ void Wizard::generateCode()
     emit emitOutput(output);
 }
 
+
+
+
+
 void Wizard::doNext()
 {
     switch(pages->currentIndex())
     {
     case 0:
         previous->setEnabled(true);
-        disconnect(pageOne->acceptDeal, SIGNAL(toggled(bool)), next, SLOT(setEnabled(bool)));
         break;
     case 1:
         next->setText(tr("Finish"));
@@ -278,14 +317,16 @@ void Wizard::doNext()
     pages->setCurrentIndex(pages->currentIndex() + 1);
 }
 
+
+
+
+
 void Wizard::doPrev()
 {
     switch(pages->currentIndex())
     {
     case 1:
         previous->setEnabled(false);
-        next->setEnabled(pageOne->acceptDeal->isChecked());
-        connect(pageOne->acceptDeal, SIGNAL(toggled(bool)), next, SLOT(setEnabled(bool)));
         break;
     case 2:
         next->setText(tr("Next"));
@@ -294,10 +335,19 @@ void Wizard::doPrev()
     pages->setCurrentIndex(pages->currentIndex() - 1);
 }
 
+
+
+
+
+//functions to enable frameless window dragging
 void Wizard::mousePressEvent(QMouseEvent *event) {
     m_nMouseClick_X_Coordinate = event->x();
     m_nMouseClick_Y_Coordinate = event->y();
 }
+
+
+
+
 
 void Wizard::mouseMoveEvent(QMouseEvent *event) {
     move(event->globalX()-m_nMouseClick_X_Coordinate, event->globalY()-m_nMouseClick_Y_Coordinate);

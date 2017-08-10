@@ -9,6 +9,8 @@ PageOne::PageOne(QWidget *parent) : QWidget(parent)
     customTab(tabWidget);
     templateTab(tabWidget);
 
+    tabWidget->setStyleSheet("QTabWidget::pane {border: 0;}");
+
     tabWidget->setMinimumSize(400,400);
 }
 
@@ -20,7 +22,7 @@ void PageOne::customTab(QTabWidget *tabWidget)
     widthEdit = new QSpinBox;
     positionEdit = new QSpinBox;
     materialEdit = new QComboBox;
-    QWizardPage *customWindow = new QWizardPage;
+    QWidget *customWindow = new QWidget;
 
     heightEdit->setRange(1, 8);
     widthEdit->setRange(1, 8);
@@ -40,7 +42,6 @@ void PageOne::customTab(QTabWidget *tabWidget)
     formLayout->addRow("&Material:", materialEdit);
 
     customWindow->setLayout(formLayout);
-
     tabWidget->addTab(customWindow, "Custom");
 }
 
@@ -52,4 +53,6 @@ void PageOne::templateTab(QTabWidget *tabWidget)
     layout->addWidget( acceptDeal, 1, 1 );
     templateWindow->setLayout(layout);
     tabWidget->addTab(templateWindow, "Templates");
+
+
 }
