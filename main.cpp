@@ -8,7 +8,12 @@ int main(int argc, char *argv[])
 
     wizardWindow.setWindowFlags(Qt::FramelessWindowHint);
     wizardWindow.setMinimumSize(600, 425);
+
+
+//    wizardWindow.setAttribute(Qt::WA_TranslucentBackground, true);
+
     wizardWindow.show();
+
 
     return app.exec();
 }

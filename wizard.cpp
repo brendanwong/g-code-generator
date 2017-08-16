@@ -36,9 +36,13 @@ Wizard::Wizard() : QDialog()
     rightLayout->addLayout(buttonLayout);
     //main layout, holds errthangggg
     mainLayout->addLayout(rightLayout);
-    mainLayout->setContentsMargins(0, 0, 0, 0);
     //pages->setStyleSheet("QStackedWidget {background-color:#ffffff;}");
     //this->setStyleSheet("Wizard {background-color:#ffffff;}");
+
+
+
+
+
 
 
     previous->setEnabled(false);
@@ -60,8 +64,8 @@ Wizard::Wizard() : QDialog()
 
 void Wizard::buildSideBar(QHBoxLayout *mainLayout)
 {
-    QVBoxLayout *layout = new QVBoxLayout;
     //sidebar, to hold logo and links
+    QVBoxLayout *layout = new QVBoxLayout;
 
     QLabel *logo = new QLabel;
     logo->setStyleSheet("color:#ffffff;");
