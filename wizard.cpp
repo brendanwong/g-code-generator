@@ -4,6 +4,9 @@
 #include "pagethree.h"
 #include "constants.h"
 
+#include <QApplication>
+
+
 
 Wizard::Wizard() : QDialog()
 {
@@ -31,6 +34,7 @@ Wizard::Wizard() : QDialog()
 
     buildSideBar(mainLayout);
 
+
     //right half layout, holds navigation and pages
     rightLayout->addLayout(pageLayout);
     rightLayout->addLayout(buttonLayout);
@@ -38,11 +42,6 @@ Wizard::Wizard() : QDialog()
     mainLayout->addLayout(rightLayout);
     //pages->setStyleSheet("QStackedWidget {background-color:#ffffff;}");
     //this->setStyleSheet("Wizard {background-color:#ffffff;}");
-
-
-
-
-
 
 
     previous->setEnabled(false);
@@ -56,7 +55,7 @@ Wizard::Wizard() : QDialog()
     pages->addWidget(pageThree = new PageThree(pages));
 
     connect(next, SIGNAL(clicked(bool)), this, SLOT(saveFormInfo()));
-    connect(this, SIGNAL(emitOutput(QString)), pageTwo, SLOT(onNewOutput(QString)));
+    connect(this, SIGNAL(emitOutput(QString)), pageTwo, SLOT(updateOutput(QString)));
 }
 
 
@@ -121,7 +120,6 @@ void Wizard::saveFormInfo()
     yearString = QString::number(yearInput);
     monthString = QString::number(monthInput);
     dayString = QString::number(dayInput);
-
     generateCode();
 
 }
@@ -152,6 +150,8 @@ void Wizard::generateCode()
         materialString =  "ABTS";
         break;
     }
+
+    output = "";
 
     //Commented confirmation of inputs
     output += "(Name: " + nameInput + ")\n";

@@ -20,6 +20,7 @@ class Wizard : public QDialog
 public:
     Wizard();
 
+
 private slots:
     void doNext();
     void doPrev();
@@ -59,6 +60,7 @@ private:
     QString yearString;
     QString monthString;
     QString dayString;
+
 
     QString output = "";
 };

@@ -13,11 +13,13 @@ public:
     PageTwo(QWidget *parent = 0);
 
 public slots:
-    void onNewOutput(const QString output);
+    void updateOutput(const QString output);
+    void onNewOutput(QString output);
 
 private:
     QFormLayout *layout;
     QTextEdit *textEdit;
+    bool firstOutput;
 
 
 
