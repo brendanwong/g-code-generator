@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
     Wizard wizardWindow;
 
     wizardWindow.setWindowFlags(Qt::FramelessWindowHint);
-    wizardWindow.setMinimumSize(600, 425);
+    wizardWindow.setMinimumSize(650, 400);
 
 
 //    wizardWindow.setAttribute(Qt::WA_TranslucentBackground, true);

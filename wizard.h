@@ -62,7 +62,7 @@ private:
     QString dayString;
 
 
-    QString output = "";
+    QString output;
 };
 
 #endif //WIZARD_H

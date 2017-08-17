@@ -38,11 +38,16 @@ Wizard::Wizard() : QDialog()
     //right half layout, holds navigation and pages
     rightLayout->addLayout(pageLayout);
     rightLayout->addLayout(buttonLayout);
+    QWidget *rightWidget = new QWidget;
+    rightWidget->setLayout(rightLayout);
+
     //main layout, holds errthangggg
-    mainLayout->addLayout(rightLayout);
+    mainLayout->addWidget(rightWidget);
     //pages->setStyleSheet("QStackedWidget {background-color:#ffffff;}");
     //this->setStyleSheet("Wizard {background-color:#ffffff;}");
 
+
+    mainLayout->setContentsMargins(0,0,0,0);
 
     previous->setEnabled(false);
 
@@ -63,6 +68,7 @@ Wizard::Wizard() : QDialog()
 
 void Wizard::buildSideBar(QHBoxLayout *mainLayout)
 {
+    /*
     //sidebar, to hold logo and links
     QVBoxLayout *layout = new QVBoxLayout;
 
@@ -98,6 +104,28 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     background->setStyleSheet("QWidget {background-color:#252525;}");
 
     mainLayout->addWidget(background);
+    */
+
+    QFrame *sidebar = new QFrame;
+    QLabel *logo = new QLabel;
+    QLabel *about = new QLabel;
+    QVBoxLayout *sidebarLayout = new QVBoxLayout;
+
+    logo->setText("SE3D Logo");
+    QPixmap image("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/se3d_small.jpg");
+    logo->setPixmap(image);
+
+    about->setText("About");
+    about->setStyleSheet("color:#ffffff");
+
+    sidebarLayout->addWidget(logo);
+    sidebarLayout->addWidget(about);
+    sidebarLayout->addStretch();
+    sidebar->setLayout(sidebarLayout);
+    sidebar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    sidebar->setStyleSheet("background-color:#252525");
+    sidebar->setMinimumWidth(220);
+    mainLayout->addWidget(sidebar);
 
 }
 
