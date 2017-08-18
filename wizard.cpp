@@ -4,7 +4,7 @@
 #include "pagethree.h"
 #include "constants.h"
 
-#include <QApplication>
+#include <QListWidget>
 
 
 
@@ -40,7 +40,7 @@ Wizard::Wizard() : QDialog()
     rightLayout->addLayout(buttonLayout);
     QWidget *rightWidget = new QWidget;
     rightWidget->setLayout(rightLayout);
-
+    //right widget to encapsulate the buttons and form to prevent the margin change to affect them
     //main layout, holds errthangggg
     mainLayout->addWidget(rightWidget);
     //pages->setStyleSheet("QStackedWidget {background-color:#ffffff;}");
@@ -68,58 +68,45 @@ Wizard::Wizard() : QDialog()
 
 void Wizard::buildSideBar(QHBoxLayout *mainLayout)
 {
-    /*
-    //sidebar, to hold logo and links
-    QVBoxLayout *layout = new QVBoxLayout;
-
-    QLabel *logo = new QLabel;
-    logo->setStyleSheet("color:#ffffff;");
-    logo->setText("logo");
-    //QPixmap image("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/se3d_small.jpg");
-    //logo->setPixmap(image);
-
-    QLabel *secondLabel = new QLabel;
-    secondLabel->setText("<a style = 'text-decoration:none' href=\"www.se3d.com/r3bel-x\">About</a>");
-    secondLabel->setTextFormat(Qt::RichText);
-    secondLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
-    secondLabel->setOpenExternalLinks(true);
-    secondLabel->setStyleSheet("color:#ffffff");
-
-
-    QLabel *third = new QLabel;
-    third->setText("Visit Us");
-    third->setStyleSheet("color:#ffffff");
-
-    QLabel *fourth = new QLabel;
-    fourth->setText("Request a Demo");
-    fourth->setStyleSheet("color:#ffffff");
-
-    layout->addWidget(logo, 0, Qt::AlignCenter);
-    layout->addWidget(secondLabel, 0 , Qt::AlignCenter);
-    layout->addWidget(third, 0 , Qt::AlignCenter);
-    layout->addWidget(fourth, 0 , Qt::AlignCenter);
-
-    QWidget *background = new QWidget;
-    background->setLayout(layout);
-    background->setStyleSheet("QWidget {background-color:#252525;}");
-
-    mainLayout->addWidget(background);
-    */
-
     QFrame *sidebar = new QFrame;
-    QLabel *logo = new QLabel;
-    QLabel *about = new QLabel;
     QVBoxLayout *sidebarLayout = new QVBoxLayout;
 
+    QLabel *logo = new QLabel;
     logo->setText("SE3D Logo");
     QPixmap image("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/se3d_small.jpg");
     logo->setPixmap(image);
+    logo->setAlignment(Qt::AlignCenter);
 
+    QLabel *welcome = new QLabel;
+    welcome->setText("Welcome to Rebel");
+    welcome->setAlignment(Qt::AlignCenter);
+    welcome->setStyleSheet("color: #ffffff;"
+                           "font: 21px;");
+
+    QLabel *version = new QLabel;
+    version->setText("Version 1.0.0");
+    version->setAlignment(Qt::AlignCenter);
+    version->setStyleSheet("color: #8F8D8D;"
+                           "font: 11px;");
+
+    QLabel *about = new QLabel;
     about->setText("About");
     about->setStyleSheet("color:#ffffff");
+    about->setText("<a style = 'text-decoration:none' href=\"www.se3d.com/r3bel-x\">About</a>");
+    about->setTextFormat(Qt::RichText);
+    about->setTextInteractionFlags(Qt::TextBrowserInteraction);
+    about->setOpenExternalLinks(true);
+    about->openExternalLinks();
+    about->setAlignment(Qt::AlignCenter);
+
 
     sidebarLayout->addWidget(logo);
+    sidebarLayout->addWidget(welcome);
+    sidebarLayout->addWidget(version);
     sidebarLayout->addWidget(about);
+
+
+
     sidebarLayout->addStretch();
     sidebar->setLayout(sidebarLayout);
     sidebar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
@@ -128,6 +115,9 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     mainLayout->addWidget(sidebar);
 
 }
+
+
+
 
 
 

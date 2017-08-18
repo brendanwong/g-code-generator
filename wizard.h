@@ -12,7 +12,6 @@
 #include "pagetwo.h"
 #include "pagethree.h"
 
-
 class Wizard : public QDialog
 {
     Q_OBJECT
@@ -60,7 +59,6 @@ private:
     QString yearString;
     QString monthString;
     QString dayString;
-
 
     QString output;
 };
