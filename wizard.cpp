@@ -43,10 +43,6 @@ Wizard::Wizard() : QDialog()
     //right widget to encapsulate the buttons and form to prevent the margin change to affect them
     //main layout, holds errthangggg
     mainLayout->addWidget(rightWidget);
-    //pages->setStyleSheet("QStackedWidget {background-color:#ffffff;}");
-    //this->setStyleSheet("Wizard {background-color:#ffffff;}");
-
-
     mainLayout->setContentsMargins(0,0,0,0);
 
     previous->setEnabled(false);
@@ -73,47 +69,89 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
 
     QLabel *logo = new QLabel;
     logo->setText("SE3D Logo");
-    QPixmap image("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/se3d_small.jpg");
+    QPixmap image("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/se3d-logo copy.png");
     logo->setPixmap(image);
     logo->setAlignment(Qt::AlignCenter);
 
     QLabel *welcome = new QLabel;
-    welcome->setText("Welcome to Rebel");
+    welcome->setText("Welcome to Rebel X");
     welcome->setAlignment(Qt::AlignCenter);
     welcome->setStyleSheet("color: #ffffff;"
                            "font: 21px;");
 
     QLabel *version = new QLabel;
-    version->setText("Version 1.0.0");
+    version->setText("Version " + VERSION);
     version->setAlignment(Qt::AlignCenter);
     version->setStyleSheet("color: #8F8D8D;"
                            "font: 11px;");
-
-    QLabel *about = new QLabel;
-    about->setText("About");
-    about->setStyleSheet("color:#ffffff");
-    about->setText("<a style = 'text-decoration:none' href=\"www.se3d.com/r3bel-x\">About</a>");
-    about->setTextFormat(Qt::RichText);
-    about->setTextInteractionFlags(Qt::TextBrowserInteraction);
-    about->setOpenExternalLinks(true);
-    about->openExternalLinks();
-    about->setAlignment(Qt::AlignCenter);
 
 
     sidebarLayout->addWidget(logo);
     sidebarLayout->addWidget(welcome);
     sidebarLayout->addWidget(version);
-    sidebarLayout->addWidget(about);
-
-
-
     sidebarLayout->addStretch();
+
+
+    //begin building each piece of the link stuff
+    //about
+    QWidget *aboutLink = new QWidget;
+    QHBoxLayout *aboutHLayout = new QHBoxLayout;
+    QLabel *icon = new QLabel;
+    QPixmap aboutIcon("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/visit.svg");
+    icon->setPixmap(aboutIcon);
+
+    QVBoxLayout *infoLayout = new QVBoxLayout;
+    QLabel *aboutLabel = new QLabel;
+    aboutLabel->setText("About");
+    aboutLabel->setStyleSheet("color:#ffffff");
+
+    QLabel *aboutDescr = new QLabel;
+    aboutDescr->setText("Learn more about the Rebel");
+    aboutDescr->setStyleSheet("color: #8F8D8D;"
+                              "font: 11px");
+    infoLayout->addWidget(aboutLabel);
+    infoLayout->addWidget(aboutDescr);
+
+    aboutHLayout->addWidget(icon);
+    aboutHLayout->addLayout(infoLayout);
+    aboutLink->setLayout(aboutHLayout);
+    sidebarLayout->addWidget(aboutLink);
+
+
+
+    //request a demo
+    QWidget *demoLink = new QWidget;
+    QHBoxLayout *demoHLayout = new QHBoxLayout;
+    QLabel *demoIcon = new QLabel;
+    QPixmap demoImage("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/visit 3.svg");
+    demoIcon->setPixmap(demoImage);
+
+    QVBoxLayout *demoVLayout = new QVBoxLayout;
+    QLabel *demoLabel = new QLabel;
+    demoLabel->setText("Request a Demo");
+    demoLabel->setStyleSheet("color: #ffffff");
+
+    QLabel *demoDescr = new QLabel;
+    demoDescr->setText("Inquire within");
+    demoDescr->setStyleSheet("color: #8F8D8D;"
+                              "font: 11px");
+
+    demoVLayout->addWidget(demoLabel);
+    demoVLayout->addWidget(demoDescr);
+
+    demoHLayout->addWidget(demoIcon);
+    demoHLayout->addLayout(demoVLayout);
+
+    demoLink->setLayout(demoHLayout);
+    sidebarLayout->addWidget(demoLink);
+
+
     sidebar->setLayout(sidebarLayout);
     sidebar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     sidebar->setStyleSheet("background-color:#252525");
     sidebar->setMinimumWidth(220);
+    sidebar->setMaximumWidth(220);
     mainLayout->addWidget(sidebar);
-
 }
 
 

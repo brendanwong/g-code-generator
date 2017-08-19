@@ -32,5 +32,7 @@ static const int X_BORDER = 40;
 static const int Y_BORDER = 40;
 static const int DISH_DIAMETER = 100;
 
+static const QString VERSION = "1.0.0";
+
 
 #endif // CONSTANTS_H
