@@ -102,7 +102,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
 
     QVBoxLayout *infoLayout = new QVBoxLayout;
     QLabel *aboutLabel = new QLabel;
-    aboutLabel->setText("About");
+    aboutLabel->setText("About the Rebel");
     aboutLabel->setStyleSheet("color:#ffffff");
 
     QLabel *aboutDescr = new QLabel;
@@ -116,6 +116,10 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     aboutHLayout->addLayout(infoLayout);
     aboutLink->setLayout(aboutHLayout);
     sidebarLayout->addWidget(aboutLink);
+
+
+    //visit se3d's website
+    QWidget *visitLink = new QWidget;
 
 
 
