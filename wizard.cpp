@@ -47,6 +47,7 @@ Wizard::Wizard() : QDialog()
 
     previous->setEnabled(false);
 
+    //this->setStyleSheet("Wizard {background-color: #ffffff;}");
     connect(next, SIGNAL(clicked()), this, SLOT(doNext()));
     connect(previous, SIGNAL(clicked()), this, SLOT(doPrev()));
     connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
@@ -77,7 +78,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     welcome->setText("Welcome to Rebel X");
     welcome->setAlignment(Qt::AlignCenter);
     welcome->setStyleSheet("color: #ffffff;"
-                           "font: 21px;");
+                           "font: 20px;");
 
     QLabel *version = new QLabel;
     version->setText("Version " + VERSION);
@@ -85,22 +86,26 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     version->setStyleSheet("color: #8F8D8D;"
                            "font: 11px;");
 
-
     sidebarLayout->addWidget(logo);
     sidebarLayout->addWidget(welcome);
     sidebarLayout->addWidget(version);
-    sidebarLayout->addStretch();
+//    sidebarLayout->addStretch();
+
+    QFrame *divLine1 = new QFrame;
+    divLine1->setFrameShape(QFrame::HLine);
+    divLine1->setStyleSheet("color:#ffffff");
+    sidebarLayout->addWidget(divLine1);
 
 
     //begin building each piece of the link stuff
     //about
-    QWidget *aboutLink = new QWidget;
+    QWidget *aboutWidget = new QWidget;
     QHBoxLayout *aboutHLayout = new QHBoxLayout;
     QLabel *icon = new QLabel;
-    QPixmap aboutIcon("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/visit.svg");
+    QPixmap aboutIcon("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/rebel-mini-logo.png");
     icon->setPixmap(aboutIcon);
 
-    QVBoxLayout *infoLayout = new QVBoxLayout;
+    QVBoxLayout *aboutVLayout = new QVBoxLayout;
     QLabel *aboutLabel = new QLabel;
     aboutLabel->setText("About the Rebel");
     aboutLabel->setStyleSheet("color:#ffffff");
@@ -109,25 +114,70 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     aboutDescr->setText("Learn more about the Rebel");
     aboutDescr->setStyleSheet("color: #8F8D8D;"
                               "font: 11px");
-    infoLayout->addWidget(aboutLabel);
-    infoLayout->addWidget(aboutDescr);
+
+    aboutVLayout->addWidget(aboutLabel);
+    aboutVLayout->addWidget(aboutDescr);
 
     aboutHLayout->addWidget(icon);
-    aboutHLayout->addLayout(infoLayout);
-    aboutLink->setLayout(aboutHLayout);
-    sidebarLayout->addWidget(aboutLink);
+    aboutHLayout->addLayout(aboutVLayout);
+    aboutWidget->setLayout(aboutHLayout);
+
+    aboutHLayout->setAlignment(Qt::AlignLeft);
+    aboutVLayout->setContentsMargins(0,0,0,0);
+    aboutHLayout->setContentsMargins(0,0,0,0);
+
+
+    sidebarLayout->addWidget(aboutWidget);
+
+
+    QFrame *divLine2 = new QFrame;
+    divLine2->setFrameShape(QFrame::HLine);
+    divLine2->setStyleSheet("color:#ffffff");
+    sidebarLayout->addWidget(divLine2);
 
 
     //visit se3d's website
-    QWidget *visitLink = new QWidget;
+    QWidget *visitWidget = new QWidget;
+    QHBoxLayout *visitHLayout = new QHBoxLayout;
+    QLabel *visitIcon = new QLabel;
+    QPixmap visitImage("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/browser-mini-logo.png");
+    visitIcon->setPixmap(visitImage);
+
+    QVBoxLayout *visitVLayout = new QVBoxLayout;
+    QLabel *visitLabel = new QLabel;
+    visitLabel->setText("Visit SE3D");
+    visitLabel->setStyleSheet("color: #ffffff");
+
+    QLabel *visitDescr = new QLabel;
+    visitDescr->setText("Check out our website!!");
+    visitDescr->setStyleSheet("color: #8F8D8D;"
+                              "font: 11px");
+
+    visitVLayout->addWidget(visitLabel);
+    visitVLayout->addWidget(visitDescr);
+
+    visitHLayout->addWidget(visitIcon);
+    visitHLayout->addLayout(visitVLayout);
+    visitWidget->setLayout(visitHLayout);
+
+    visitVLayout->setContentsMargins(0,0,0,0);
+    visitHLayout->setContentsMargins(0,0,0,0);
+    visitHLayout->setAlignment(Qt::AlignLeft);
+
+    sidebarLayout->addWidget(visitWidget);
 
 
+
+    QFrame *divLine3 = new QFrame;
+    divLine3->setFrameShape(QFrame::HLine);
+    divLine3->setStyleSheet("color:#ffffff");
+    sidebarLayout->addWidget(divLine3);
 
     //request a demo
-    QWidget *demoLink = new QWidget;
+    QWidget *demoWidget = new QWidget;
     QHBoxLayout *demoHLayout = new QHBoxLayout;
     QLabel *demoIcon = new QLabel;
-    QPixmap demoImage("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/visit 3.svg");
+    QPixmap demoImage("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/research-mini-logo.png");
     demoIcon->setPixmap(demoImage);
 
     QVBoxLayout *demoVLayout = new QVBoxLayout;
@@ -145,10 +195,12 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
 
     demoHLayout->addWidget(demoIcon);
     demoHLayout->addLayout(demoVLayout);
+    demoWidget->setLayout(demoHLayout);
 
-    demoLink->setLayout(demoHLayout);
-    sidebarLayout->addWidget(demoLink);
-
+    demoVLayout->setContentsMargins(0,0,0,0);
+    demoHLayout->setContentsMargins(0,0,0,0);
+    demoHLayout->setAlignment(Qt::AlignLeft);
+    sidebarLayout->addWidget(demoWidget);
 
     sidebar->setLayout(sidebarLayout);
     sidebar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
