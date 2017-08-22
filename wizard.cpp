@@ -45,14 +45,14 @@ Wizard::Wizard() : QDialog()
 
     previous->setEnabled(false);
 
-    //this->setStyleSheet("Wizard {background-color: #ffffff;}");
+//    this->setStyleSheet("Wizard {background-color: #ffffff;}");
     connect(next, SIGNAL(clicked()), this, SLOT(doNext()));
     connect(previous, SIGNAL(clicked()), this, SLOT(doPrev()));
     connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
 
     pages->addWidget(pageOne = new PageOne(pages));
     pages->addWidget(pageTwo = new PageTwo(pages));
-    pages->addWidget(pageThree = new PageThree(pages));
+//    pages->addWidget(pageThree = new PageThree(pages));
 
     connect(next, SIGNAL(clicked(bool)), this, SLOT(saveFormInfo()));
     connect(this, SIGNAL(emitOutput(QString)), pageTwo, SLOT(updateOutput(QString)));
@@ -88,12 +88,11 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     sidebarLayout->addWidget(welcome);
     sidebarLayout->addWidget(version);
 
+    //build component links
     addDivider(sidebarLayout);
     buildAbout(sidebarLayout);
-
     addDivider(sidebarLayout);
     buildVisit(sidebarLayout);
-
     addDivider(sidebarLayout);
     buildDemoRequest(sidebarLayout);
 
@@ -105,10 +104,12 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     mainLayout->addWidget(sidebar);
 }
 
+
+
+
+
 void Wizard::buildAbout(QVBoxLayout *sidebarLayout)
 {
-    //begin building each piece of the link stuff
-    //about
     QWidget *aboutWidget = new QWidget;
     QHBoxLayout *aboutHLayout = new QHBoxLayout;
     QLabel *icon = new QLabel;
@@ -134,8 +135,8 @@ void Wizard::buildAbout(QVBoxLayout *sidebarLayout)
     aboutWidget->setLayout(aboutHLayout);
 
     aboutHLayout->setAlignment(Qt::AlignLeft);
-    aboutVLayout->setContentsMargins(0,0,0,0);
-    aboutHLayout->setContentsMargins(0,0,0,0);
+    aboutVLayout->setContentsMargins(0, 0, 0, 0);
+    aboutHLayout->setContentsMargins(0, 0, 0, 0);
 
 
     sidebarLayout->addWidget(aboutWidget);
@@ -144,9 +145,12 @@ void Wizard::buildAbout(QVBoxLayout *sidebarLayout)
 
 }
 
+
+
+
+
 void Wizard::buildVisit(QVBoxLayout *sidebarLayout)
 {
-
     //visit se3d's website
     QWidget *visitWidget = new QWidget;
     QHBoxLayout *visitHLayout = new QHBoxLayout;
@@ -173,14 +177,19 @@ void Wizard::buildVisit(QVBoxLayout *sidebarLayout)
     visitHLayout->addLayout(visitVLayout);
     visitWidget->setLayout(visitHLayout);
 
-    visitVLayout->setContentsMargins(0,0,0,0);
-    visitHLayout->setContentsMargins(0,0,0,0);
+    visitVLayout->setContentsMargins(0, 0, 0, 0);
+    visitHLayout->setContentsMargins(0, 0, 0, 0);
     visitHLayout->setAlignment(Qt::AlignLeft);
 
 
     sidebarLayout->addWidget(visitWidget);
 
 }
+
+
+
+
+
 
 void Wizard::buildDemoRequest(QVBoxLayout *sidebarLayout)
 {
@@ -199,7 +208,7 @@ void Wizard::buildDemoRequest(QVBoxLayout *sidebarLayout)
     demoLabel->setStyleSheet("color: #ffffff");
 
     QLabel *demoDescr = new QLabel;
-    demoDescr->setText("Inquire within ma nigga");
+    demoDescr->setText("Inquire within boi");
     demoDescr->setStyleSheet("color: #8F8D8D;"
                               "font: 11px");
 
@@ -210,12 +219,16 @@ void Wizard::buildDemoRequest(QVBoxLayout *sidebarLayout)
     demoHLayout->addLayout(demoVLayout);
     demoWidget->setLayout(demoHLayout);
 
-    demoVLayout->setContentsMargins(0,0,0,0);
-    demoHLayout->setContentsMargins(0,0,0,0);
+    demoVLayout->setContentsMargins(0, 0, 0, 0);
+    demoHLayout->setContentsMargins(0, 0, 0, 0);
     demoHLayout->setAlignment(Qt::AlignLeft);
     sidebarLayout->addWidget(demoWidget);
 
 }
+
+
+
+
 
 void Wizard::addDivider(QVBoxLayout *sidebarLayout)
 {
@@ -223,7 +236,6 @@ void Wizard::addDivider(QVBoxLayout *sidebarLayout)
     divLine->setFrameShape(QFrame::HLine);
     divLine->setStyleSheet("color:#ffffff;");
     sidebarLayout->addWidget(divLine);
-
 }
 
 
@@ -432,19 +444,8 @@ void Wizard::generateCode()
 
 void Wizard::doNext()
 {
-    switch(pages->currentIndex())
-    {
-    case 0:
-        previous->setEnabled(true);
-        break;
-    case 1:
-        next->setText(tr("Finish"));
-        break;
-    case 2:
-        QMessageBox::information(this, tr("Finishing"), tr("Here is where the action takes place."));
-        accept();
-        return;
-    }
+    previous->setEnabled(true);
+    next->setEnabled(false);
     pages->setCurrentIndex(pages->currentIndex() + 1);
 }
 
@@ -454,15 +455,8 @@ void Wizard::doNext()
 
 void Wizard::doPrev()
 {
-    switch(pages->currentIndex())
-    {
-    case 1:
-        previous->setEnabled(false);
-        break;
-    case 2:
-        next->setText(tr("Next"));
-        break;
-    }
+    previous->setEnabled(false);
+    next->setEnabled(true);
     pages->setCurrentIndex(pages->currentIndex() - 1);
 }
 

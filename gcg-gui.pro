@@ -27,14 +27,12 @@ SOURCES += \
         main.cpp \
     wizard.cpp \
     pageone.cpp \
-    pagetwo.cpp \
-    pagethree.cpp
+    pagetwo.cpp
 
 HEADERS += \
     wizard.h \
     pageone.h \
     pagetwo.h \
-    pagethree.h \
     constants.h
 
 FORMS += \
