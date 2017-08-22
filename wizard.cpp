@@ -4,8 +4,6 @@
 #include "pagethree.h"
 #include "constants.h"
 
-#include <QListWidget>
-
 
 
 Wizard::Wizard() : QDialog()
@@ -89,14 +87,26 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     sidebarLayout->addWidget(logo);
     sidebarLayout->addWidget(welcome);
     sidebarLayout->addWidget(version);
-//    sidebarLayout->addStretch();
 
-    QFrame *divLine1 = new QFrame;
-    divLine1->setFrameShape(QFrame::HLine);
-    divLine1->setStyleSheet("color:#ffffff");
-    sidebarLayout->addWidget(divLine1);
+    addDivider(sidebarLayout);
+    buildAbout(sidebarLayout);
 
+    addDivider(sidebarLayout);
+    buildVisit(sidebarLayout);
 
+    addDivider(sidebarLayout);
+    buildDemoRequest(sidebarLayout);
+
+    sidebar->setLayout(sidebarLayout);
+    sidebar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    sidebar->setStyleSheet("background-color:#252525");
+    sidebar->setMinimumWidth(220);
+    sidebar->setMaximumWidth(220);
+    mainLayout->addWidget(sidebar);
+}
+
+void Wizard::buildAbout(QVBoxLayout *sidebarLayout)
+{
     //begin building each piece of the link stuff
     //about
     QWidget *aboutWidget = new QWidget;
@@ -104,6 +114,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     QLabel *icon = new QLabel;
     QPixmap aboutIcon("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/rebel-mini-logo.png");
     icon->setPixmap(aboutIcon);
+    aboutWidget->setMaximumHeight(30);
 
     QVBoxLayout *aboutVLayout = new QVBoxLayout;
     QLabel *aboutLabel = new QLabel;
@@ -130,11 +141,11 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     sidebarLayout->addWidget(aboutWidget);
 
 
-    QFrame *divLine2 = new QFrame;
-    divLine2->setFrameShape(QFrame::HLine);
-    divLine2->setStyleSheet("color:#ffffff");
-    sidebarLayout->addWidget(divLine2);
 
+}
+
+void Wizard::buildVisit(QVBoxLayout *sidebarLayout)
+{
 
     //visit se3d's website
     QWidget *visitWidget = new QWidget;
@@ -142,6 +153,8 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     QLabel *visitIcon = new QLabel;
     QPixmap visitImage("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/browser-mini-logo.png");
     visitIcon->setPixmap(visitImage);
+    visitWidget->setMaximumHeight(30);
+
 
     QVBoxLayout *visitVLayout = new QVBoxLayout;
     QLabel *visitLabel = new QLabel;
@@ -164,21 +177,21 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     visitHLayout->setContentsMargins(0,0,0,0);
     visitHLayout->setAlignment(Qt::AlignLeft);
 
+
     sidebarLayout->addWidget(visitWidget);
 
+}
 
-
-    QFrame *divLine3 = new QFrame;
-    divLine3->setFrameShape(QFrame::HLine);
-    divLine3->setStyleSheet("color:#ffffff");
-    sidebarLayout->addWidget(divLine3);
-
+void Wizard::buildDemoRequest(QVBoxLayout *sidebarLayout)
+{
     //request a demo
     QWidget *demoWidget = new QWidget;
     QHBoxLayout *demoHLayout = new QHBoxLayout;
     QLabel *demoIcon = new QLabel;
     QPixmap demoImage("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/research-mini-logo.png");
     demoIcon->setPixmap(demoImage);
+    demoWidget->setMaximumHeight(35);
+
 
     QVBoxLayout *demoVLayout = new QVBoxLayout;
     QLabel *demoLabel = new QLabel;
@@ -186,7 +199,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     demoLabel->setStyleSheet("color: #ffffff");
 
     QLabel *demoDescr = new QLabel;
-    demoDescr->setText("Inquire within");
+    demoDescr->setText("Inquire within ma nigga");
     demoDescr->setStyleSheet("color: #8F8D8D;"
                               "font: 11px");
 
@@ -202,15 +215,16 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     demoHLayout->setAlignment(Qt::AlignLeft);
     sidebarLayout->addWidget(demoWidget);
 
-    sidebar->setLayout(sidebarLayout);
-    sidebar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-    sidebar->setStyleSheet("background-color:#252525");
-    sidebar->setMinimumWidth(220);
-    sidebar->setMaximumWidth(220);
-    mainLayout->addWidget(sidebar);
 }
 
+void Wizard::addDivider(QVBoxLayout *sidebarLayout)
+{
+    QFrame *divLine = new QFrame;
+    divLine->setFrameShape(QFrame::HLine);
+    divLine->setStyleSheet("color:#ffffff;");
+    sidebarLayout->addWidget(divLine);
 
+}
 
 
 
@@ -266,7 +280,8 @@ void Wizard::generateCode()
     output = "";
 
     //Commented confirmation of inputs
-    output += "(Name: " + nameInput + ")\n";
+    if (nameInput != "")
+        output += "(Name: " + nameInput + ")\n";
     output += "(Material: " + materialString + ")\n";
     output += "(Position: " + QString::number(positionInput) + ")\n";
     output += "(Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + ")\n";

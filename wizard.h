@@ -28,6 +28,10 @@ private slots:
 private:
     void generateCode();
     void buildSideBar(QHBoxLayout *mainLayout);
+    void buildAbout(QVBoxLayout *sidebarLayout);
+    void buildVisit(QVBoxLayout *sidebarLayout);
+    void buildDemoRequest(QVBoxLayout *sidebarLayout);
+    void addDivider(QVBoxLayout *sidebarLayout);
 
 signals:
     void emitOutput(const QString &output);
