@@ -27,10 +27,7 @@ private slots:
 private:
     void generateCode();
     void buildSideBar(QHBoxLayout *mainLayout);
-    void buildAbout(QVBoxLayout *sidebarLayout);
-    void buildVisit(QVBoxLayout *sidebarLayout);
-    void buildDemoRequest(QVBoxLayout *sidebarLayout);
-    void buildContact(QVBoxLayout *sidebarLayout);
+    void buildSidebarLink(QVBoxLayout *sidebarLayout, QString inLink, QString location, QString inLabel, QString inDescr);
     void addDivider(QVBoxLayout *sidebarLayout);
 
 signals:

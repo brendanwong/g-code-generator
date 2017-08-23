@@ -2,7 +2,7 @@
 
 Link::Link()
 {
-    url = "www.google.com";
+    url = "www.se3d.com";
 }
 
 Link::Link(QString inUrl)
