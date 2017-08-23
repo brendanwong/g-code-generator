@@ -8,10 +8,11 @@ int main(int argc, char *argv[])
 
     app.setWindowIcon(QIcon("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/rebel-logo-big.ico"));
 
+    //window adjustments
     wizardWindow.setWindowFlags(Qt::FramelessWindowHint);
     wizardWindow.resize(660, 400);
 
-
+    //round the window
     QPainterPath path;
     path.addRoundedRect(wizardWindow.rect(), 5, 5);
     QRegion mask = QRegion(path.toFillPolygon().toPolygon());
@@ -20,7 +21,6 @@ int main(int argc, char *argv[])
 //    wizardWindow.setAttribute(Qt::WA_TranslucentBackground, true);
 
     wizardWindow.show();
-
 
     return app.exec();
 }

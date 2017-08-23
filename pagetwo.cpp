@@ -1,6 +1,5 @@
 #include "pagetwo.h"
 #include "wizard.h"
-#include <QApplication>
 
 PageTwo::PageTwo(QWidget *parent) : QWidget(parent)
 {
@@ -26,7 +25,7 @@ void PageTwo::updateOutput(const QString output)
         firstOutput = false;
     } else
         onNewOutput(output);
-
+    //otherwise, new output box will be created every single time
 
 }
 

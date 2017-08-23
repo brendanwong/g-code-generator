@@ -11,7 +11,6 @@
 #include <QDate>
 #include <QFormLayout>
 #include <QGridLayout>
-#include <QCheckBox>
 #include <QLabel>
 
 class PageOne : public QWidget
@@ -20,7 +19,6 @@ class PageOne : public QWidget
 public:
     PageOne(QWidget *parent = 0);
 
-    QCheckBox *acceptDeal;
     QLabel *customLabel;
     QLineEdit *nameEdit;
     QDateEdit *dateEdit;

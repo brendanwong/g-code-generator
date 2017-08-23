@@ -5,6 +5,7 @@
 #include <QFormLayout>
 #include <QLabel>
 #include <QTextEdit>
+#include <QApplication>
 
 class PageTwo : public QWidget
 {

@@ -1,6 +1,5 @@
-#include "wizard.h"
 #include "pageone.h"
-
+#include "wizard.h"
 
 PageOne::PageOne(QWidget *parent) : QWidget(parent)
 {

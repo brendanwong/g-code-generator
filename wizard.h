@@ -11,6 +11,7 @@
 #include "pageone.h"
 #include "pagetwo.h"
 #include "link.h"
+#include "constants.h"
 
 class Wizard : public QDialog
 {

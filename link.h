@@ -6,13 +6,17 @@
 #include <QUrl>
 
 class Link : public QWidget{
+
     Q_OBJECT
+
 public:
     Link();
     Link(QString inUrl);
-    QUrl url;
+
     void mouseReleaseEvent(QMouseEvent *);
 
+private:
+    QUrl url;
 };
 
 #endif // LINK_H
