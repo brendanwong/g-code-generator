@@ -11,7 +11,7 @@ PageOne::PageOne(QWidget *parent) : QWidget(parent)
 
     tabWidget->setStyleSheet("QTabWidget::pane {border: 0;}");
 
-    tabWidget->setMinimumSize(400,400);
+    tabWidget->setMinimumSize(400, 400);
 }
 
 void PageOne::customTab(QTabWidget *tabWidget)
@@ -47,12 +47,13 @@ void PageOne::customTab(QTabWidget *tabWidget)
 
 void PageOne::templateTab(QTabWidget *tabWidget)
 {
-    QGridLayout *layout = new QGridLayout;
+    QHBoxLayout *layout = new QHBoxLayout;
     QWidget *templateWindow = new QWidget;
-    acceptDeal = new QCheckBox( tr("I accept") );
-    layout->addWidget( acceptDeal, 1, 1 );
+    QTextEdit *edit = new QTextEdit;
+    layout->addWidget(edit);
+    edit->setMinimumSize(300,280);
     templateWindow->setLayout(layout);
-    tabWidget->addTab(templateWindow, "Templates");
+    tabWidget->addTab(templateWindow, "Template");
 
 
 }

@@ -1,7 +1,6 @@
 #include "wizard.h"
 #include "pageone.h"
 #include "pagetwo.h"
-#include "pagethree.h"
 #include "constants.h"
 
 
@@ -45,14 +44,12 @@ Wizard::Wizard() : QDialog()
 
     previous->setEnabled(false);
 
-//    this->setStyleSheet("Wizard {background-color: #ffffff;}");
     connect(next, SIGNAL(clicked()), this, SLOT(doNext()));
     connect(previous, SIGNAL(clicked()), this, SLOT(doPrev()));
     connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
 
     pages->addWidget(pageOne = new PageOne(pages));
     pages->addWidget(pageTwo = new PageTwo(pages));
-//    pages->addWidget(pageThree = new PageThree(pages));
 
     connect(next, SIGNAL(clicked(bool)), this, SLOT(saveFormInfo()));
     connect(this, SIGNAL(emitOutput(QString)), pageTwo, SLOT(updateOutput(QString)));
@@ -68,12 +65,13 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
 
     QLabel *logo = new QLabel;
     logo->setText("SE3D Logo");
-    QPixmap image("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/se3d-logo copy.png");
+    QPixmap image("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/se3d-logo-copy.png");
     logo->setPixmap(image);
     logo->setAlignment(Qt::AlignCenter);
 
+
     QLabel *welcome = new QLabel;
-    welcome->setText("Welcome to Rebel X");
+    welcome->setText("G-Code Generator");
     welcome->setAlignment(Qt::AlignCenter);
     welcome->setStyleSheet("color: #ffffff;"
                            "font: 20px;");
@@ -94,6 +92,8 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     addDivider(sidebarLayout);
     buildVisit(sidebarLayout);
     addDivider(sidebarLayout);
+    buildContact(sidebarLayout);
+    addDivider(sidebarLayout);
     buildDemoRequest(sidebarLayout);
 
     sidebar->setLayout(sidebarLayout);
@@ -110,7 +110,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
 
 void Wizard::buildAbout(QVBoxLayout *sidebarLayout)
 {
-    QWidget *aboutWidget = new QWidget;
+    Link *aboutWidget = new Link(ABOUT_LINK);
     QHBoxLayout *aboutHLayout = new QHBoxLayout;
     QLabel *icon = new QLabel;
     QPixmap aboutIcon("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/rebel-mini-logo.png");
@@ -123,7 +123,7 @@ void Wizard::buildAbout(QVBoxLayout *sidebarLayout)
     aboutLabel->setStyleSheet("color:#ffffff");
 
     QLabel *aboutDescr = new QLabel;
-    aboutDescr->setText("Learn more about the Rebel");
+    aboutDescr->setText("Learn about our printers");
     aboutDescr->setStyleSheet("color: #8F8D8D;"
                               "font: 11px");
 
@@ -139,9 +139,9 @@ void Wizard::buildAbout(QVBoxLayout *sidebarLayout)
     aboutHLayout->setContentsMargins(0, 0, 0, 0);
 
 
+
+
     sidebarLayout->addWidget(aboutWidget);
-
-
 
 }
 
@@ -152,7 +152,7 @@ void Wizard::buildAbout(QVBoxLayout *sidebarLayout)
 void Wizard::buildVisit(QVBoxLayout *sidebarLayout)
 {
     //visit se3d's website
-    QWidget *visitWidget = new QWidget;
+    Link *visitWidget = new Link(VISIT_LINK);
     QHBoxLayout *visitHLayout = new QHBoxLayout;
     QLabel *visitIcon = new QLabel;
     QPixmap visitImage("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/browser-mini-logo.png");
@@ -190,11 +190,49 @@ void Wizard::buildVisit(QVBoxLayout *sidebarLayout)
 
 
 
+void Wizard::buildContact(QVBoxLayout *sidebarLayout)
+{
+    Link *contactWidget = new Link(CONTACT_LINK);
+    QHBoxLayout *contactHLayout = new QHBoxLayout;
+    QLabel *icon = new QLabel;
+    QPixmap contactIcon("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/rebel-mini-logo.png");
+    icon->setPixmap(contactIcon);
+    contactWidget->setMaximumHeight(30);
+
+    QVBoxLayout *contactVLayout = new QVBoxLayout;
+    QLabel *contactLabel = new QLabel;
+    contactLabel->setText("Contact Us");
+    contactLabel->setStyleSheet("color:#ffffff");
+
+    QLabel *contactDescr = new QLabel;
+    contactDescr->setText("Questions? Let us know!");
+    contactDescr->setStyleSheet("color: #8F8D8D;"
+                              "font: 11px");
+
+    contactVLayout->addWidget(contactLabel);
+    contactVLayout->addWidget(contactDescr);
+
+    contactHLayout->addWidget(icon);
+    contactHLayout->addLayout(contactVLayout);
+    contactWidget->setLayout(contactHLayout);
+
+    contactHLayout->setAlignment(Qt::AlignLeft);
+    contactVLayout->setContentsMargins(0, 0, 0, 0);
+    contactHLayout->setContentsMargins(0, 0, 0, 0);
+
+    sidebarLayout->addWidget(contactWidget);
+
+}
+
+
+
+
+
 
 void Wizard::buildDemoRequest(QVBoxLayout *sidebarLayout)
 {
     //request a demo
-    QWidget *demoWidget = new QWidget;
+    Link *demoWidget = new Link(DEMO_LINK);
     QHBoxLayout *demoHLayout = new QHBoxLayout;
     QLabel *demoIcon = new QLabel;
     QPixmap demoImage("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/research-mini-logo.png");
@@ -208,7 +246,7 @@ void Wizard::buildDemoRequest(QVBoxLayout *sidebarLayout)
     demoLabel->setStyleSheet("color: #ffffff");
 
     QLabel *demoDescr = new QLabel;
-    demoDescr->setText("Inquire within boi");
+    demoDescr->setText("Slide thru these DMs");
     demoDescr->setStyleSheet("color: #8F8D8D;"
                               "font: 11px");
 
@@ -234,7 +272,7 @@ void Wizard::addDivider(QVBoxLayout *sidebarLayout)
 {
     QFrame *divLine = new QFrame;
     divLine->setFrameShape(QFrame::HLine);
-    divLine->setStyleSheet("color:#ffffff;");
+    divLine->setStyleSheet("color:#696969;");
     sidebarLayout->addWidget(divLine);
 }
 

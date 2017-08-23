@@ -10,7 +10,7 @@
 
 #include "pageone.h"
 #include "pagetwo.h"
-#include "pagethree.h"
+#include "link.h"
 
 class Wizard : public QDialog
 {
@@ -30,6 +30,7 @@ private:
     void buildAbout(QVBoxLayout *sidebarLayout);
     void buildVisit(QVBoxLayout *sidebarLayout);
     void buildDemoRequest(QVBoxLayout *sidebarLayout);
+    void buildContact(QVBoxLayout *sidebarLayout);
     void addDivider(QVBoxLayout *sidebarLayout);
 
 signals:
@@ -43,7 +44,6 @@ private:
 
     PageOne *pageOne;
     PageTwo *pageTwo;
-    PageThree *pageThree;
 
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);

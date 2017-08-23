@@ -6,8 +6,11 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     Wizard wizardWindow;
 
+    app.setWindowIcon(QIcon("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/rebel-logo-big.ico"));
+
     wizardWindow.setWindowFlags(Qt::FramelessWindowHint);
     wizardWindow.resize(660, 400);
+
 
     QPainterPath path;
     path.addRoundedRect(wizardWindow.rect(), 5, 5);

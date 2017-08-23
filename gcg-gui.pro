@@ -27,13 +27,15 @@ SOURCES += \
         main.cpp \
     wizard.cpp \
     pageone.cpp \
-    pagetwo.cpp
+    pagetwo.cpp \
+    link.cpp
 
 HEADERS += \
     wizard.h \
     pageone.h \
     pagetwo.h \
-    constants.h
+    constants.h \
+    link.h
 
 FORMS += \
         mainwindow.ui
