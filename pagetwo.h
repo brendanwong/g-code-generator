@@ -21,10 +21,6 @@ private:
     QFormLayout *layout;
     QTextEdit *textEdit;
     bool firstOutput;
-
-
-
-
 };
 
 #endif // PAGETWO_H

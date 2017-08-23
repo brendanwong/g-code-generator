@@ -6,9 +6,14 @@ PageTwo::PageTwo(QWidget *parent) : QWidget(parent)
     layout = new QFormLayout( this );
     QLabel *label = new QLabel;
     firstOutput = true;
+
     label->setText("G-Code Output");
     layout->addWidget(label);
 }
+
+
+
+
 
 void PageTwo::updateOutput(const QString output)
 {
@@ -26,8 +31,11 @@ void PageTwo::updateOutput(const QString output)
     } else
         onNewOutput(output);
     //otherwise, new output box will be created every single time
-
 }
+
+
+
+
 
 void PageTwo::onNewOutput(QString output)
 {

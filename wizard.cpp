@@ -69,7 +69,6 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     logo->setPixmap(image);
     logo->setAlignment(Qt::AlignCenter);
 
-
     QLabel *welcome = new QLabel;
     welcome->setText("G-Code Generator");
     welcome->setAlignment(Qt::AlignCenter);
@@ -86,7 +85,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     sidebarLayout->addWidget(welcome);
     sidebarLayout->addWidget(version);
 
-    //build component links, pls replace file paths if forked
+    //build component links, replace file paths if forked
     addDivider(sidebarLayout);
     buildSidebarLink(sidebarLayout, ABOUT_LINK, "/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/rebel-mini-logo.png",
                         "About the Rebel", "Learn about our flagship");

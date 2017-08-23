@@ -18,8 +18,6 @@ int main(int argc, char *argv[])
     QRegion mask = QRegion(path.toFillPolygon().toPolygon());
     wizardWindow.setMask(mask);
 
-//    wizardWindow.setAttribute(Qt::WA_TranslucentBackground, true);
-
     wizardWindow.show();
 
     return app.exec();

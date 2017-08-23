@@ -5,10 +5,9 @@
 #include <QDesktopServices>
 #include <QUrl>
 
-class Link : public QWidget{
-
+class Link : public QWidget
+{
     Q_OBJECT
-
 public:
     Link();
     Link(QString inUrl);

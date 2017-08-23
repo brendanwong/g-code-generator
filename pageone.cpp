@@ -13,6 +13,10 @@ PageOne::PageOne(QWidget *parent) : QWidget(parent)
     tabWidget->setMinimumSize(400, 400);
 }
 
+
+
+
+
 void PageOne::customTab(QTabWidget *tabWidget)
 {
     nameEdit = new QLineEdit;
@@ -44,6 +48,10 @@ void PageOne::customTab(QTabWidget *tabWidget)
     tabWidget->addTab(customWindow, "Custom");
 }
 
+
+
+
+
 void PageOne::templateTab(QTabWidget *tabWidget)
 {
     QHBoxLayout *layout = new QHBoxLayout;
@@ -53,6 +61,4 @@ void PageOne::templateTab(QTabWidget *tabWidget)
     edit->setMinimumSize(300,280);
     templateWindow->setLayout(layout);
     tabWidget->addTab(templateWindow, "Template");
-
-
 }
