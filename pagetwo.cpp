@@ -36,6 +36,7 @@ void PageTwo::updateOutput(const QString output)
         QPushButton *exportButton = new QPushButton(tr("Export as Text File"));
         layout->addWidget(exportButton);
         QObject::connect(exportButton, SIGNAL(clicked(bool)), this, SLOT(onExportButtonClicked()));
+
     } else
         onNewOutput(output);
     //otherwise, new output box will be created every single time
@@ -48,11 +49,8 @@ void PageTwo::updateOutput(const QString output)
 void PageTwo::onExportButtonClicked()
 {
     QString saveDirectory;
-    saveDirectory = QFileDialog::getExistingDirectory(this, tr("Export G-Code File"), title);
-    //need to connect the save button to preFileIO()
+    saveDirectory = QFileDialog::getSaveFileName(this, tr("Export G-Code File"), title);
     fileOutput(saveDirectory);
-
-
 }
 
 
@@ -61,14 +59,12 @@ void PageTwo::onExportButtonClicked()
 
 void PageTwo::fileOutput(QString directory)
 {
-       title = directory + "/" +title;
-       title += ".txt";
-       QFile file(title);
-       file.open(QIODevice::WriteOnly | QIODevice::Text);
-       QTextStream out(&file);
-       out << this->output;
-       file.close();
-
+    directory += ".txt";
+    QFile file(directory);
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    QTextStream out(&file);
+    out << this->output;
+    file.close();
 }
 
 
@@ -77,7 +73,6 @@ void PageTwo::fileOutput(QString directory)
 
 void PageTwo::onNewOutput(QString output)
 {
-
     textEdit->setText(output);
     QApplication::processEvents();
 }
