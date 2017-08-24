@@ -20,6 +20,10 @@ class Wizard : public QDialog
 public:
     Wizard();
 
+signals:
+    void emitOutput(const QString &output);
+    void emitTitle(const QString &output);
+
 private slots:
     void doNext();
     void doPrev();
@@ -27,12 +31,12 @@ private slots:
 
 private:
     void generateCode();
+    void buildTitle();
     void buildSideBar(QHBoxLayout *mainLayout);
     void buildSidebarLink(QVBoxLayout *sidebarLayout, QString inLink, QString location, QString inLabel, QString inDescr);
     void addDivider(QVBoxLayout *sidebarLayout);
-
-signals:
-    void emitOutput(const QString &output);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
 
 private:
     QStackedWidget *pages;
@@ -43,8 +47,6 @@ private:
     PageOne *pageOne;
     PageTwo *pageTwo;
 
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
     int m_nMouseClick_X_Coordinate;
     int m_nMouseClick_Y_Coordinate;
 
@@ -62,6 +64,8 @@ private:
     QString dayString;
 
     QString output;
+
+
 };
 
 #endif //WIZARD_H

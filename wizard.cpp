@@ -52,6 +52,7 @@ Wizard::Wizard() : QDialog()
 
     connect(next, SIGNAL(clicked(bool)), this, SLOT(saveFormInfo()));
     connect(this, SIGNAL(emitOutput(QString)), pageTwo, SLOT(updateOutput(QString)));
+    connect(this, SIGNAL(emitTitle(QString)), pageTwo, SLOT(updateTitle(QString)));
 }
 
 
@@ -70,7 +71,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     logo->setAlignment(Qt::AlignCenter);
 
     QLabel *welcome = new QLabel;
-    welcome->setText("G-Code Generator");
+    welcome->setText("Welcome to Rebel X");
     welcome->setAlignment(Qt::AlignCenter);
     welcome->setStyleSheet("color: #ffffff;"
                            "font: 20px;");
@@ -85,7 +86,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     sidebarLayout->addWidget(welcome);
     sidebarLayout->addWidget(version);
 
-    //build component links, replace file paths if forked
+    //build component links, replace icon file paths if forked
     addDivider(sidebarLayout);
     buildSidebarLink(sidebarLayout, ABOUT_LINK, "/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/rebel-mini-logo.png",
                         "About the Rebel", "Learn about our flagship");
@@ -176,8 +177,35 @@ void Wizard::saveFormInfo()
     yearString = QString::number(yearInput);
     monthString = QString::number(monthInput);
     dayString = QString::number(dayInput);
+
+    buildTitle();
     generateCode();
 
+}
+
+
+
+
+void Wizard::buildTitle()
+{
+    QString title = "";
+    switch(materialInput)
+    {
+    case 0:
+        title +=  "CaCl2 - ";
+        break;
+    case 1:
+        title += "HPR - ";
+        break;
+    case 2:
+        title +=  "ABTS - ";
+        break;
+    }
+    title += QString::number(widthInput);
+    title += "x";
+    title += QString::number(heightInput);
+
+    emit emitTitle(title);
 }
 
 

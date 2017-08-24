@@ -13,14 +13,17 @@ class PageTwo : public QWidget
 public:
     PageTwo(QWidget *parent = 0);
 
-public slots:
+private slots:
     void updateOutput(const QString output);
     void onNewOutput(QString output);
+    void onExportButtonClicked();
+    void updateTitle(QString title);
 
 private:
     QFormLayout *layout;
     QTextEdit *textEdit;
     bool firstOutput;
+    QString title;
 };
 
 #endif // PAGETWO_H
