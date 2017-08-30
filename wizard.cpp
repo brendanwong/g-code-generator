@@ -85,7 +85,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     sidebarLayout->addWidget(welcome);
     sidebarLayout->addWidget(version);
 
-    //build component links, replace icon file paths if forked
+    //build component links, replace icon file paths if pulled
     addDivider(sidebarLayout);
     buildSidebarLink(sidebarLayout, ABOUT_LINK, "/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/rebel-mini-logo.png",
                         "About the Rebel", "Learn about our flagship");
