@@ -58,6 +58,7 @@ private:
     int widthInput;
     int positionInput;
     int materialInput;
+    int printType;
 
     QString yearString;
     QString monthString;
