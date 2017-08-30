@@ -12,6 +12,8 @@
 #include <QFormLayout>
 #include <QGridLayout>
 #include <QLabel>
+#include <QGroupBox>
+#include <QRadioButton>
 
 class PageOne : public QWidget
 {
@@ -21,6 +23,7 @@ public:
 
     QLabel *customLabel;
     QLineEdit *nameEdit;
+
     QDateEdit *dateEdit;
     QSpinBox *heightEdit;
     QSpinBox *widthEdit;
