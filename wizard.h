@@ -30,7 +30,8 @@ private slots:
     void saveFormInfo();
 
 private:
-    void generateCode();
+    void generatePetriArray();
+    void generatePlateArray();
     void buildTitle();
     void buildSideBar(QHBoxLayout *mainLayout);
     void buildSidebarLink(QVBoxLayout *sidebarLayout, QString inLink, QString location, QString inLabel, QString inDescr);
@@ -58,6 +59,7 @@ private:
     int widthInput;
     int positionInput;
     int materialInput;
+    int printType;
 
     QString yearString;
     QString monthString;

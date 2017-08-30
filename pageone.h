@@ -29,10 +29,21 @@ public:
     QSpinBox *widthEdit;
     QSpinBox *positionEdit;
     QComboBox *materialEdit;
+    QGroupBox *groupBox;
+
+    QRadioButton *petriRadio;
+    QRadioButton *wellPlateRadio;
+
+    bool firstMessage = true;
 
 private:
     void customTab(QTabWidget *tabWidget);
     void templateTab(QTabWidget *tabWidget);
+    void buildPrintSelection();
+
+private slots:
+    void onWellPlateRadioClicked();
+    void onPetriRadioClicked();
 };
 
 #endif //PAGEONE_H

@@ -177,12 +177,20 @@ void Wizard::saveFormInfo()
     positionInput = pageOne->positionEdit->value();
     materialInput = pageOne->materialEdit->currentIndex();
 
+    if (pageOne->petriRadio->isChecked())
+        printType = 0;
+    if (pageOne->wellPlateRadio->isChecked())
+        printType = 1;
+
     yearString = QString::number(yearInput);
     monthString = QString::number(monthInput);
     dayString = QString::number(dayInput);
 
     buildTitle();
-    generateCode();
+    if (printType == 0)
+        generatePetriArray();
+    if (printType == 1)
+        generatePlateArray();
 }
 
 
@@ -191,6 +199,17 @@ void Wizard::saveFormInfo()
 void Wizard::buildTitle()
 {
     QString title = "";
+
+    switch(printType)
+    {
+    case 0:
+        title += "Petri Dish ";
+        break;
+    case 1:
+        title += "Well Plate ";
+        break;
+    }
+
     switch(materialInput)
     {
     case 0:
@@ -214,7 +233,7 @@ void Wizard::buildTitle()
 
 
 
-void Wizard::generateCode()
+void Wizard::generatePetriArray()
 {
     int calc;
     int X_MOVE = DISH_DIAMETER - X_BORDER;
@@ -242,6 +261,16 @@ void Wizard::generateCode()
     //G-Code commented confirmation of inputs
     if (nameInput != "")
         output += "(Name: " + nameInput + ")\n";
+    switch(printType)
+    {
+    case 0:
+        output += "(Type: Petri Dish)\n";
+        break;
+    case 1:
+        output += "(Type: Well Plate)\n";
+        break;
+    }
+
     output += "(Material: " + materialString + ")\n";
     output += "(Position: " + QString::number(positionInput) + ")\n";
     output += "(Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + ")\n";
@@ -270,15 +299,15 @@ void Wizard::generateCode()
     {
     case 0:
         //Calcium Carbonate
-        output += "G1 Z" + Z_START_CACL2 + " F1000\n";
+        output += "G1 Z" + PETRI_Z_CACL2 + " F1000\n";
         break;
     case 1:
         //HPR
-        output += "G1 Z" + Z_START_ALGINATE + " F1000\n";
+        output += "G1 Z" + PETRI_Z_ALGINATE + " F1000\n";
         break;
     case 2:
         //ABTS
-        output += "G1 Z" + Z_START_ABTS + " F1000\n";
+        output += "G1 Z" + PETRI_Z_ABTS + " F1000\n";
         break;
     }
 
@@ -295,23 +324,23 @@ void Wizard::generateCode()
             {
                 output += "G1 E" + EXTRUDE + " F" + FR_EXTRUDE + "\n";
                 output += "G4 P" + DWELL + "\n";
-                output += "G1 Z" + Z_MOVE + " F" + Z_FEEDRATE + "\n";
+                output += "G1 Z" + PETRI_Z_MOVE + " F" + Z_FEEDRATE + "\n";
 
                 calc = row % 2 ? -1 : 1;
                 calc *= X_MOVE;
                 QString temp  = QString::number(calc);
 
                 output += "G1 X" + temp + " F" + FR_MOVE_XY + "\n";
-                output += "G1 Z-" + Z_MOVE + " F" + Z_FEEDRATE + "\n\n";
+                output += "G1 Z-" + PETRI_Z_MOVE + " F" + Z_FEEDRATE + "\n\n";
             }
             output += "G1 E" + EXTRUDE + " F" + FR_EXTRUDE + "\n";
             output += "G4 P" + DWELL + "\n";
-            output += "G1 Z" + Z_MOVE + " F" + Z_FEEDRATE + "\n";
+            output += "G1 Z" + PETRI_Z_MOVE + " F" + Z_FEEDRATE + "\n";
 
             if (row < heightInput - 1)
             {
                 output += "G1 Y" + QString::number(Y_MOVE) + " F" + FR_MOVE_XY + "\n";
-                output += "G1 Z-" + Z_MOVE + " F" + Z_FEEDRATE + "\n\n";
+                output += "G1 Z-" + PETRI_Z_MOVE + " F" + Z_FEEDRATE + "\n\n";
             }
             else
                 output += "\n\n";
@@ -384,6 +413,177 @@ void Wizard::generateCode()
     }
 
     emit emitOutput(output);
+}
+
+
+
+
+
+
+void Wizard::generatePlateArray()
+{
+
+    int calc;
+
+    QString output; //remove later bc class var in wizard
+
+    QString materialString; //remove later
+    switch(materialInput)
+    {
+        case 0:
+            materialString =  "CaCl2";
+            break;
+        case 1:
+            materialString = "HPR";
+            break;
+        case 2:
+            materialString =  "ABTS";
+            break;
+    }
+
+    output = "";
+
+    //G-Code commented confirmation of inputs
+    if (nameInput != "")
+        output += "(Name: " + nameInput + ")\n";
+
+
+    output += "(Type: Well Plate)\n";
+    output += "(Material: " + materialString + ")\n";
+    output += "(Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + ")\n";
+    output += "(Date: " + monthString + "/" + dayString + "/" + yearString + ")\n\n";
+
+
+    //Begin building gcode
+    output += "G90\n";
+    output += "G1 Z" + PLATE_HEIGHT + " F1000\n";
+    output += "G1 X" + PLATE_START_X + " Y" + PLATE_START_Y + " F" + FR_MOVE_XY + "\n";
+
+    switch(materialInput)
+    {
+        case 0:
+            //Calcium Carbonate
+            output += "G1 Z" + PLATE_Z_CACL2 + " F1000\n";
+            break;
+        case 1:
+            //HPR
+            output += "G1 Z" + PLATE_Z_ALGINATE + " F1000\n";
+            break;
+        case 2:
+            //ABTS
+            output += "G1 Z" + PLATE_Z_ABTS + " F1000\n";
+            break;
+    }
+
+    //Relative positioning start
+    output += "\nG91\n\n";
+
+    switch(materialInput)
+    {
+            //CaCl2 print
+        case 0:
+            for (int row = 0; row < heightInput; row++)
+            {
+                for (int col = 0; col < (widthInput - 1); col++)
+                {
+                    output += "G1 E" + EXTRUDE + " F" + FR_EXTRUDE + "\n";
+                    output += "G4 P" + DWELL + "\n";
+                    output += "G1 Z" + PLATE_Z_MOVE + " F" + Z_FEEDRATE + "\n";
+
+                    calc = row % 2 ? -1 : 1;
+                    calc *= PLATE_XY_MOVE;
+                    QString temp  = QString::number(calc);
+
+                    output += "G1 X" + temp + " F" + FR_MOVE_XY + "\n";
+                    output += "G1 Z-" + PLATE_Z_MOVE + " F" + Z_FEEDRATE + "\n\n";
+                }
+                output += "G1 E" + EXTRUDE + " F" + FR_EXTRUDE + "\n";
+                output += "G4 P" + DWELL + "\n";
+                output += "G1 Z" + PLATE_Z_MOVE + " F" + Z_FEEDRATE + "\n";
+
+                if (row < heightInput - 1)
+                {
+                    output += "G1 Y" + QString::number(PLATE_XY_MOVE) + " F" + FR_MOVE_XY + "\n";
+                    output += "G1 Z-" + PLATE_Z_MOVE + " F" + Z_FEEDRATE + "\n\n";
+                }
+                else
+                    output += "\n\n";
+            }
+            output += "G90\n";
+            output += "G1 Z" + DISH_HEIGHT + " F1000\n";
+            output += "G1 E-.5 F50\n"; //reverse extrude to prevent dribbling
+            output += "G1 X100 Y10 F6000\n";
+            output += "M84\n";
+            break;
+
+            // 1% HPR Alginate Mixture
+        case 1:
+            for (int row = 0; row < heightInput; row++)
+            {
+                for (int col = 0; col < (widthInput - 1); col++)
+                {
+                    output += "G1 E" + ALG_EXT + " F" + FR_EXTRUDE + "\n";
+                    output += "G1 E-" + ALG_EXT_REV + " F" + FR_EXTRUDE + "\n";
+                    output += "G4 P" + ALG_DWELL + "\n";
+
+                    calc = row % 2 ? -1 : 1;
+                    calc *= PLATE_XY_MOVE;
+                    QString temp = QString::number(calc);
+
+                    output += "G1 X" + temp + " F" + FR_MOVE_XY + "\n\n";
+                }
+                output += "G1 E" + ALG_EXT + " F" + FR_EXTRUDE + "\n";
+                output +=  "G1 E-" + ALG_EXT_REV + " F" + FR_EXTRUDE + "\n";
+                output += "G4 P" + ALG_DWELL + "\n";
+
+                if (row < heightInput - 1)
+                    output += "G1 Y" + QString(PLATE_XY_MOVE) + " F" + FR_MOVE_XY + "\n\n";
+                else
+                    output += "\n\n";
+            }
+            output += "G90\n";
+            output += "G1 Z" + DISH_HEIGHT + " F1000\n";
+            output += "G1 E-.5 F50\n"; //reverse extrude to prevent dribbling
+            output += "G1 X100 Y10 F6000\n";
+            output += "M84\n";
+            break;
+
+            //ABTS Substrate -- assay print
+        case 2:
+            for (int row = 0; row < heightInput; row++)
+            {
+                for (int col = 0; col < (widthInput - 1); col++)
+                {
+                    output += "G1 E" + ABTS_EXT + " F" + FR_EXTRUDE + "\n";
+                    output += "G1 E-" + ABTS_EXT_REV + " F" + FR_ABTS_EXT + "\n";
+                    output += "G4 P" + DWELL + "\n";
+
+                    calc = row % 2 ? -1 : 1;
+                    calc *= PLATE_XY_MOVE;
+                    QString temp = QString::number(calc);
+
+                    output += "G1 X" + temp + " F" + FR_MOVE_XY + "\n\n";
+                }
+                output += "G1 E " + ABTS_EXT + " F " + FR_EXTRUDE + "\n";
+                output += "G1 E-" + ABTS_EXT_REV + " F" + FR_ABTS_EXT + "\n";
+                output += "G4 P" + DWELL + "\n";
+
+                if (row < heightInput - 1)
+                    output += "G1 Y" + QString(PLATE_XY_MOVE) + " F" + FR_MOVE_XY + "\n\n";
+                else
+                    output += "\n\n";
+            }
+            break;
+    }
+
+
+
+
+    emit emitOutput(output);
+
+
+
+
 }
 
 

@@ -5,12 +5,19 @@ static const string FR_EXTRUDE = "200";
 static const string DWELL = "1000";
 static const string Z_FEEDRATE = "400";
 
-static const string Z_START_CACL2 = "2.5";
-static const string Z_START_ALGINATE = "10";
-static const string Z_START_ABTS = "10";
+static const string PETRI_Z_CACL2 = "2.5";
+static const string PETRI_Z_ALGINATE = "10";
+static const string PETRI_Z_ABTS = "10";
+
+static const string PLATE_Z_CACL2 = "5";            //to be changed. need to confirm values
+static const string PLATE_Z_ALGINATE = "12.5";
+static const string PLATE_Z_ABTS = "12.5";
 
 static const string FR_MOVE_XY = "6000";
-static const string Z_MOVE = "5";
+
+static const int PLATE_XY_MOVE = 9;
+static const string PETRI_Z_MOVE = "5";
+static const string PLATE_Z_MOVE = "10";  //need to confirm or calculate after ^^^^^^^
 
 static const string EXTRUDE = "1";
 
@@ -32,7 +39,7 @@ static const string PLATE_START_X = "18.5";
 static const string PLATE_START_Y = "18";
 
 
-//to be removed
+//petri dish dims
 static const int X_BORDER = 40;
 static const int Y_BORDER = 40;
 static const int DISH_DIAMETER = 100;
@@ -52,16 +59,13 @@ static const int positionInput = -1;
 
 
 
+
+
+
+
 int main(int argc, const char * argv[]) {
 
     int calc;
-    int X_MOVE = DISH_DIAMETER - X_BORDER;
-    int Y_MOVE = DISH_DIAMETER - Y_BORDER;
-    
-    
-    X_MOVE = X_MOVE / widthInput;
-    Y_MOVE = Y_MOVE / heightInput;
-    
     
     string output; //remove later bc class var in wizard
     
@@ -88,7 +92,6 @@ int main(int argc, const char * argv[]) {
     
     output += "(Type: Well Plate)\n";
     output += "(Material: " + materialString + ")\n";
-//    output += "(Position: " + QString::number(positionInput) + ")\n";
     output += "(Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + ")\n";
     output += "(Date: " + monthString + "/" + dayString + "/" + yearString + ")\n\n";
     
@@ -102,15 +105,15 @@ int main(int argc, const char * argv[]) {
     {
         case 0:
             //Calcium Carbonate
-            output += "G1 Z" + Z_START_CACL2 + " F1000\n";
+            output += "G1 Z" + PLATE_Z_CACL2 + " F1000\n";
             break;
         case 1:
             //HPR
-            output += "G1 Z" + Z_START_ALGINATE + " F1000\n";
+            output += "G1 Z" + PLATE_Z_ALGINATE + " F1000\n";
             break;
         case 2:
             //ABTS
-            output += "G1 Z" + Z_START_ABTS + " F1000\n";
+            output += "G1 Z" + PLATE_Z_ABTS + " F1000\n";
             break;
     }
     
@@ -127,23 +130,23 @@ int main(int argc, const char * argv[]) {
                 {
                     output += "G1 E" + EXTRUDE + " F" + FR_EXTRUDE + "\n";
                     output += "G4 P" + DWELL + "\n";
-                    output += "G1 Z" + Z_MOVE + " F" + Z_FEEDRATE + "\n";
+                    output += "G1 Z" + PLATE_Z_MOVE + " F" + Z_FEEDRATE + "\n";
                     
                     calc = row % 2 ? -1 : 1;
-                    calc *= X_MOVE;
+                    calc *= PLATE_XY_MOVE;
                     QString temp  = QString::number(calc);
                     
                     output += "G1 X" + temp + " F" + FR_MOVE_XY + "\n";
-                    output += "G1 Z-" + Z_MOVE + " F" + Z_FEEDRATE + "\n\n";
+                    output += "G1 Z-" + PLATE_Z_MOVE + " F" + Z_FEEDRATE + "\n\n";
                 }
                 output += "G1 E" + EXTRUDE + " F" + FR_EXTRUDE + "\n";
                 output += "G4 P" + DWELL + "\n";
-                output += "G1 Z" + Z_MOVE + " F" + Z_FEEDRATE + "\n";
+                output += "G1 Z" + PLATE_Z_MOVE + " F" + Z_FEEDRATE + "\n";
                 
                 if (row < heightInput - 1)
                 {
-                    output += "G1 Y" + QString::number(Y_MOVE) + " F" + FR_MOVE_XY + "\n";
-                    output += "G1 Z-" + Z_MOVE + " F" + Z_FEEDRATE + "\n\n";
+                    output += "G1 Y" + QString::number(PLATE_XY_MOVE) + " F" + FR_MOVE_XY + "\n";
+                    output += "G1 Z-" + PLATE_Z_MOVE + " F" + Z_FEEDRATE + "\n\n";
                 }
                 else
                     output += "\n\n";
@@ -166,7 +169,7 @@ int main(int argc, const char * argv[]) {
                     output += "G4 P" + ALG_DWELL + "\n";
                     
                     calc = row % 2 ? -1 : 1;
-                    calc *= X_MOVE;
+                    calc *= PLATE_XY_MOVE;
                     QString temp = QString::number(calc);
                     
                     output += "G1 X" + temp + " F" + FR_MOVE_XY + "\n\n";
@@ -176,7 +179,7 @@ int main(int argc, const char * argv[]) {
                 output += "G4 P" + ALG_DWELL + "\n";
                 
                 if (row < heightInput - 1)
-                    output += "G1 Y" + QString(Y_MOVE) + " F" + FR_MOVE_XY + "\n\n";
+                    output += "G1 Y" + QString(PLATE_XY_MOVE) + " F" + FR_MOVE_XY + "\n\n";
                 else
                     output += "\n\n";
             }
@@ -198,7 +201,7 @@ int main(int argc, const char * argv[]) {
                     output += "G4 P" + DWELL + "\n";
                     
                     calc = row % 2 ? -1 : 1;
-                    calc *= X_MOVE;
+                    calc *= PLATE_XY_MOVE;
                     QString temp = QString::number(calc);
                     
                     output += "G1 X" + temp + " F" + FR_MOVE_XY + "\n\n";
@@ -208,7 +211,7 @@ int main(int argc, const char * argv[]) {
                 output += "G4 P" + DWELL + "\n";
                 
                 if (row < heightInput - 1)
-                    output += "G1 Y" + QString(Y_MOVE) + " F" + FR_MOVE_XY + "\n\n";
+                    output += "G1 Y" + QString(PLATE_XY_MOVE) + " F" + FR_MOVE_XY + "\n\n";
                 else
                     output += "\n\n";
             }
