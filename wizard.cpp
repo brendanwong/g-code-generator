@@ -177,14 +177,6 @@ void Wizard::saveFormInfo()
     positionInput = pageOne->positionEdit->value();
     materialInput = pageOne->materialEdit->currentIndex();
 
-    //printType - 0 for petri dish array, 1 for well plate print
-    if(pageOne->petriRadio->isChecked() == true)
-        printType = 0;
-    if(pageOne->wellPlateRadio->isChecked() == true)
-        printType = 1;
-
-
-
     yearString = QString::number(yearInput);
     monthString = QString::number(monthInput);
     dayString = QString::number(dayInput);
@@ -250,24 +242,10 @@ void Wizard::generateCode()
     //G-Code commented confirmation of inputs
     if (nameInput != "")
         output += "(Name: " + nameInput + ")\n";
-
-    switch(printType)
-    {
-    case 0:
-        output += "(Type: Petri Dish Print)\n";
-        break;
-    case 1:
-        output += "(Type: Well Plate Print)\n";
-        break;
-    }
-
     output += "(Material: " + materialString + ")\n";
     output += "(Position: " + QString::number(positionInput) + ")\n";
     output += "(Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + ")\n";
     output += "(Date: " + monthString + "/" + dayString + "/" + yearString + ")\n\n";
-
-
-
 
     //Begin building gcode
     output += "G90\n";
@@ -404,6 +382,7 @@ void Wizard::generateCode()
         }
         break;
     }
+
     emit emitOutput(output);
 }
 

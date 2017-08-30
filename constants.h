@@ -23,7 +23,7 @@ static const QString ABTS_EXT = "1.7";
 static const QString ABTS_EXT_REV = "0.4";
 static const QString FR_ABTS_EXT = "50";
 
-static const QString DISH_HEIGHT = "25"; //given 10 mm clearance
+static const QString DISH_HEIGHT = "25";
 
 static const QString COORD_1 = "30";
 static const QString COORD_2 = "130";
@@ -31,7 +31,6 @@ static const QString COORD_2 = "130";
 static const int X_BORDER = 40;
 static const int Y_BORDER = 40;
 static const int DISH_DIAMETER = 100;
-
 
 static const QString VERSION = "1.0.0";
 

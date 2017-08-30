@@ -23,24 +23,16 @@ public:
 
     QLabel *customLabel;
     QLineEdit *nameEdit;
-    QGroupBox *printGroup;
+
     QDateEdit *dateEdit;
     QSpinBox *heightEdit;
     QSpinBox *widthEdit;
     QSpinBox *positionEdit;
     QComboBox *materialEdit;
-    QRadioButton *petriRadio;
-    QRadioButton *wellPlateRadio;
-
-    bool firstMessage = true;
 
 private:
     void customTab(QTabWidget *tabWidget);
     void templateTab(QTabWidget *tabWidget);
-
-private slots:
-    void onWellPlateSelected();
-    void onPetriRadioSelected();
 };
 
 #endif //PAGEONE_H
