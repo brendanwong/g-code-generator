@@ -373,7 +373,7 @@ void Wizard::generatePetriArray()
             output += "G4 P" + ALG_DWELL + "\n";
 
             if (row < heightInput - 1)
-                output += "G1 Y" + QString(Y_MOVE) + " F" + FR_MOVE_XY + "\n\n";
+                output += "G1 Y" + QString::number(Y_MOVE) + " F" + FR_MOVE_XY + "\n\n";
             else
                 output += "\n\n";
         }
@@ -405,10 +405,16 @@ void Wizard::generatePetriArray()
             output += "G4 P" + DWELL + "\n";
 
             if (row < heightInput - 1)
-                output += "G1 Y" + QString(Y_MOVE) + " F" + FR_MOVE_XY + "\n\n";
+                output += "G1 Y" + QString::number(Y_MOVE) + " F" + FR_MOVE_XY + "\n\n";
             else
                 output += "\n\n";
+
         }
+        output += "G90\n";
+        output += "G1 Z" + DISH_HEIGHT + " F1000\n";
+        output += "G1 E-.5 F50\n"; //reverse extrude to prevent dribbling
+        output += "G1 X100 Y10 F6000\n";
+        output += "M84\n";
         break;
     }
 
@@ -537,7 +543,7 @@ void Wizard::generatePlateArray()
                 output += "G4 P" + ALG_DWELL + "\n";
 
                 if (row < heightInput - 1)
-                    output += "G1 Y" + QString(PLATE_XY_MOVE) + " F" + FR_MOVE_XY + "\n\n";
+                    output += "G1 Y" + QString::number(PLATE_XY_MOVE) + " F" + FR_MOVE_XY + "\n\n";
                 else
                     output += "\n\n";
             }
@@ -569,10 +575,16 @@ void Wizard::generatePlateArray()
                 output += "G4 P" + DWELL + "\n";
 
                 if (row < heightInput - 1)
-                    output += "G1 Y" + QString(PLATE_XY_MOVE) + " F" + FR_MOVE_XY + "\n\n";
+                    output += "G1 Y" + QString::number(PLATE_XY_MOVE) + " F" + FR_MOVE_XY + "\n\n";
                 else
                     output += "\n\n";
+
             }
+            output += "G90\n";
+            output += "G1 Z" + DISH_HEIGHT + " F1000\n";
+            output += "G1 E-.5 F50\n"; //reverse extrude to prevent dribbling
+            output += "G1 X100 Y10 F6000\n";
+            output += "M84\n";
             break;
     }
 
