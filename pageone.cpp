@@ -60,5 +60,5 @@ void PageOne::templateTab(QTabWidget *tabWidget)
     layout->addWidget(edit);
     edit->setMinimumSize(300,280);
     templateWindow->setLayout(layout);
-    tabWidget->addTab(templateWindow, "Template");
+    tabWidget->addTab(templateWindow, "Templates");
 }

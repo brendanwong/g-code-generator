@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     Wizard wizardWindow;
 
-    app.setWindowIcon(QIcon("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/rebel-logo-big.ico"));
+    app.setWindowIcon(QIcon("/Users/brendanwong/Documents/Qt projects/gcg-gui/apple-logo.ico"));
 
     //window adjustments
     wizardWindow.setWindowFlags(Qt::FramelessWindowHint);

@@ -13,7 +13,6 @@ Wizard::Wizard() : QDialog()
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     QWidget *rightWidget = new QWidget;
 
-
     //container for the array/template code generation
     pageLayout->addWidget(pages);
 
@@ -28,7 +27,7 @@ Wizard::Wizard() : QDialog()
 
     buildSideBar(mainLayout);
 
-    //right layout, for user input and naviation
+    //right layout, contains user input and naviation
     rightLayout->addLayout(pageLayout);
     rightLayout->addLayout(buttonLayout);
 
@@ -37,7 +36,7 @@ Wizard::Wizard() : QDialog()
 
     //main layout to hold everything
     mainLayout->addWidget(rightWidget);
-    mainLayout->setContentsMargins(0,0,0,0);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
 
     //create forms
     pages->addWidget(pageOne = new PageOne(pages));
@@ -92,10 +91,10 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
                         "About the Rebel", "Learn about our flagship");
     addDivider(sidebarLayout);
     buildSidebarLink(sidebarLayout, VISIT_LINK, "/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/browser-mini-logo.png",
-                        "Visit SE3D", "Check out our website!");
+                        "Visit SE3D", "Check out our website ");
     addDivider(sidebarLayout);
     buildSidebarLink(sidebarLayout, CONTACT_LINK, "/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/rebel-mini-logo.png",
-                        "Contact Us", "Questions? Let us know!");
+                        "Contact Us", "Questions? Let us know");
     addDivider(sidebarLayout);
     buildSidebarLink(sidebarLayout, DEMO_LINK, "/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/research-mini-logo.png",
                         "Request a Demo", "or preview our curriculum");
@@ -115,13 +114,17 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
 
 void Wizard::buildSidebarLink(QVBoxLayout *sidebarLayout, QString inLink, QString location, QString inLabel, QString inDescr)
 {
+    //Custom link widget to encapsulate everything and provide clickability
     Link *linkWidget = new Link(inLink);
+    linkWidget->setMaximumHeight(30);
+
+    //Horizontal layout to hold icon and vertical layout
     QHBoxLayout *HLayout = new QHBoxLayout;
     QLabel *iconLabel = new QLabel;
     QPixmap icon(location);
     iconLabel->setPixmap(icon);
-    linkWidget->setMaximumHeight(30);
 
+    //Vertical layout to hold title and description
     QVBoxLayout *VLayout = new QVBoxLayout;
     QLabel *label = new QLabel;
     label->setText(inLabel);
@@ -164,6 +167,7 @@ void Wizard::addDivider(QVBoxLayout *sidebarLayout)
 
 void Wizard::saveFormInfo()
 {
+    //Save information from text fields, invoked when next button is clicked
     nameInput = pageOne->nameEdit->text();
     yearInput = pageOne->dateEdit->date().year();
     monthInput = pageOne->dateEdit->date().month();
@@ -173,14 +177,12 @@ void Wizard::saveFormInfo()
     positionInput = pageOne->positionEdit->value();
     materialInput = pageOne->materialEdit->currentIndex();
 
-    //String conversion for later use
     yearString = QString::number(yearInput);
     monthString = QString::number(monthInput);
     dayString = QString::number(dayInput);
 
     buildTitle();
     generateCode();
-
 }
 
 
@@ -237,7 +239,7 @@ void Wizard::generateCode()
 
     output = "";
 
-    //Commented confirmation of inputs
+    //G-Code commented confirmation of inputs
     if (nameInput != "")
         output += "(Name: " + nameInput + ")\n";
     output += "(Material: " + materialString + ")\n";
