@@ -9,6 +9,7 @@ PageOne::PageOne(QWidget *parent) : QWidget(parent)
     templateTab(tabWidget);
 
     tabWidget->setStyleSheet("QTabWidget::pane {border: 0;}");
+    tabWidget->tabBar()->setStyleSheet("QTabBar::tab:selected{ color:#ffffff}");
 
     tabWidget->setMinimumSize(400, 400);
 }
@@ -109,7 +110,7 @@ void PageOne::onWellPlateRadioClicked()
     {
         QMessageBox warningMessage;
         warningMessage.setText("warning this software only currently only prints "
-                               "accurately with the greiner 650101 well plate");
+                               "accurately with the greiner 650161 well plate");
         warningMessage.exec();
         firstMessage = false;
     }

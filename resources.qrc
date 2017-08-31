@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/browser-logo.svg</file>
+        <file>Resources/se3d-circle-logo.svg</file>
+        <file>resources/rebel-logo-normal.svg</file>
+        <file>resources/science-logo.svg</file>
+    </qresource>
+</RCC>

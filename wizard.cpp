@@ -65,9 +65,12 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
 
     QLabel *logo = new QLabel;
     logo->setText("SE3D Logo");
-    QPixmap image("/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/se3d-logo-copy.png");
-    logo->setPixmap(image);
+    QPixmap image(":/Resources/se3d-circle-logo.svg");
+    image.setDevicePixelRatio(devicePixelRatio());
+    logo->setPixmap(image.scaled(240,240,Qt::KeepAspectRatio, Qt::SmoothTransformation));
     logo->setAlignment(Qt::AlignCenter);
+
+
 
     QLabel *welcome = new QLabel;
     welcome->setText("Welcome to Rebel X");
@@ -85,18 +88,17 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     sidebarLayout->addWidget(welcome);
     sidebarLayout->addWidget(version);
 
-    //build component links, replace icon file paths if pulled
     addDivider(sidebarLayout);
-    buildSidebarLink(sidebarLayout, ABOUT_LINK, "/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/rebel-mini-logo.png",
+    buildSidebarLink(sidebarLayout, ABOUT_LINK, "://resources/rebel-logo-normal.svg",
                         "About the Rebel", "Learn about our flagship");
     addDivider(sidebarLayout);
-    buildSidebarLink(sidebarLayout, VISIT_LINK, "/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/browser-mini-logo.png",
+    buildSidebarLink(sidebarLayout, VISIT_LINK, "://resources/browser-logo.svg",
                         "Visit SE3D", "Check out our website ");
     addDivider(sidebarLayout);
-    buildSidebarLink(sidebarLayout, CONTACT_LINK, "/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/rebel-mini-logo.png",
+    buildSidebarLink(sidebarLayout, CONTACT_LINK, "://resources/rebel-logo-normal.svg",
                         "Contact Us", "Questions? Let us know");
     addDivider(sidebarLayout);
-    buildSidebarLink(sidebarLayout, DEMO_LINK, "/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/research-mini-logo.png",
+    buildSidebarLink(sidebarLayout, DEMO_LINK, "://resources/science-logo.svg",
                         "Request a Demo", "or preview our curriculum");
 
     sidebar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
@@ -122,7 +124,8 @@ void Wizard::buildSidebarLink(QVBoxLayout *sidebarLayout, QString inLink, QStrin
     QHBoxLayout *HLayout = new QHBoxLayout;
     QLabel *iconLabel = new QLabel;
     QPixmap icon(location);
-    iconLabel->setPixmap(icon);
+    icon.setDevicePixelRatio(devicePixelRatio());
+    iconLabel->setPixmap(icon.scaled(60, 60, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     //Vertical layout to hold title and description
     QVBoxLayout *VLayout = new QVBoxLayout;
@@ -588,14 +591,7 @@ void Wizard::generatePlateArray()
             break;
     }
 
-
-
-
     emit emitOutput(output);
-
-
-
-
 }
 
 
