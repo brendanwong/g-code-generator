@@ -1,5 +1,6 @@
 #include "pageone.h"
 #include "wizard.h"
+#include "templateitem.h"
 
 PageOne::PageOne(QWidget *parent) : QWidget(parent)
 {
@@ -38,6 +39,7 @@ void PageOne::customTab(QTabWidget *tabWidget)
     materialEdit->addItem("Calcium Carbonate");
     materialEdit->addItem("HPR");
     materialEdit->addItem("ABTS");
+//    materialEdit->setStyleSheet("QComboBox {background-color: white;}");
     dateEdit->setDate(QDate::currentDate());
 
     buildPrintSelection();
@@ -92,11 +94,39 @@ void PageOne::templateTab(QTabWidget *tabWidget)
 {
     QHBoxLayout *layout = new QHBoxLayout;
     QWidget *templateWindow = new QWidget;
-    QTextEdit *edit = new QTextEdit;
-    layout->addWidget(edit);
-    edit->setMinimumSize(300,280);
+
+
+    QListWidget *templateWidget = new QListWidget;
+    templateWidget->setViewMode(QListWidget::IconMode);
+    templateWidget->setMovement(QListWidget::Static);
+
+    buildTemplateItem(templateWidget, "Custom", "/Users/brendanwong/Desktop/custom-template.png");
+//    buildTemplateItem(templateWidget, "Template 1", "/Users/brendanwong/Desktop/template-1.png");
+//    buildTemplateItem(templateWidget, "Template 2", "/Users/brendanwong/Desktop/template-2.png");
+//    buildTemplateItem(templateWidget, "Template 3", "/Users/brendanwong/Desktop/template-3.png");
+//    buildTemplateItem(templateWidget, "Template 4", "/Users/brendanwong/Desktop/template-4.png");
+//    buildTemplateItem(templateWidget, "Template 5", "/Users/brendanwong/Desktop/template-5.png");
+
+    layout->addWidget(templateWidget);
     templateWindow->setLayout(layout);
     tabWidget->addTab(templateWindow, "Templates");
+}
+
+void PageOne::buildTemplateItem(QListWidget *templateWidget, QString title, QString iconPath)
+{
+
+    TemplateItem *item = new TemplateItem;
+    item->setText(title);
+    QVBoxLayout *layout = new QVBoxLayout;
+    QLabel *iconLabel = new QLabel;
+    QPixmap icon(iconPath);
+    icon.setDevicePixelRatio(devicePixelRatio());
+    iconLabel->setPixmap(icon.scaled(100,100,Qt::KeepAspectRatio,Qt::SmoothTransformation));
+    layout->addWidget(iconLabel);
+    item->setLayout(layout);
+    templateWidget->addItem(item);
+
+
 }
 
 
@@ -109,8 +139,7 @@ void PageOne::onWellPlateRadioClicked()
     if (firstMessage == true)
     {
         QMessageBox warningMessage;
-        warningMessage.setText("warning this software only currently only prints "
-                               "accurately with the greiner 650161 well plate");
+        warningMessage.setText("Note: This will only print accurately to the Greiner 650161 well plate.");
         warningMessage.exec();
         firstMessage = false;
     }

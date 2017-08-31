@@ -1,7 +1,5 @@
 #include "pagetwo.h"
 #include "wizard.h"
-#include <QFileDialog>
-#include <QTextStream>
 
 PageTwo::PageTwo(QWidget *parent) : QWidget(parent)
 {
@@ -26,7 +24,7 @@ void PageTwo::updateOutput(const QString output)
 
         textEdit = new QTextEdit;
         textEdit->setReadOnly(true);
-        textEdit->setMinimumSize(300, 250);
+        textEdit->setMinimumSize(330, 270);
 
         textEdit->setPlaceholderText("Output code should go here");
         textEdit->setText(output);

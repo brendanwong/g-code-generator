@@ -14,6 +14,9 @@
 #include <QLabel>
 #include <QGroupBox>
 #include <QRadioButton>
+#include <QListWidget>
+#include <QListWidget>
+#include <QListWidgetItem>
 
 class PageOne : public QWidget
 {
@@ -40,6 +43,7 @@ private:
     void customTab(QTabWidget *tabWidget);
     void templateTab(QTabWidget *tabWidget);
     void buildPrintSelection();
+    void buildTemplateItem(QListWidget *templateWidget, QString title, QString iconPath);
 
 private slots:
     void onWellPlateRadioClicked();

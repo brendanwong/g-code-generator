@@ -28,14 +28,16 @@ SOURCES += \
     wizard.cpp \
     pageone.cpp \
     pagetwo.cpp \
-    link.cpp
+    link.cpp \
+    templateitem.cpp
 
 HEADERS += \
     wizard.h \
     pageone.h \
     pagetwo.h \
     constants.h \
-    link.h
+    link.h \
+    templateitem.h
 
 FORMS += \
         mainwindow.ui

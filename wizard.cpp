@@ -67,7 +67,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     logo->setText("SE3D Logo");
     QPixmap image(":/Resources/se3d-circle-logo.svg");
     image.setDevicePixelRatio(devicePixelRatio());
-    logo->setPixmap(image.scaled(240,240,Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    logo->setPixmap(image.scaled(280, 280,Qt::KeepAspectRatio, Qt::SmoothTransformation));
     logo->setAlignment(Qt::AlignCenter);
 
 

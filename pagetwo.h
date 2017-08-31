@@ -6,6 +6,8 @@
 #include <QLabel>
 #include <QTextEdit>
 #include <QApplication>
+#include <QFileDialog>
+#include <QTextStream>
 
 class PageTwo : public QWidget
 {
