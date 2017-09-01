@@ -16,18 +16,23 @@ public:
     PageTwo(QWidget *parent = 0);
 
 private slots:
+    void updateTitle(QString title);
     void updateOutput(const QString output);
     void onNewOutput(QString output);
-    void onExportButtonClicked();
-    void updateTitle(QString title);
-    void fileOutput(QString directory);
+    void onExportTextClicked();
+    void onExportNCClicked();
 
 private:
-    QFormLayout *layout;
+    QVBoxLayout *layout;
     QTextEdit *textEdit;
     bool firstOutput;
     QString title;
     QString output;
+
+    void textOutput(QString directory);
+    void NCOutput(QString directory);
+
+
 };
 
 #endif // PAGETWO_H

@@ -2,15 +2,16 @@
 
 TemplateItem::TemplateItem()
 {
-
+    inUrl = "www.google.com";
+    url.setUrl(inUrl);
 }
 
-TemplateItem::TemplateItem(int a)
+TemplateItem::TemplateItem(QString inUrl)
 {
-    this->a = a;
+    url.setUrl(inUrl);
 }
 
 void TemplateItem::mouseDoubleClickEvent(QMouseEvent *)
 {
-
+    QDesktopServices::openUrl(url);
 }

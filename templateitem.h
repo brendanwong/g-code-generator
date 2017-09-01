@@ -3,17 +3,22 @@
 
 #include <QWidget>
 #include <QListWidgetItem>
+#include <QDesktopServices>
+#include <QUrl>
 
 class TemplateItem : public QWidget, public QListWidgetItem
 {
     Q_OBJECT
 public:
     TemplateItem();
-    TemplateItem(int a);
+    TemplateItem(QString inUrl);
 
     void mouseDoubleClickEvent(QMouseEvent *);
 
+private:
     int a;
+    QUrl url;
+    QString inUrl;
 };
 
 #endif // TEMPLATEITEM_H

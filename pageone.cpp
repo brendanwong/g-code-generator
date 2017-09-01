@@ -1,6 +1,8 @@
 #include "pageone.h"
 #include "wizard.h"
 #include "templateitem.h"
+#include <QScrollArea>
+
 
 PageOne::PageOne(QWidget *parent) : QWidget(parent)
 {
@@ -101,11 +103,11 @@ void PageOne::templateTab(QTabWidget *tabWidget)
     templateWidget->setMovement(QListWidget::Static);
 
     buildTemplateItem(templateWidget, "Custom", "/Users/brendanwong/Desktop/custom-template.png");
-//    buildTemplateItem(templateWidget, "Template 1", "/Users/brendanwong/Desktop/template-1.png");
-//    buildTemplateItem(templateWidget, "Template 2", "/Users/brendanwong/Desktop/template-2.png");
-//    buildTemplateItem(templateWidget, "Template 3", "/Users/brendanwong/Desktop/template-3.png");
-//    buildTemplateItem(templateWidget, "Template 4", "/Users/brendanwong/Desktop/template-4.png");
-//    buildTemplateItem(templateWidget, "Template 5", "/Users/brendanwong/Desktop/template-5.png");
+    buildTemplateItem(templateWidget, "Template 1", "/Users/brendanwong/Desktop/template-1.png");
+    buildTemplateItem(templateWidget, "Template 2", "/Users/brendanwong/Desktop/template-2.png");
+    buildTemplateItem(templateWidget, "Template 3", "/Users/brendanwong/Desktop/template-3.png");
+    buildTemplateItem(templateWidget, "Template 4", "/Users/brendanwong/Desktop/template-4.png");
+    buildTemplateItem(templateWidget, "Template 5", "/Users/brendanwong/Desktop/template-5.png");
 
     layout->addWidget(templateWidget);
     templateWindow->setLayout(layout);
@@ -114,17 +116,22 @@ void PageOne::templateTab(QTabWidget *tabWidget)
 
 void PageOne::buildTemplateItem(QListWidget *templateWidget, QString title, QString iconPath)
 {
-
     TemplateItem *item = new TemplateItem;
     item->setText(title);
-    QVBoxLayout *layout = new QVBoxLayout;
-    QLabel *iconLabel = new QLabel;
-    QPixmap icon(iconPath);
-    icon.setDevicePixelRatio(devicePixelRatio());
-    iconLabel->setPixmap(icon.scaled(100,100,Qt::KeepAspectRatio,Qt::SmoothTransformation));
-    layout->addWidget(iconLabel);
-    item->setLayout(layout);
+    QIcon icon(iconPath);
+    item->setIcon(icon);
     templateWidget->addItem(item);
+
+//    TemplateItem *item = new TemplateItem;
+//    item->setText(title);
+//    QVBoxLayout *layout = new QVBoxLayout;
+//    QLabel *iconLabel = new QLabel;
+//    QPixmap icon(iconPath);
+//    icon.setDevicePixelRatio(devicePixelRatio());
+//    iconLabel->setPixmap(icon.scaled(100,100,Qt::KeepAspectRatio,Qt::SmoothTransformation));
+//    layout->addWidget(iconLabel);
+//    item->setLayout(layout);
+//    templateWidget->addItem(item);
 
 
 }
