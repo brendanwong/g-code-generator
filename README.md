@@ -1,2 +1,4 @@
 # gcg-gui
-Full-stack g-code generator for use with SE3D's Rebel Bioprinter. Currently supports the greiner 650161 well plate.
+This is the g-code generator for SE3D's r3bEL X and r3bEL mini bioprinters.
+
+This project is still in development.
