@@ -20,7 +20,7 @@ private slots:
     void updateOutput(const QString output);
     void onNewOutput(QString output);
     void onExportTextClicked();
-    void onExportNCClicked();
+    void onExportGCClicked();
 
 private:
     QVBoxLayout *layout;
@@ -30,7 +30,7 @@ private:
     QString output;
 
     void textOutput(QString directory);
-    void NCOutput(QString directory);
+    void GCOutput(QString directory);
 
 
 };

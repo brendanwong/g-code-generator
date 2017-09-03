@@ -36,6 +36,7 @@ public:
 
     QRadioButton *petriRadio;
     QRadioButton *wellPlateRadio;
+    QTabWidget *tabWidget;
 
     bool firstMessage = true;
 
@@ -43,7 +44,7 @@ private:
     void customTab(QTabWidget *tabWidget);
     void templateTab(QTabWidget *tabWidget);
     void buildPrintSelection();
-    void buildTemplateItem(QListWidget *templateWidget, QString title, QString iconPath);
+    void buildTemplateItem(QHBoxLayout *hlayout, QString title, QString iconPath);
 
 private slots:
     void onWellPlateRadioClicked();

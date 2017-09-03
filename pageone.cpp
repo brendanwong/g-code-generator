@@ -1,12 +1,13 @@
 #include "pageone.h"
 #include "wizard.h"
 #include "templateitem.h"
-#include <QScrollArea>
 
+#include "constants.h"
+#include <QScrollArea>
 
 PageOne::PageOne(QWidget *parent) : QWidget(parent)
 {
-    QTabWidget *tabWidget = new QTabWidget(this);
+    tabWidget = new QTabWidget(this);
 
     customTab(tabWidget);
     templateTab(tabWidget);
@@ -14,7 +15,7 @@ PageOne::PageOne(QWidget *parent) : QWidget(parent)
     tabWidget->setStyleSheet("QTabWidget::pane {border: 0;}");
     tabWidget->tabBar()->setStyleSheet("QTabBar::tab:selected{ color:#ffffff}");
 
-    tabWidget->setMinimumSize(400, 400);
+    tabWidget->setMinimumSize(400, 350);
 }
 
 
@@ -41,7 +42,6 @@ void PageOne::customTab(QTabWidget *tabWidget)
     materialEdit->addItem("Calcium Carbonate");
     materialEdit->addItem("HPR");
     materialEdit->addItem("ABTS");
-//    materialEdit->setStyleSheet("QComboBox {background-color: white;}");
     dateEdit->setDate(QDate::currentDate());
 
     buildPrintSelection();
@@ -92,48 +92,59 @@ void PageOne::buildPrintSelection()
 
 
 
+
 void PageOne::templateTab(QTabWidget *tabWidget)
 {
-    QHBoxLayout *layout = new QHBoxLayout;
-    QWidget *templateWindow = new QWidget;
+    //encapsulating widget to house the layouts
+    QFrame *templateWindow = new QFrame;
+    //encapsulating horizontal widget to house first few
+    QHBoxLayout *firstRowLayout = new QHBoxLayout;
+    buildTemplateItem(firstRowLayout, "Custom" , "/Users/brendanwong/Desktop/custom-template.png");
+    buildTemplateItem(firstRowLayout, "Template 1" , "/Users/brendanwong/Desktop/template-1.png");
+    buildTemplateItem(firstRowLayout, "Template 2" , "/Users/brendanwong/Desktop/template-2.png");
 
+    QHBoxLayout *secondRowLayout = new QHBoxLayout;
+    buildTemplateItem(secondRowLayout, "Template 3" , "/Users/brendanwong/Desktop/template-3.png");
+    buildTemplateItem(secondRowLayout, "Template 4" , "/Users/brendanwong/Desktop/template-4.png");
+    buildTemplateItem(secondRowLayout, "Template 5" , "/Users/brendanwong/Desktop/template-5.png");
 
-    QListWidget *templateWidget = new QListWidget;
-    templateWidget->setViewMode(QListWidget::IconMode);
-    templateWidget->setMovement(QListWidget::Static);
+    QVBoxLayout *vlayout = new QVBoxLayout;
 
-    buildTemplateItem(templateWidget, "Custom", "/Users/brendanwong/Desktop/custom-template.png");
-    buildTemplateItem(templateWidget, "Template 1", "/Users/brendanwong/Desktop/template-1.png");
-    buildTemplateItem(templateWidget, "Template 2", "/Users/brendanwong/Desktop/template-2.png");
-    buildTemplateItem(templateWidget, "Template 3", "/Users/brendanwong/Desktop/template-3.png");
-    buildTemplateItem(templateWidget, "Template 4", "/Users/brendanwong/Desktop/template-4.png");
-    buildTemplateItem(templateWidget, "Template 5", "/Users/brendanwong/Desktop/template-5.png");
+    vlayout->addLayout(firstRowLayout);
+    vlayout->addLayout(secondRowLayout);
 
-    layout->addWidget(templateWidget);
-    templateWindow->setLayout(layout);
+    templateWindow->setLayout(vlayout);
+
     tabWidget->addTab(templateWindow, "Templates");
+
 }
 
-void PageOne::buildTemplateItem(QListWidget *templateWidget, QString title, QString iconPath)
+
+
+
+
+void PageOne::buildTemplateItem(QHBoxLayout *hlayout, QString title, QString iconPath)
 {
     TemplateItem *item = new TemplateItem;
-    item->setText(title);
-    QIcon icon(iconPath);
-    item->setIcon(icon);
-    templateWidget->addItem(item);
+    item->setMaximumHeight(170);
 
-//    TemplateItem *item = new TemplateItem;
-//    item->setText(title);
-//    QVBoxLayout *layout = new QVBoxLayout;
-//    QLabel *iconLabel = new QLabel;
-//    QPixmap icon(iconPath);
-//    icon.setDevicePixelRatio(devicePixelRatio());
-//    iconLabel->setPixmap(icon.scaled(100,100,Qt::KeepAspectRatio,Qt::SmoothTransformation));
-//    layout->addWidget(iconLabel);
-//    item->setLayout(layout);
-//    templateWidget->addItem(item);
+    QVBoxLayout *vlayout = new QVBoxLayout;
 
+    QLabel *iconLabel = new QLabel;
+    QPixmap icon(iconPath);
+    icon.setDevicePixelRatio(devicePixelRatio());
+    iconLabel->setPixmap(icon);
 
+    QLabel *label = new QLabel(title);
+    label->setAlignment(Qt::AlignCenter);
+
+    vlayout->addWidget(iconLabel);
+    vlayout->addWidget(label);
+    item->setLayout(vlayout);
+
+    QObject::connect(item, SIGNAL(switchTabs(int)), tabWidget, SLOT(setCurrentIndex(int)));
+
+    hlayout->addWidget(item);
 }
 
 

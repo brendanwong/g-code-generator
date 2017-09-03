@@ -20,10 +20,12 @@ Wizard::Wizard() : QDialog()
     next->setMinimumWidth(100);
     previous->setMinimumWidth(100);
     cancel->setMinimumWidth(100);
+    cancel->setFocusPolicy(Qt::NoFocus);
 
-    buttonLayout->addWidget(previous, 0, Qt::AlignLeft);
-    buttonLayout->addWidget(next, 0, Qt::AlignLeft);
-    buttonLayout->addWidget(cancel, 0, Qt::AlignRight);
+    buttonLayout->addWidget(cancel, 0, Qt::AlignLeft);
+    buttonLayout->addWidget(previous, 0, Qt::AlignRight);
+    buttonLayout->addWidget(next, 0, Qt::AlignRight);
+
 
     buildSideBar(mainLayout);
 
@@ -633,4 +635,3 @@ void Wizard::mousePressEvent(QMouseEvent *event) {
 void Wizard::mouseMoveEvent(QMouseEvent *event) {
     move(event->globalX()-m_nMouseClick_X_Coordinate, event->globalY()-m_nMouseClick_Y_Coordinate);
 }
-

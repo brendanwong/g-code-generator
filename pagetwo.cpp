@@ -25,7 +25,6 @@ void PageTwo::updateOutput(const QString output)
 
         textEdit = new QTextEdit;
         textEdit->setReadOnly(true);
-        textEdit->setMinimumSize(300, 270);
 
         textEdit->setPlaceholderText("Output code should go here");
         textEdit->setText(output);
@@ -36,15 +35,15 @@ void PageTwo::updateOutput(const QString output)
         QHBoxLayout *hlayout = new QHBoxLayout;
 
         QPushButton *exportText = new QPushButton(tr("Export as Text File"));
-        QPushButton *exportNC = new QPushButton(tr("Export as .nc File"));
+        QPushButton *exportGC = new QPushButton(tr("Export as G-Code File"));
 
         hlayout->addWidget(exportText);
-        hlayout->addWidget(exportNC);
+        hlayout->addWidget(exportGC);
         buttonEncapsulator->setLayout(hlayout);
         layout->addWidget(buttonEncapsulator);
 
         QObject::connect(exportText, SIGNAL(clicked(bool)), this, SLOT(onExportTextClicked()));
-        QObject::connect(exportNC, SIGNAL(clicked(bool)), this, SLOT(onExportNCClicked()));
+        QObject::connect(exportGC, SIGNAL(clicked(bool)), this, SLOT(onExportGCClicked()));
 
     } else
         onNewOutput(output);
@@ -82,20 +81,20 @@ void PageTwo::textOutput(QString directory)
 
 
 
-void PageTwo::onExportNCClicked()
+void PageTwo::onExportGCClicked()
 {
     QString saveDirectory;
     saveDirectory = QFileDialog::getSaveFileName(this, tr("Export G-Code File"), title);
-    NCOutput(saveDirectory);
+    GCOutput(saveDirectory);
 }
 
 
 
 
 
-void PageTwo::NCOutput(QString directory)
+void PageTwo::GCOutput(QString directory)
 {
-    directory += ".nc";
+    directory += ".gcode";
     QFile file(directory);
     file.open(QIODevice::WriteOnly | QIODevice::Text);
     QTextStream out(&file);
