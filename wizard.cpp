@@ -76,7 +76,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
 
 
     QLabel *welcome = new QLabel;
-    welcome->setText("Welcome to Rebel X");
+    welcome->setText("G-Code Generator");
     welcome->setAlignment(Qt::AlignCenter);
     welcome->setStyleSheet("color: #ffffff;"
                            "font: 20px;");
@@ -93,16 +93,17 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
 
     addDivider(sidebarLayout);
     buildSidebarLink(sidebarLayout, ABOUT_LINK, "://resources/rebel-logo-normal.svg",
-                        "About the Rebel", "Learn about our flagship");
+                        "About the Rebel", "Learn about our flagship"); //link to portal for more resources???????
     addDivider(sidebarLayout);
     buildSidebarLink(sidebarLayout, VISIT_LINK, "://resources/browser-logo.svg",
                         "Visit SE3D", "Check out our website ");
     addDivider(sidebarLayout);
-    buildSidebarLink(sidebarLayout, CONTACT_LINK, "://resources/rebel-logo-normal.svg",
-                        "Contact Us", "Questions? Let us know");
+    buildSidebarLink(sidebarLayout, CONTACT_LINK, "/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/eye.svg",
+                        "Troubleshooting", "Questions? Let us know");  //troubleshooting/support
     addDivider(sidebarLayout);
     buildSidebarLink(sidebarLayout, DEMO_LINK, "://resources/science-logo.svg",
-                        "Request a Demo", "or preview our curriculum");
+                        "Resupply", "Order more supplies here");
+    //refill supplies
 
     sidebar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     sidebar->setStyleSheet("background-color:#252525");
@@ -182,6 +183,7 @@ void Wizard::saveFormInfo()
     widthInput = pageOne->widthEdit->value();
     positionInput = pageOne->positionEdit->value();
     materialInput = pageOne->materialEdit->currentIndex();
+    extrusionAmount = pageOne->amountEdit->value();
 
     if (pageOne->petriRadio->isChecked())
         printType = 0;
@@ -267,21 +269,21 @@ void Wizard::generatePetriArray()
 
     //G-Code commented confirmation of inputs
     if (nameInput != "")
-        output += "(Name: " + nameInput + ")\n";
+        output += ";(Name: " + nameInput + ")\n";
     switch(printType)
     {
     case 0:
-        output += "(Type: Petri Dish)\n";
+        output += ";(Type: Petri Dish)\n";
         break;
     case 1:
-        output += "(Type: Well Plate)\n";
+        output += ";(Type: Well Plate)\n";
         break;
     }
 
-    output += "(Material: " + materialString + ")\n";
-    output += "(Position: " + QString::number(positionInput) + ")\n";
-    output += "(Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + ")\n";
-    output += "(Date: " + monthString + "/" + dayString + "/" + yearString + ")\n\n";
+    output += ";(Material: " + materialString + ")\n";
+    output += ";(Position: " + QString::number(positionInput) + ")\n";
+    output += ";(Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + ")\n";
+    output += ";(Date: " + monthString + "/" + dayString + "/" + yearString + ")\n\n";
 
     //Begin building gcode
     output += "G90\n";
@@ -458,13 +460,14 @@ void Wizard::generatePlateArray()
 
     //G-Code commented confirmation of inputs
     if (nameInput != "")
-        output += "(Name: " + nameInput + ")\n";
+        output += ";(Name: " + nameInput + ")\n";
 
 
-    output += "(Type: Well Plate)\n";
-    output += "(Material: " + materialString + ")\n";
-    output += "(Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + ")\n";
-    output += "(Date: " + monthString + "/" + dayString + "/" + yearString + ")\n\n";
+    output += ";(Type: Well Plate)\n";
+    output += ";(Material: " + materialString + ")\n";
+    output += ";(Extrusion amount (μl): " + QString::number(extrusionAmount) + ")\n";
+    output += ";(Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + ")\n";
+    output += ";(Date: " + monthString + "/" + dayString + "/" + yearString + ")\n\n";
 
 
     //Begin building gcode
@@ -476,7 +479,10 @@ void Wizard::generatePlateArray()
     {
         case 0:
             //Calcium Carbonate
-            output += "G1 Z" + PLATE_Z_CACL2 + " F1000\n";
+            if (extrusionAmount < 50)
+                output += "G1 Z" + PLATE_Z_CACL2 + " F1000\n";
+            else
+                output += "G1 Z16 F1000\n";
             break;
         case 1:
             //HPR
@@ -491,6 +497,21 @@ void Wizard::generatePlateArray()
     //Relative positioning start
     output += "\nG91\n\n";
 
+
+    int z_move;
+
+    if (extrusionAmount < 50)
+        z_move = PLATE_Z_MOVE.toInt();
+    else
+        z_move = 0;
+
+    //per g-code syntax
+    extrusionAmount = extrusionAmount / 10;
+
+
+
+
+
     switch(materialInput)
     {
             //CaCl2 print
@@ -499,25 +520,25 @@ void Wizard::generatePlateArray()
             {
                 for (int col = 0; col < (widthInput - 1); col++)
                 {
-                    output += "G1 E" + EXTRUDE + " F" + FR_EXTRUDE + "\n";
+                    output += "G1 E" + QString::number(extrusionAmount) + " F" + FR_EXTRUDE + "\n";
                     output += "G4 P" + DWELL + "\n";
-                    output += "G1 Z" + PLATE_Z_MOVE + " F" + Z_FEEDRATE + "\n";
+                    output += "G1 Z" + QString::number(z_move) + " F" + Z_FEEDRATE + "\n";
 
                     calc = row % 2 ? -1 : 1;
                     calc *= PLATE_XY_MOVE;
                     QString temp  = QString::number(calc);
 
                     output += "G1 X" + temp + " F" + FR_MOVE_XY + "\n";
-                    output += "G1 Z-" + PLATE_Z_MOVE + " F" + Z_FEEDRATE + "\n\n";
+                    output += "G1 Z-" + QString::number(z_move) + " F" + Z_FEEDRATE + "\n\n";
                 }
-                output += "G1 E" + EXTRUDE + " F" + FR_EXTRUDE + "\n";
+                output += "G1 E" + QString::number(extrusionAmount) + " F" + FR_EXTRUDE + "\n";
                 output += "G4 P" + DWELL + "\n";
-                output += "G1 Z" + PLATE_Z_MOVE + " F" + Z_FEEDRATE + "\n";
+                output += "G1 Z" + QString::number(z_move) + " F" + Z_FEEDRATE + "\n";
 
                 if (row < heightInput - 1)
                 {
                     output += "G1 Y" + QString::number(PLATE_XY_MOVE) + " F" + FR_MOVE_XY + "\n";
-                    output += "G1 Z-" + PLATE_Z_MOVE + " F" + Z_FEEDRATE + "\n\n";
+                    output += "G1 Z-" + QString::number(z_move) + " F" + Z_FEEDRATE + "\n\n";
                 }
                 else
                     output += "\n\n";
@@ -535,7 +556,7 @@ void Wizard::generatePlateArray()
             {
                 for (int col = 0; col < (widthInput - 1); col++)
                 {
-                    output += "G1 E" + ALG_EXT + " F" + FR_EXTRUDE + "\n";
+                    output += "G1 E" + QString::number(extrusionAmount) + " F" + FR_EXTRUDE + "\n";
                     output += "G1 E-" + ALG_EXT_REV + " F" + FR_EXTRUDE + "\n";
                     output += "G4 P" + ALG_DWELL + "\n";
 
@@ -545,7 +566,7 @@ void Wizard::generatePlateArray()
 
                     output += "G1 X" + temp + " F" + FR_MOVE_XY + "\n\n";
                 }
-                output += "G1 E" + ALG_EXT + " F" + FR_EXTRUDE + "\n";
+                output += "G1 E" + QString::number(extrusionAmount) + " F" + FR_EXTRUDE + "\n";
                 output +=  "G1 E-" + ALG_EXT_REV + " F" + FR_EXTRUDE + "\n";
                 output += "G4 P" + ALG_DWELL + "\n";
 
@@ -567,7 +588,7 @@ void Wizard::generatePlateArray()
             {
                 for (int col = 0; col < (widthInput - 1); col++)
                 {
-                    output += "G1 E" + ABTS_EXT + " F" + FR_EXTRUDE + "\n";
+                    output += "G1 E" + QString::number(extrusionAmount) + " F" + FR_EXTRUDE + "\n";
                     output += "G1 E-" + ABTS_EXT_REV + " F" + FR_ABTS_EXT + "\n";
                     output += "G4 P" + DWELL + "\n";
 
@@ -577,7 +598,7 @@ void Wizard::generatePlateArray()
 
                     output += "G1 X" + temp + " F" + FR_MOVE_XY + "\n\n";
                 }
-                output += "G1 E " + ABTS_EXT + " F " + FR_EXTRUDE + "\n";
+                output += "G1 E " + QString::number(extrusionAmount) + " F " + FR_EXTRUDE + "\n";
                 output += "G1 E-" + ABTS_EXT_REV + " F" + FR_ABTS_EXT + "\n";
                 output += "G4 P" + DWELL + "\n";
 
@@ -637,14 +658,3 @@ void Wizard::mousePressEvent(QMouseEvent *event) {
 void Wizard::mouseMoveEvent(QMouseEvent *event) {
     move(event->globalX()-m_nMouseClick_X_Coordinate, event->globalY()-m_nMouseClick_Y_Coordinate);
 }
-
-
-
-
-
-void Wizard::clickNext()
-{
-    next->click();
-}
-
-

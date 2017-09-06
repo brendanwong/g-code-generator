@@ -11,7 +11,7 @@ static const QString PETRI_Z_CACL2 = "2.5";
 static const QString PETRI_Z_ALGINATE = "10";
 static const QString PETRI_Z_ABTS = "10";
 
-static const QString PLATE_Z_CACL2 = "5";            //to be changed. need to confirm values
+static const QString PLATE_Z_CACL2 = "10";      //change from 5        //to be changed. need to confirm values
 static const QString PLATE_Z_ALGINATE = "12.5";
 static const QString PLATE_Z_ABTS = "12.5";
 
@@ -19,7 +19,7 @@ static const QString FR_MOVE_XY = "6000";
 
 static const int PLATE_XY_MOVE = 9;
 static const QString PETRI_Z_MOVE = "5";
-static const QString PLATE_Z_MOVE = "10";  //need to confirm or calculate after ^^^^^^^
+static const QString PLATE_Z_MOVE = "12";
 
 static const QString EXTRUDE = "1";
 

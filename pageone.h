@@ -33,6 +33,8 @@ public:
     QSpinBox *positionEdit;
     QComboBox *materialEdit;
     QGroupBox *groupBox;
+    QSpinBox *amountEdit;
+
 
     QRadioButton *petriRadio;
     QRadioButton *wellPlateRadio;

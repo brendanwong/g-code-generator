@@ -28,7 +28,6 @@ private slots:
     void doNext();
     void doPrev();
     void saveFormInfo();
-    void clickNext();
 
 private:
     void generatePetriArray();
@@ -61,6 +60,7 @@ private:
     int positionInput;
     int materialInput;
     int printType;
+    double extrusionAmount;
 
     QString yearString;
     QString monthString;

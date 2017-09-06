@@ -32,6 +32,7 @@ void PageOne::customTab(QTabWidget *tabWidget)
     widthEdit = new QSpinBox;
     positionEdit = new QSpinBox;
     materialEdit = new QComboBox;
+    amountEdit = new QSpinBox;
 
     //standard two digit width for uniformity
     heightEdit->setMinimumWidth(42);
@@ -41,10 +42,15 @@ void PageOne::customTab(QTabWidget *tabWidget)
     heightEdit->setRange(1, 8);
     widthEdit->setRange(1, 8);
     positionEdit->setRange(1, 4);
-    materialEdit->addItem("Calcium Carbonate");
-    materialEdit->addItem("HPR");
-    materialEdit->addItem("ABTS");
+    amountEdit->setRange(10, 150);
+    materialEdit->addItem("Calcium Chloride");
+    materialEdit->addItem("Biomolecule in 1% Alginate");
+    materialEdit->addItem("Substrate Solution");
     dateEdit->setDate(QDate::currentDate());
+
+    amountEdit->setValue(25);
+    amountEdit->setDisabled(true);
+
 
     buildPrintSelection();
 
@@ -54,9 +60,11 @@ void PageOne::customTab(QTabWidget *tabWidget)
     formLayout->addRow("&Date:", dateEdit);
     formLayout->addRow("&Print:", groupBox);
     formLayout->addRow("&Material:", materialEdit);
-    formLayout->addRow("&Width:", widthEdit);
-    formLayout->addRow("&Height:", heightEdit);
+    formLayout->addRow("&Rows:", heightEdit);
+    formLayout->addRow("&Columns:", widthEdit);
     formLayout->addRow("&Position:", positionEdit);
+    formLayout->addRow("&Extrusion Amount (μl):", amountEdit);
+
 
     QWidget *customWindow = new QWidget;
     customWindow->setLayout(formLayout);
@@ -151,7 +159,6 @@ void PageOne::buildCustomTemplate(QHBoxLayout *hlayout, QString title, QString i
 
     QObject::connect(item, SIGNAL(switchTabs(int)), tabWidget, SLOT(setCurrentIndex(int)));
 
-
     hlayout->addWidget(item);
 }
 
@@ -178,7 +185,7 @@ void PageOne::buildTemplateItem(QHBoxLayout *hlayout, QString title, QString ico
     item->setLayout(vlayout);
 
     QObject::connect(item, SIGNAL(rowPrint()), this, slot);
-//    QObject::connect(item, SIGNAL(switchTabs(int)), tabWidget, SLOT(setCurrentIndex(int)));
+    QObject::connect(item, SIGNAL(switchTabs(int)), tabWidget, SLOT(setCurrentIndex(int)));
 
     hlayout->addWidget(item);
 }
@@ -205,6 +212,9 @@ void PageOne::onWellPlateRadioClicked()
     widthEdit->update();
     positionEdit->setDisabled(true);
     positionEdit->update();
+    amountEdit->setEnabled(true);
+    amountEdit->update();
+
 }
 
 
@@ -218,6 +228,8 @@ void PageOne::onPetriRadioClicked()
     widthEdit->update();
     positionEdit->setEnabled(true);
     positionEdit->update();
+    amountEdit->setDisabled(true);
+    amountEdit->update();
 }
 
 

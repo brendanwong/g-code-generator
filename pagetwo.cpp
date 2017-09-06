@@ -52,7 +52,21 @@ void PageTwo::updateOutput(const QString output)
 
 
 
-
+/*
+ *
+ *
+ *
+ * get rid of text file button
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
 
 
 void PageTwo::onExportTextClicked()
