@@ -54,6 +54,7 @@ Wizard::Wizard() : QDialog()
     connect(next, SIGNAL(clicked(bool)), this, SLOT(saveFormInfo()));
     connect(this, SIGNAL(emitOutput(QString)), pageTwo, SLOT(updateOutput(QString)));
     connect(this, SIGNAL(emitTitle(QString)), pageTwo, SLOT(updateTitle(QString)));
+
 }
 
 
@@ -192,6 +193,7 @@ void Wizard::saveFormInfo()
     dayString = QString::number(dayInput);
 
     buildTitle();
+
     if (printType == 0)
         generatePetriArray();
     if (printType == 1)
@@ -635,3 +637,14 @@ void Wizard::mousePressEvent(QMouseEvent *event) {
 void Wizard::mouseMoveEvent(QMouseEvent *event) {
     move(event->globalX()-m_nMouseClick_X_Coordinate, event->globalY()-m_nMouseClick_Y_Coordinate);
 }
+
+
+
+
+
+void Wizard::clickNext()
+{
+    next->click();
+}
+
+

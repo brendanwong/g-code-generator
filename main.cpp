@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 
     //window adjustments
     wizardWindow.setWindowFlags(Qt::FramelessWindowHint);
-    wizardWindow.setMinimumWidth(660);
+    wizardWindow.setMinimumWidth(700);
     //round the window
     QPainterPath path;
     path.addRoundedRect(wizardWindow.rect(), 5, 5);

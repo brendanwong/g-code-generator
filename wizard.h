@@ -28,6 +28,7 @@ private slots:
     void doNext();
     void doPrev();
     void saveFormInfo();
+    void clickNext();
 
 private:
     void generatePetriArray();

@@ -1,6 +1,9 @@
 #ifndef TEMPLATEITEM_H
 #define TEMPLATEITEM_H
 
+#include "pageone.h"
+#include "wizard.h"
+
 #include <QWidget>
 #include <QDesktopServices>
 #include <QUrl>
@@ -15,6 +18,7 @@ public:
 
 signals:
     void switchTabs(int);
+    void rowPrint();
 
 };
 

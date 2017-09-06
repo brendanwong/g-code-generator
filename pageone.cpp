@@ -100,20 +100,26 @@ void PageOne::templateTab(QTabWidget *tabWidget)
     //encapsulating widget to house the layouts
     QFrame *templateWindow = new QFrame;
     //encapsulating horizontal widget to house first few
+
     QHBoxLayout *firstRowLayout = new QHBoxLayout;
     buildCustomTemplate(firstRowLayout, "Custom" , "/Users/brendanwong/Desktop/custom-template.png");
-    buildTemplateItem(firstRowLayout, "Row Print" , "/Users/brendanwong/Desktop/template-1.png");
-    buildTemplateItem(firstRowLayout, "Petri Dish" , "/Users/brendanwong/Desktop/template-2.png");
+    buildTemplateItem(firstRowLayout, "Row Print" , "/Users/brendanwong/Desktop/template-1.png", SLOT(onRowTemplateClicked()));
+    buildTemplateItem(firstRowLayout, "3x3 CaCl2" , "/Users/brendanwong/Desktop/template-2.png", SLOT(templateTwo()));
 
     QHBoxLayout *secondRowLayout = new QHBoxLayout;
-    buildTemplateItem(secondRowLayout, "Well Plate" , "/Users/brendanwong/Desktop/template-3.png");
-    buildTemplateItem(secondRowLayout, "Template 4" , "/Users/brendanwong/Desktop/template-4.png");
-    buildTemplateItem(secondRowLayout, "Template 5" , "/Users/brendanwong/Desktop/template-5.png");
+    buildTemplateItem(secondRowLayout, "Fill Well Plate" , "/Users/brendanwong/Desktop/template-3.png", SLOT(fillWell()));
+    buildTemplateItem(secondRowLayout, "Template 4" , "/Users/brendanwong/Desktop/template-4.png", SLOT(templateTwo()));
+    buildTemplateItem(secondRowLayout, "Template 5" , "/Users/brendanwong/Desktop/template-5.png", SLOT(templateTwo()));
 
     QVBoxLayout *vlayout = new QVBoxLayout;
 
     vlayout->addLayout(firstRowLayout);
     vlayout->addLayout(secondRowLayout);
+
+    firstRowLayout->setContentsMargins(0,0,0,0);
+    secondRowLayout->setContentsMargins(0,0,0,0);
+
+
 
     templateWindow->setLayout(vlayout);
 
@@ -128,7 +134,6 @@ void PageOne::templateTab(QTabWidget *tabWidget)
 void PageOne::buildCustomTemplate(QHBoxLayout *hlayout, QString title, QString iconPath)
 {
     CustomTemplate *item = new CustomTemplate;
-    item->setMaximumHeight(170);
 
     QVBoxLayout *vlayout = new QVBoxLayout;
 
@@ -146,6 +151,7 @@ void PageOne::buildCustomTemplate(QHBoxLayout *hlayout, QString title, QString i
 
     QObject::connect(item, SIGNAL(switchTabs(int)), tabWidget, SLOT(setCurrentIndex(int)));
 
+
     hlayout->addWidget(item);
 }
 
@@ -153,10 +159,9 @@ void PageOne::buildCustomTemplate(QHBoxLayout *hlayout, QString title, QString i
 
 
 
-void PageOne::buildTemplateItem(QHBoxLayout *hlayout, QString title, QString iconPath)
+void PageOne::buildTemplateItem(QHBoxLayout *hlayout, QString title, QString iconPath, const char *slot)
 {
     TemplateItem *item = new TemplateItem;
-    item->setMaximumHeight(170);
 
     QVBoxLayout *vlayout = new QVBoxLayout;
 
@@ -172,10 +177,14 @@ void PageOne::buildTemplateItem(QHBoxLayout *hlayout, QString title, QString ico
     vlayout->addWidget(label);
     item->setLayout(vlayout);
 
-    QObject::connect(item, SIGNAL(switchTabs(int)), tabWidget, SLOT(setCurrentIndex(int)));
+    QObject::connect(item, SIGNAL(rowPrint()), this, slot);
+//    QObject::connect(item, SIGNAL(switchTabs(int)), tabWidget, SLOT(setCurrentIndex(int)));
 
     hlayout->addWidget(item);
 }
+
+
+
 
 
 
@@ -210,3 +219,31 @@ void PageOne::onPetriRadioClicked()
     positionEdit->setEnabled(true);
     positionEdit->update();
 }
+
+
+
+void PageOne::onRowTemplateClicked()
+{
+    wellPlateRadio->click();
+    widthEdit->setValue(12);
+    heightEdit->setValue(1);
+}
+
+
+void PageOne::templateTwo()
+{
+   petriRadio->click();
+   widthEdit->setValue(3);
+   heightEdit->setValue(3);
+
+}
+
+
+void PageOne::fillWell()
+{
+    wellPlateRadio->click();
+    widthEdit->setValue(12);
+    heightEdit->setValue(8);
+}
+
+

@@ -45,12 +45,16 @@ private:
     void templateTab(QTabWidget *tabWidget);
     void buildPrintSelection();
     void buildCustomTemplate(QHBoxLayout *hlayout, QString title, QString iconPath);
+    void buildTemplateItem(QHBoxLayout *hlayout, QString title, QString iconPath, const char *slot);
 
-    void buildTemplateItem(QHBoxLayout *hlayout, QString title, QString iconPath);
 
 private slots:
     void onWellPlateRadioClicked();
     void onPetriRadioClicked();
+    void onRowTemplateClicked();
+    void templateTwo();
+    void fillWell();
+
 };
 
 #endif //PAGEONE_H
