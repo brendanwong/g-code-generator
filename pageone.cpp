@@ -1,6 +1,7 @@
 #include "pageone.h"
 #include "wizard.h"
 #include "templateitem.h"
+#include "customtemplate.h"
 
 #include "constants.h"
 #include <QScrollArea>
@@ -11,6 +12,7 @@ PageOne::PageOne(QWidget *parent) : QWidget(parent)
 
     customTab(tabWidget);
     templateTab(tabWidget);
+    tabWidget->setCurrentIndex(1);
 
     tabWidget->setStyleSheet("QTabWidget::pane {border: 0;}");
     tabWidget->tabBar()->setStyleSheet("QTabBar::tab:selected{ color:#ffffff}");
@@ -99,12 +101,12 @@ void PageOne::templateTab(QTabWidget *tabWidget)
     QFrame *templateWindow = new QFrame;
     //encapsulating horizontal widget to house first few
     QHBoxLayout *firstRowLayout = new QHBoxLayout;
-    buildTemplateItem(firstRowLayout, "Custom" , "/Users/brendanwong/Desktop/custom-template.png");
-    buildTemplateItem(firstRowLayout, "Template 1" , "/Users/brendanwong/Desktop/template-1.png");
-    buildTemplateItem(firstRowLayout, "Template 2" , "/Users/brendanwong/Desktop/template-2.png");
+    buildCustomTemplate(firstRowLayout, "Custom" , "/Users/brendanwong/Desktop/custom-template.png");
+    buildTemplateItem(firstRowLayout, "Row Print" , "/Users/brendanwong/Desktop/template-1.png");
+    buildTemplateItem(firstRowLayout, "Petri Dish" , "/Users/brendanwong/Desktop/template-2.png");
 
     QHBoxLayout *secondRowLayout = new QHBoxLayout;
-    buildTemplateItem(secondRowLayout, "Template 3" , "/Users/brendanwong/Desktop/template-3.png");
+    buildTemplateItem(secondRowLayout, "Well Plate" , "/Users/brendanwong/Desktop/template-3.png");
     buildTemplateItem(secondRowLayout, "Template 4" , "/Users/brendanwong/Desktop/template-4.png");
     buildTemplateItem(secondRowLayout, "Template 5" , "/Users/brendanwong/Desktop/template-5.png");
 
@@ -117,6 +119,34 @@ void PageOne::templateTab(QTabWidget *tabWidget)
 
     tabWidget->addTab(templateWindow, "Templates");
 
+}
+
+
+
+
+
+void PageOne::buildCustomTemplate(QHBoxLayout *hlayout, QString title, QString iconPath)
+{
+    CustomTemplate *item = new CustomTemplate;
+    item->setMaximumHeight(170);
+
+    QVBoxLayout *vlayout = new QVBoxLayout;
+
+    QLabel *iconLabel = new QLabel;
+    QPixmap icon(iconPath);
+    icon.setDevicePixelRatio(devicePixelRatio());
+    iconLabel->setPixmap(icon);
+
+    QLabel *label = new QLabel(title);
+    label->setAlignment(Qt::AlignCenter);
+
+    vlayout->addWidget(iconLabel);
+    vlayout->addWidget(label);
+    item->setLayout(vlayout);
+
+    QObject::connect(item, SIGNAL(switchTabs(int)), tabWidget, SLOT(setCurrentIndex(int)));
+
+    hlayout->addWidget(item);
 }
 
 
@@ -146,6 +176,7 @@ void PageOne::buildTemplateItem(QHBoxLayout *hlayout, QString title, QString ico
 
     hlayout->addWidget(item);
 }
+
 
 
 

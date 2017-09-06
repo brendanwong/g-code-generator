@@ -29,7 +29,8 @@ SOURCES += \
     pageone.cpp \
     pagetwo.cpp \
     link.cpp \
-    templateitem.cpp
+    templateitem.cpp \
+    customtemplate.cpp
 
 HEADERS += \
     wizard.h \
@@ -37,7 +38,8 @@ HEADERS += \
     pagetwo.h \
     constants.h \
     link.h \
-    templateitem.h
+    templateitem.h \
+    customtemplate.h
 
 FORMS += \
         mainwindow.ui

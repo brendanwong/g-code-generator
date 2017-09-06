@@ -44,6 +44,8 @@ private:
     void customTab(QTabWidget *tabWidget);
     void templateTab(QTabWidget *tabWidget);
     void buildPrintSelection();
+    void buildCustomTemplate(QHBoxLayout *hlayout, QString title, QString iconPath);
+
     void buildTemplateItem(QHBoxLayout *hlayout, QString title, QString iconPath);
 
 private slots:
