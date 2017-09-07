@@ -19,7 +19,6 @@ private slots:
     void updateTitle(QString title);
     void updateOutput(const QString output);
     void onNewOutput(QString output);
-    void onExportTextClicked();
     void onExportGCClicked();
 
 private:

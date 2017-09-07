@@ -34,61 +34,19 @@ void PageTwo::updateOutput(const QString output)
         QWidget *buttonEncapsulator = new QWidget;
         QHBoxLayout *hlayout = new QHBoxLayout;
 
-        QPushButton *exportText = new QPushButton(tr("Export as Text File"));
         QPushButton *exportGC = new QPushButton(tr("Export as G-Code File"));
 
-        hlayout->addWidget(exportText);
+        exportGC->setMaximumWidth(200);
+
         hlayout->addWidget(exportGC);
         buttonEncapsulator->setLayout(hlayout);
         layout->addWidget(buttonEncapsulator);
 
-        QObject::connect(exportText, SIGNAL(clicked(bool)), this, SLOT(onExportTextClicked()));
         QObject::connect(exportGC, SIGNAL(clicked(bool)), this, SLOT(onExportGCClicked()));
 
     } else
         onNewOutput(output);
     //otherwise, new output box will be created every single time
-}
-
-
-
-/*
- *
- *
- *
- * get rid of text file button
- *
- *
- *
- *
- *
- *
- *
- *
- *
- */
-
-
-void PageTwo::onExportTextClicked()
-{
-    QString saveDirectory;
-    saveDirectory = QFileDialog::getSaveFileName(this, tr("Export G-Code File"), title);
-    textOutput(saveDirectory);
-}
-
-
-
-
-
-
-void PageTwo::textOutput(QString directory)
-{
-    directory += ".txt";
-    QFile file(directory);
-    file.open(QIODevice::WriteOnly | QIODevice::Text);
-    QTextStream out(&file);
-    out << this->output;
-    file.close();
 }
 
 

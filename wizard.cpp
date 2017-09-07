@@ -92,16 +92,16 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     sidebarLayout->addWidget(version);
 
     addDivider(sidebarLayout);
-    buildSidebarLink(sidebarLayout, ABOUT_LINK, "://resources/rebel-logo-normal.svg",
-                        "About the Rebel", "Learn about our flagship"); //link to portal for more resources???????
-    addDivider(sidebarLayout);
     buildSidebarLink(sidebarLayout, VISIT_LINK, "://resources/browser-logo.svg",
                         "Visit SE3D", "Check out our website ");
     addDivider(sidebarLayout);
-    buildSidebarLink(sidebarLayout, CONTACT_LINK, "/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/eye.svg",
-                        "Troubleshooting", "Questions? Let us know");  //troubleshooting/support
+    buildSidebarLink(sidebarLayout, PORTAL_LINK, "://resources/rebel-logo-normal.svg",
+                        "SE3D Portal", "find tutorials and curriculum");
     addDivider(sidebarLayout);
-    buildSidebarLink(sidebarLayout, DEMO_LINK, "://resources/science-logo.svg",
+    buildSidebarLink(sidebarLayout, CONTACT_LINK, "/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/eye.svg",
+                        "Troubleshooting", "Questions? Let us know");
+    addDivider(sidebarLayout);
+    buildSidebarLink(sidebarLayout, SUPPLY_LINK, "://resources/science-logo.svg",
                         "Resupply", "Order more supplies here");
     //refill supplies
 
@@ -269,21 +269,21 @@ void Wizard::generatePetriArray()
 
     //G-Code commented confirmation of inputs
     if (nameInput != "")
-        output += ";(Name: " + nameInput + ")\n";
+        output += ";Name: " + nameInput + "\n";
     switch(printType)
     {
     case 0:
-        output += ";(Type: Petri Dish)\n";
+        output += "; Type: Petri Dish\n";
         break;
     case 1:
-        output += ";(Type: Well Plate)\n";
+        output += "; Type: Well Plate\n";
         break;
     }
 
-    output += ";(Material: " + materialString + ")\n";
-    output += ";(Position: " + QString::number(positionInput) + ")\n";
-    output += ";(Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + ")\n";
-    output += ";(Date: " + monthString + "/" + dayString + "/" + yearString + ")\n\n";
+    output += "; Material: " + materialString + "\n";
+    output += "; Position: " + QString::number(positionInput) + "\n";
+    output += "; Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + "\n";
+    output += "; Date: " + monthString + "/" + dayString + "/" + yearString + "\n\n";
 
     //Begin building gcode
     output += "G90\n";
@@ -460,14 +460,14 @@ void Wizard::generatePlateArray()
 
     //G-Code commented confirmation of inputs
     if (nameInput != "")
-        output += ";(Name: " + nameInput + ")\n";
+        output += "; Name: " + nameInput + "\n";
 
 
-    output += ";(Type: Well Plate)\n";
-    output += ";(Material: " + materialString + ")\n";
-    output += ";(Extrusion amount (μl): " + QString::number(extrusionAmount) + ")\n";
-    output += ";(Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + ")\n";
-    output += ";(Date: " + monthString + "/" + dayString + "/" + yearString + ")\n\n";
+    output += "; Type: Well Plate \n";
+    output += "; Material: " + materialString + " \n";
+    output += "; Extrusion amount (μl): " + QString::number(extrusionAmount) + " \n";
+    output += "; Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + "\n";
+    output += "; Date: " + monthString + "/" + dayString + "/" + yearString + " \n\n";
 
 
     //Begin building gcode

@@ -46,9 +46,9 @@ static const int DISH_DIAMETER = 100;
 
 static const QString VERSION = "1.0.0";
 
-static const QString ABOUT_LINK = "https://www.se3d.com/r3bel-x";
+static const QString PORTAL_LINK = "http://portal.se3d.com";
 static const QString VISIT_LINK = "https://www.se3d.com/";
 static const QString CONTACT_LINK = "https://www.se3d.com/connect";
-static const QString DEMO_LINK = "https://docs.google.com/forms/d/e/1FAIpQLScg9WurcDZvU-UQC_OMzgztlIxp6kBLTwr21S84k4i1ZWnyUw/viewform?usp=send_form";
+static const QString SUPPLY_LINK = "https://google.com";
 
 #endif // CONSTANTS_H
