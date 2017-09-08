@@ -24,7 +24,7 @@ private slots:
 private:
     QVBoxLayout *layout;
     QTextEdit *textEdit;
-    bool firstOutput;
+    bool firstOutput = true;
     QString title;
     QString output;
 

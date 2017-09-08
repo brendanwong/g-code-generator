@@ -2,15 +2,26 @@
 
 Wizard::Wizard() : QDialog()
 {
+    //create navigation buttons
     cancel = new QPushButton(tr("Cancel"));
     next = new QPushButton(tr("Next"));
     previous = new QPushButton(tr("Previous"));
     pages = new QStackedWidget();
 
+    //mainLayout to encapsulate everything
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
+
+    //rightLayout to hold tab widget and buttons
     QVBoxLayout *rightLayout = new QVBoxLayout;
+
+    //pageLayout to hold tab widget
     QHBoxLayout *pageLayout = new QHBoxLayout;
+
+    //buttonLayout to hold buttons
     QHBoxLayout *buttonLayout = new QHBoxLayout;
+
+    //encapsulating right widget to hold tab widget and buttons
+    //in addition to rightLayout for uniform and aesthetically pleasing border
     QWidget *rightWidget = new QWidget;
 
     //container for the array/template code generation
@@ -22,6 +33,7 @@ Wizard::Wizard() : QDialog()
     cancel->setMinimumWidth(100);
     cancel->setFocusPolicy(Qt::NoFocus);
 
+    //adding buttons to layout
     buttonLayout->addWidget(cancel, 0, Qt::AlignLeft);
     buttonLayout->addWidget(previous, 0, Qt::AlignRight);
     buttonLayout->addWidget(next, 0, Qt::AlignRight);
@@ -29,24 +41,26 @@ Wizard::Wizard() : QDialog()
 
     buildSideBar(mainLayout);
 
-    //right layout, contains user input and naviation
+    //adding widgets to right side
     rightLayout->addLayout(pageLayout);
     rightLayout->addLayout(buttonLayout);
 
     //right widget to encapsulate input and buttons
     rightWidget->setLayout(rightLayout);
 
-    //main layout to hold everything
+    //adding widgets to main layout
     mainLayout->addWidget(rightWidget);
     mainLayout->setContentsMargins(0, 0, 0, 0);
 
-    //create forms
+    //create forms/output pages
     pages->addWidget(pageOne = new PageOne(pages));
     pages->addWidget(pageTwo = new PageTwo(pages));
+    pages->addWidget(pageThree = new PageThree(pages));
 
-    //button functionality
+    //previous set false because its the first page
     previous->setEnabled(false);
 
+    //adding button functionality
     connect(next, SIGNAL(clicked()), this, SLOT(doNext()));
     connect(previous, SIGNAL(clicked()), this, SLOT(doPrev()));
     connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
@@ -63,9 +77,11 @@ Wizard::Wizard() : QDialog()
 
 void Wizard::buildSideBar(QHBoxLayout *mainLayout)
 {
+    //encapsulating frame for border and background
     QFrame *sidebar = new QFrame;
     QVBoxLayout *sidebarLayout = new QVBoxLayout;
 
+    //main logo instantiation + properties
     QLabel *logo = new QLabel;
     logo->setText("SE3D Logo");
     QPixmap image(":/Resources/se3d-circle-logo.svg");
@@ -73,24 +89,26 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     logo->setPixmap(image.scaled(280, 280,Qt::KeepAspectRatio, Qt::SmoothTransformation));
     logo->setAlignment(Qt::AlignCenter);
 
-
-
-    QLabel *welcome = new QLabel;
-    welcome->setText("G-Code Generator");
-    welcome->setAlignment(Qt::AlignCenter);
-    welcome->setStyleSheet("color: #ffffff;"
+    //title logo instantiation + properties
+    QLabel *title = new QLabel;
+    title->setText("G-Code Generator");
+    title->setAlignment(Qt::AlignCenter);
+    title->setStyleSheet("color: #ffffff;"
                            "font: 20px;");
 
+    //version instantiation + properties. it looks more official :)
     QLabel *version = new QLabel;
     version->setText("Version " + VERSION);
     version->setAlignment(Qt::AlignCenter);
     version->setStyleSheet("color: #8F8D8D;"
                            "font: 11px;");
 
+    //add logo, title, and version to sidebar
     sidebarLayout->addWidget(logo);
-    sidebarLayout->addWidget(welcome);
+    sidebarLayout->addWidget(title);
     sidebarLayout->addWidget(version);
 
+    //build divider and each component link
     addDivider(sidebarLayout);
     buildSidebarLink(sidebarLayout, VISIT_LINK, "://resources/browser-logo.svg",
                         "Visit SE3D", "Check out our website ");
@@ -103,8 +121,8 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     addDivider(sidebarLayout);
     buildSidebarLink(sidebarLayout, SUPPLY_LINK, "://resources/science-logo.svg",
                         "Resupply", "Order more supplies here");
-    //refill supplies
 
+    //sidebar settings
     sidebar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     sidebar->setStyleSheet("background-color:#252525");
     sidebar->setMinimumWidth(220);
@@ -137,11 +155,13 @@ void Wizard::buildSidebarLink(QVBoxLayout *sidebarLayout, QString inLink, QStrin
     label->setText(inLabel);
     label->setStyleSheet("color: #ffffff");
 
+    //build description
     QLabel *description = new QLabel;
     description->setText(inDescr);
     description->setStyleSheet("color: #8F8D8D;"
                                 "font: 11px");
 
+    //add widgets
     VLayout->addWidget(label);
     VLayout->addWidget(description);
 
@@ -149,6 +169,7 @@ void Wizard::buildSidebarLink(QVBoxLayout *sidebarLayout, QString inLink, QStrin
     HLayout->addLayout(VLayout);
     linkWidget->setLayout(HLayout);
 
+    //set properties
     HLayout->setAlignment(Qt::AlignLeft);
     VLayout->setContentsMargins(0, 0, 0, 0);
     HLayout->setContentsMargins(0, 0, 0, 0);
@@ -162,6 +183,7 @@ void Wizard::buildSidebarLink(QVBoxLayout *sidebarLayout, QString inLink, QStrin
 
 void Wizard::addDivider(QVBoxLayout *sidebarLayout)
 {
+    //dividers to make it look pretty
     QFrame *divLine = new QFrame;
     divLine->setFrameShape(QFrame::HLine);
     divLine->setStyleSheet("color:#696969;");
@@ -194,6 +216,7 @@ void Wizard::saveFormInfo()
     monthString = QString::number(monthInput);
     dayString = QString::number(dayInput);
 
+    //build title based off of selections
     buildTitle();
 
     if (printType == 0)
@@ -207,6 +230,7 @@ void Wizard::saveFormInfo()
 
 void Wizard::buildTitle()
 {
+    //build title based off of form and selections
     QString title = "";
 
     switch(printType)
@@ -235,6 +259,7 @@ void Wizard::buildTitle()
     title += "x";
     title += QString::number(heightInput);
 
+    //to be picked up by pageTwo when file is saved
     emit emitTitle(title);
 }
 
@@ -244,6 +269,7 @@ void Wizard::buildTitle()
 
 void Wizard::generatePetriArray()
 {
+    //calculations to allow variable size petri dishes
     int calc;
     int X_MOVE = DISH_DIAMETER - X_BORDER;
     int Y_MOVE = DISH_DIAMETER - Y_BORDER;
@@ -251,7 +277,8 @@ void Wizard::generatePetriArray()
     X_MOVE = X_MOVE / widthInput;
     Y_MOVE = Y_MOVE / heightInput;
 
-    QString materialString;
+    //material string for input confirmation
+
     switch(materialInput)
     {
     case 0:
@@ -269,26 +296,27 @@ void Wizard::generatePetriArray()
 
     //G-Code commented confirmation of inputs
     if (nameInput != "")
-        output += ";Name: " + nameInput + "\n";
+        output += ";Name: " + nameInput + " ;\n";
     switch(printType)
     {
     case 0:
-        output += "; Type: Petri Dish\n";
+        output += "; Type: Petri Dish ;\n";
         break;
     case 1:
-        output += "; Type: Well Plate\n";
+        output += "; Type: Well Plate ;\n";
         break;
     }
 
-    output += "; Material: " + materialString + "\n";
-    output += "; Position: " + QString::number(positionInput) + "\n";
-    output += "; Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + "\n";
-    output += "; Date: " + monthString + "/" + dayString + "/" + yearString + "\n\n";
+    output += "; Material: " + materialString + " ;\n";
+    output += "; Position: " + QString::number(positionInput) + " ;\n";
+    output += "; Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + " ;\n";
+    output += "; Date: " + monthString + "/" + dayString + "/" + yearString + " ;\n\n";
 
     //Begin building gcode
     output += "G90\n";
     output += "G1 Z" + DISH_HEIGHT + " F1000\n";
 
+    //first position
     switch(positionInput)
     {
     case 1:
@@ -304,6 +332,7 @@ void Wizard::generatePetriArray()
         output += "G1 X" + COORD_2 + " Y" + COORD_2 + " F" + FR_MOVE_XY + "\n";
     }
 
+    //initial drop height
     switch(materialInput)
     {
     case 0:
@@ -323,6 +352,7 @@ void Wizard::generatePetriArray()
     //Relative positioning start
     output += "\nG91\n\n";
 
+    //begin printing
     switch(materialInput)
     {
     //CaCl2 print
@@ -427,6 +457,7 @@ void Wizard::generatePetriArray()
         break;
     }
 
+    //signal to be picked up by pageTwo
     emit emitOutput(output);
 }
 
@@ -437,12 +468,10 @@ void Wizard::generatePetriArray()
 
 void Wizard::generatePlateArray()
 {
-
     int calc;
 
-    QString output; //remove later bc class var in wizard
+    //material string for input confirmation
 
-    QString materialString; //remove later
     switch(materialInput)
     {
         case 0:
@@ -460,14 +489,13 @@ void Wizard::generatePlateArray()
 
     //G-Code commented confirmation of inputs
     if (nameInput != "")
-        output += "; Name: " + nameInput + "\n";
+        output += "; Name: " + nameInput + " ;\n";
 
-
-    output += "; Type: Well Plate \n";
-    output += "; Material: " + materialString + " \n";
-    output += "; Extrusion amount (μl): " + QString::number(extrusionAmount) + " \n";
-    output += "; Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + "\n";
-    output += "; Date: " + monthString + "/" + dayString + "/" + yearString + " \n\n";
+    output += "; Type: Well Plate ;\n";
+    output += "; Material: " + materialString + " ;\n";
+    output += "; Extrusion amount: " + QString::number(extrusionAmount) + " μl ;\n";
+    output += "; Size: " + QString::number(widthInput) + "x" + QString::number(heightInput) + " ;\n";
+    output += "; Date: " + monthString + "/" + dayString + "/" + yearString + " ;\n\n";
 
 
     //Begin building gcode
@@ -498,6 +526,7 @@ void Wizard::generatePlateArray()
     output += "\nG91\n\n";
 
 
+    //variable drop height depending on extrusion volume
     int z_move;
 
     if (extrusionAmount < 50)
@@ -508,10 +537,7 @@ void Wizard::generatePlateArray()
     //per g-code syntax
     extrusionAmount = extrusionAmount / 10;
 
-
-
-
-
+    //being printing
     switch(materialInput)
     {
             //CaCl2 print
@@ -625,8 +651,11 @@ void Wizard::generatePlateArray()
 //window navigation
 void Wizard::doNext()
 {
+    //disable next button if last page
+    if (pages->currentIndex() == 1)
+        next->setDisabled(true);
     previous->setEnabled(true);
-    next->setEnabled(false);
+
     pages->setCurrentIndex(pages->currentIndex() + 1);
 }
 
@@ -636,8 +665,11 @@ void Wizard::doNext()
 
 void Wizard::doPrev()
 {
-    previous->setEnabled(false);
+    //disable previous button if first page
+    if (pages->currentIndex() == 1)
+        previous->setDisabled(true);
     next->setEnabled(true);
+
     pages->setCurrentIndex(pages->currentIndex() - 1);
 }
 
@@ -646,15 +678,20 @@ void Wizard::doPrev()
 
 
 //functions to enable frameless window dragging
-void Wizard::mousePressEvent(QMouseEvent *event) {
-    m_nMouseClick_X_Coordinate = event->x();
-    m_nMouseClick_Y_Coordinate = event->y();
+void Wizard::mousePressEvent(QMouseEvent *event)
+{
+    //tracks mouse clicks
+    x_coord = event->x();
+    y_coord = event->y();
 }
 
 
 
 
 
-void Wizard::mouseMoveEvent(QMouseEvent *event) {
-    move(event->globalX()-m_nMouseClick_X_Coordinate, event->globalY()-m_nMouseClick_Y_Coordinate);
+void Wizard::mouseMoveEvent(QMouseEvent *event)
+{
+    //tracks mouse drags
+    move(event->globalX()-x_coord,
+         event->globalY()-y_coord);
 }

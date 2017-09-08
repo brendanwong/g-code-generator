@@ -30,7 +30,8 @@ SOURCES += \
     pagetwo.cpp \
     link.cpp \
     templateitem.cpp \
-    customtemplate.cpp
+    customtemplate.cpp \
+    pagethree.cpp
 
 HEADERS += \
     wizard.h \
@@ -39,7 +40,8 @@ HEADERS += \
     constants.h \
     link.h \
     templateitem.h \
-    customtemplate.h
+    customtemplate.h \
+    pagethree.h
 
 FORMS += \
         mainwindow.ui

@@ -10,6 +10,7 @@
 
 #include "pageone.h"
 #include "pagetwo.h"
+#include "pagethree.h"
 #include "link.h"
 #include "constants.h"
 
@@ -47,11 +48,13 @@ private:
 
     PageOne *pageOne;
     PageTwo *pageTwo;
+    PageThree *pageThree;
 
-    int m_nMouseClick_X_Coordinate;
-    int m_nMouseClick_Y_Coordinate;
+    int x_coord;
+    int y_coord;
 
     QString nameInput;
+    QString materialString;
     int yearInput;
     int monthInput;
     int dayInput;

@@ -44,7 +44,7 @@ static const int X_BORDER = 40;
 static const int Y_BORDER = 40;
 static const int DISH_DIAMETER = 100;
 
-static const QString VERSION = "1.0.0";
+static const QString VERSION = "1.1.0";
 
 static const QString PORTAL_LINK = "http://portal.se3d.com";
 static const QString VISIT_LINK = "https://www.se3d.com/";
