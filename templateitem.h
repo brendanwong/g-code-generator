@@ -17,7 +17,7 @@ public:
     void mouseDoubleClickEvent(QMouseEvent *);
 
 signals:
-    void switchTabs(int);
+    void switchPage(int);
     void rowPrint();
 
 };

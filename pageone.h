@@ -35,7 +35,6 @@ public:
     QGroupBox *groupBox;
     QSpinBox *amountEdit;
 
-
     QRadioButton *petriRadio;
     QRadioButton *wellPlateRadio;
     QTabWidget *tabWidget;
@@ -49,13 +48,13 @@ private:
     void buildCustomTemplate(QHBoxLayout *hlayout, QString title, QString iconPath);
     void buildTemplateItem(QHBoxLayout *hlayout, QString title, QString iconPath, const char *slot);
 
-
 private slots:
     void onWellPlateRadioClicked();
     void onPetriRadioClicked();
     void onRowTemplateClicked();
     void templateTwo();
     void fillWell();
+
 
 };
 

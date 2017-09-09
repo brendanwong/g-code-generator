@@ -31,7 +31,7 @@ SOURCES += \
     link.cpp \
     templateitem.cpp \
     customtemplate.cpp \
-    pagethree.cpp
+    templateedit.cpp
 
 HEADERS += \
     wizard.h \
@@ -41,7 +41,7 @@ HEADERS += \
     link.h \
     templateitem.h \
     customtemplate.h \
-    pagethree.h
+    templateedit.h
 
 FORMS += \
         mainwindow.ui

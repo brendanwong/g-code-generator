@@ -10,9 +10,9 @@
 
 #include "pageone.h"
 #include "pagetwo.h"
-#include "pagethree.h"
 #include "link.h"
 #include "constants.h"
+#include "templateedit.h"
 
 class Wizard : public QDialog
 {
@@ -20,6 +20,8 @@ class Wizard : public QDialog
 
 public:
     Wizard();
+    QStackedWidget *pages;
+
 
 signals:
     void emitOutput(const QString &output);
@@ -40,15 +42,13 @@ private:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
 
-private:
-    QStackedWidget *pages;
     QPushButton *next;
     QPushButton *previous;
     QPushButton *cancel;
 
     PageOne *pageOne;
     PageTwo *pageTwo;
-    PageThree *pageThree;
+    TemplateEdit *anotherOne;
 
     int x_coord;
     int y_coord;

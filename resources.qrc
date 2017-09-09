@@ -4,5 +4,6 @@
         <file>Resources/se3d-circle-logo.svg</file>
         <file>resources/rebel-logo-normal.svg</file>
         <file>resources/science-logo.svg</file>
+        <file>resources/bed.png</file>
     </qresource>
 </RCC>

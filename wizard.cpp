@@ -52,13 +52,11 @@ Wizard::Wizard() : QDialog()
     mainLayout->addWidget(rightWidget);
     mainLayout->setContentsMargins(0, 0, 0, 0);
 
+
     //create forms/output pages
     pages->addWidget(pageOne = new PageOne(pages));
+    pages->addWidget(anotherOne = new TemplateEdit(pages));
     pages->addWidget(pageTwo = new PageTwo(pages));
-    pages->addWidget(pageThree = new PageThree(pages));
-
-    //previous set false because its the first page
-    previous->setEnabled(false);
 
     //adding button functionality
     connect(next, SIGNAL(clicked()), this, SLOT(doNext()));
@@ -651,12 +649,11 @@ void Wizard::generatePlateArray()
 //window navigation
 void Wizard::doNext()
 {
-    //disable next button if last page
-    if (pages->currentIndex() == 1)
-        next->setDisabled(true);
-    previous->setEnabled(true);
+   if (pageOne->tabWidget->currentIndex() == 0)
+       pages->setCurrentIndex(2);
+   else
+       pages->setCurrentIndex(pages->currentIndex() + 1);
 
-    pages->setCurrentIndex(pages->currentIndex() + 1);
 }
 
 
@@ -665,11 +662,9 @@ void Wizard::doNext()
 
 void Wizard::doPrev()
 {
-    //disable previous button if first page
-    if (pages->currentIndex() == 1)
-        previous->setDisabled(true);
-    next->setEnabled(true);
 
+
+    //move to previous page
     pages->setCurrentIndex(pages->currentIndex() - 1);
 }
 

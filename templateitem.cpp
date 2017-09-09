@@ -6,6 +6,6 @@ TemplateItem::TemplateItem()
 
 void TemplateItem::mouseDoubleClickEvent(QMouseEvent *)
 {
-    emit switchTabs(0);
+    emit switchPage(1);
     emit rowPrint();
 }

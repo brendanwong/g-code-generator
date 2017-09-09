@@ -2,7 +2,6 @@
 #include "wizard.h"
 #include "templateitem.h"
 #include "customtemplate.h"
-
 #include "constants.h"
 #include <QScrollArea>
 
@@ -23,6 +22,7 @@ PageOne::PageOne(QWidget *parent) : QWidget(parent)
     tabWidget->tabBar()->setStyleSheet("QTabBar::tab:selected{ color:#ffffff}");
 
     tabWidget->setMinimumSize(400, 350);
+
 }
 
 
@@ -60,7 +60,7 @@ void PageOne::customTab(QTabWidget *tabWidget)
     //builds the print selection row (petri vs well plate)
     buildPrintSelection();
 
-    //add each part of the form
+    //add each row of the form
     QFormLayout *formLayout = new QFormLayout;
 
     formLayout->addRow("&Name:", nameEdit);
@@ -71,6 +71,7 @@ void PageOne::customTab(QTabWidget *tabWidget)
     formLayout->addRow("&Columns:", widthEdit);
     formLayout->addRow("&Position:", positionEdit);
     formLayout->addRow("&Extrusion Amount (μl):", amountEdit);
+
 
     //add custom tab to the main tab widget
     QWidget *customWindow = new QWidget;
@@ -209,7 +210,7 @@ void PageOne::buildTemplateItem(QHBoxLayout *hlayout, QString title, QString ico
 
     //adds functionality, switching the tab and changing appropriate settings
     QObject::connect(item, SIGNAL(rowPrint()), this, slot);
-    QObject::connect(item, SIGNAL(switchTabs(int)), tabWidget, SLOT(setCurrentIndex(int)));
+    QObject::connect(item, SIGNAL(switchPage(int)), parent(), SLOT(setCurrentIndex(int)));
 
     hlayout->addWidget(item);
 }
