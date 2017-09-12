@@ -1,6 +1,8 @@
 #ifndef PAGEONE_H
 #define PAGEONE_H
 
+#include "positionedit.h"
+
 #include <QWidget>
 #include <QTabWidget>
 #include <QLineEdit>
@@ -31,7 +33,7 @@ public:
     QDateEdit *dateEdit;
     QSpinBox *heightEdit;
     QSpinBox *widthEdit;
-    QSpinBox *positionEdit;
+    PositionEdit *positionEdit;
     QComboBox *materialEdit;
     QGroupBox *groupBox;
     QSpinBox *amountEdit;
@@ -39,6 +41,8 @@ public:
     QRadioButton *petriRadio;
     QRadioButton *wellPlateRadio;
     QTabWidget *tabWidget;
+
+    QLabel *positionGraphic;
 
     bool firstMessage = true;
 
@@ -49,9 +53,6 @@ private:
     void buildCustomTemplate(QHBoxLayout *hlayout, QString title, QString iconPath);
     void buildTemplateItem(QHBoxLayout *hlayout, QString title, QString iconPath, const char *slot);
 
-
-//    Q_DISABLE_COPY(PageOne)
-
 private slots:
     void onWellPlateRadioClicked();
     void onPetriRadioClicked();
@@ -60,6 +61,7 @@ private slots:
     void gridPlateClicked();
     void fillWellClicked();
     void wellPlateColumnClicked();
+    void placeholder();
 
 signals:
     void rowTemplateSignal();
@@ -67,7 +69,7 @@ signals:
     void fillWellSignal();
     void gridPlateSignal();
     void wellPlateColumnSignal();
-
+    void nextPage();
 
 };
 

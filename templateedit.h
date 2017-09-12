@@ -10,6 +10,8 @@
 #include <QRadioButton>
 #include <QLabel>
 #include <QMessageBox>
+#include "positionedit.h"
+
 
 
 
@@ -28,7 +30,7 @@ public:
     QDateEdit *dateEdit;
     QSpinBox *heightEdit;
     QSpinBox *widthEdit;
-    QSpinBox *positionEdit;
+    PositionEdit *positionEdit;
     QComboBox *materialEdit;
     QSpinBox *amountEdit;
 

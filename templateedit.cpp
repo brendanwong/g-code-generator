@@ -17,7 +17,7 @@ void TemplateEdit::buildTemplateEdit()
     dateEdit = new QDateEdit;
     heightEdit = new QSpinBox;
     widthEdit = new QSpinBox;
-    positionEdit = new QSpinBox;
+    positionEdit = new PositionEdit;
     materialEdit = new QComboBox;
     amountEdit = new QSpinBox;
 
@@ -40,6 +40,10 @@ void TemplateEdit::buildTemplateEdit()
 
     amountEdit->setValue(25);
     amountEdit->setDisabled(true);
+
+    //to enable mouse tracking and pop up for bed pos
+    positionEdit->setAttribute(Qt::WA_Hover);
+    positionEdit->setMouseTracking(true);
 
     buildPrintSelection();
 

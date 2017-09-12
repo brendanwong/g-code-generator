@@ -31,7 +31,8 @@ SOURCES += \
     link.cpp \
     templateitem.cpp \
     customtemplate.cpp \
-    templateedit.cpp
+    templateedit.cpp \
+    positionedit.cpp
 
 HEADERS += \
     wizard.h \
@@ -41,7 +42,8 @@ HEADERS += \
     link.h \
     templateitem.h \
     customtemplate.h \
-    templateedit.h
+    templateedit.h \
+    positionedit.h
 
 FORMS += \
         mainwindow.ui

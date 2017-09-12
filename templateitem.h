@@ -12,7 +12,6 @@ class TemplateItem : public QWidget
     Q_OBJECT
 public:
     TemplateItem();
-
     void mouseDoubleClickEvent(QMouseEvent *);
 
 signals:

@@ -4,7 +4,6 @@
 #include "customtemplate.h"
 #include "constants.h"
 
-
 PageOne::PageOne(QWidget *parent) : QWidget(parent)
 {
     //create widget to hold tabs
@@ -34,13 +33,15 @@ void PageOne::customTab(QTabWidget *tabWidget)
     dateEdit = new QDateEdit;
     heightEdit = new QSpinBox;
     widthEdit = new QSpinBox;
-    positionEdit = new QSpinBox;
+    positionEdit = new PositionEdit;
     materialEdit = new QComboBox;
     amountEdit = new QSpinBox;
 
     //standard two digit width for uniformity
     heightEdit->setMinimumWidth(42);
+    heightEdit->setMaximumWidth(42);
     widthEdit->setMinimumWidth(42);
+    widthEdit->setMaximumWidth(42);
     positionEdit->setMinimumWidth(42);
 
     //set properties for each form
@@ -52,6 +53,10 @@ void PageOne::customTab(QTabWidget *tabWidget)
     materialEdit->addItem("Biomolecule in 1% Alginate");
     materialEdit->addItem("Substrate Solution");
     dateEdit->setDate(QDate::currentDate());
+
+    //to enable mouse tracking and pop up for bed pos
+    positionEdit->setAttribute(Qt::WA_Hover);
+    positionEdit->setMouseTracking(true);
 
     amountEdit->setValue(25);
     amountEdit->setDisabled(true);
@@ -70,6 +75,14 @@ void PageOne::customTab(QTabWidget *tabWidget)
     formLayout->addRow("&Columns:", widthEdit);
     formLayout->addRow("&Position:", positionEdit);
     formLayout->addRow("&Extrusion Amount (μl):", amountEdit);
+
+    positionGraphic = new QLabel;
+
+    formLayout->addRow("", positionGraphic);
+
+    connect(positionEdit, SIGNAL(positionHoverSignal()), this, SLOT(placeholder()));
+
+
 
 
     //add custom tab to the main tab widget
@@ -185,6 +198,7 @@ void PageOne::buildCustomTemplate(QHBoxLayout *hlayout, QString title, QString i
     //add functionality
     QObject::connect(item, SIGNAL(switchTabs(int)), tabWidget, SLOT(setCurrentIndex(int)));
 
+
     hlayout->addWidget(item);
 }
 
@@ -203,7 +217,8 @@ void PageOne::buildTemplateItem(QHBoxLayout *hlayout, QString title, QString ico
     QLabel *iconLabel = new QLabel;
     QPixmap icon(iconPath);
     icon.setDevicePixelRatio(devicePixelRatio());
-    iconLabel->setPixmap(icon);
+    iconLabel->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
 
     //set label title
     QLabel *label = new QLabel(title);
@@ -216,7 +231,6 @@ void PageOne::buildTemplateItem(QHBoxLayout *hlayout, QString title, QString ico
 
     //adds functionality, switching the tab and changing appropriate settings
     QObject::connect(item, SIGNAL(activateTemplate()), this, slot);
-    QObject::connect(item, SIGNAL(switchPage(int)), parent(), SLOT(setCurrentIndex(int)));
 
     hlayout->addWidget(item);
 }
@@ -273,31 +287,71 @@ void PageOne::onPetriRadioClicked()
 
 
 
+
+
+
+
 void PageOne::onRowTemplateClicked()
 {
     emit rowTemplateSignal();
+    emit nextPage();
 }
+
+
+
+
 
 
 void PageOne::gridPetriClicked()
 {
     emit gridPetriSignal();
+    emit nextPage();
+
 }
+
+
+
+
 
 
 void PageOne::fillWellClicked()
 {
     emit fillWellSignal();
+    emit nextPage();
+
 }
+
+
+
+
+
 
 
 void PageOne::gridPlateClicked()
 {
     emit gridPlateSignal();
+    emit nextPage();
+
 }
+
+
+
+
 
 
 void PageOne::wellPlateColumnClicked()
 {
     emit wellPlateColumnSignal();
+    emit nextPage();
+
+}
+
+
+
+void PageOne::placeholder()
+{
+    QPixmap icon("/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/petri-template.png");
+    icon.setDevicePixelRatio(devicePixelRatio());
+    positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    positionGraphic->update();
 }

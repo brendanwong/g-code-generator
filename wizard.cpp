@@ -71,11 +71,12 @@ Wizard::Wizard() : QDialog()
     connect(previous, SIGNAL(clicked()), this, SLOT(doPrev()));
     connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
 
-    QObject::connect(pageOne, SIGNAL(rowTemplateSignal()), templateEdit, SLOT(rowTemplate()));
-    QObject::connect(pageOne, SIGNAL(gridPetriSignal()), templateEdit, SLOT(gridPetriSlot()));
-    QObject::connect(pageOne, SIGNAL(wellPlateColumnSignal()), templateEdit, SLOT(wellPlateColumnSlot()));
-    QObject::connect(pageOne, SIGNAL(gridPlateSignal()), templateEdit, SLOT(gridPlateSlot()));
-    QObject::connect(pageOne, SIGNAL(fillWellSignal()), templateEdit, SLOT(fillWellSlot()));
+    connect(pageOne, SIGNAL(rowTemplateSignal()), templateEdit, SLOT(rowTemplate()));
+    connect(pageOne, SIGNAL(gridPetriSignal()), templateEdit, SLOT(gridPetriSlot()));
+    connect(pageOne, SIGNAL(wellPlateColumnSignal()), templateEdit, SLOT(wellPlateColumnSlot()));
+    connect(pageOne, SIGNAL(gridPlateSignal()), templateEdit, SLOT(gridPlateSlot()));
+    connect(pageOne, SIGNAL(fillWellSignal()), templateEdit, SLOT(fillWellSlot()));
+    connect(pageOne, SIGNAL(nextPage()), this, SLOT(doNext()));
 }
 
 
