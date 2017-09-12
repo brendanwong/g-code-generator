@@ -47,8 +47,8 @@ private:
     QPushButton *cancel;
 
     PageOne *pageOne;
+    TemplateEdit *templateEdit;
     PageTwo *pageTwo;
-    TemplateEdit *anotherOne;
 
     int x_coord;
     int y_coord;
@@ -71,7 +71,7 @@ private:
 
     QString output;
 
-
+    int selection = 1;
 };
 
 #endif //WIZARD_H

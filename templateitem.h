@@ -5,8 +5,7 @@
 #include "wizard.h"
 
 #include <QWidget>
-#include <QDesktopServices>
-#include <QUrl>
+
 
 class TemplateItem : public QWidget
 {
@@ -18,7 +17,7 @@ public:
 
 signals:
     void switchPage(int);
-    void rowPrint();
+    void activateTemplate();
 
 };
 

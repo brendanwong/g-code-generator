@@ -9,6 +9,8 @@
 #include <QGroupBox>
 #include <QRadioButton>
 #include <QLabel>
+#include <QMessageBox>
+
 
 
 class TemplateEdit : public QWidget
@@ -17,6 +19,7 @@ class TemplateEdit : public QWidget
 public:
     TemplateEdit(QWidget *parent = 0);
     void buildTemplateEdit();
+    void buildPrintSelection();
 
     QLabel *title;
     QWidget *templateEdit;
@@ -32,6 +35,22 @@ public:
     QGroupBox *groupBox;
     QRadioButton *petriRadio;
     QRadioButton *wellPlateRadio;
+
+    bool firstMessage = true;
+
+
+
+private slots:
+    void onWellPlateRadioClicked();
+    void onPetriRadioClicked();
+
+public slots:
+    void rowTemplate();
+    void gridPetriSlot();
+    void gridPlateSlot();
+    void wellPlateColumnSlot();
+    void fillWellSlot();
+
 
 };
 

@@ -22,6 +22,7 @@ class PageOne : public QWidget
 {
     Q_OBJECT
 public:
+    PageOne();
     PageOne(QWidget *parent = 0);
 
     QLabel *customLabel;
@@ -48,12 +49,24 @@ private:
     void buildCustomTemplate(QHBoxLayout *hlayout, QString title, QString iconPath);
     void buildTemplateItem(QHBoxLayout *hlayout, QString title, QString iconPath, const char *slot);
 
+
+//    Q_DISABLE_COPY(PageOne)
+
 private slots:
     void onWellPlateRadioClicked();
     void onPetriRadioClicked();
     void onRowTemplateClicked();
-    void templateTwo();
-    void fillWell();
+    void gridPetriClicked();
+    void gridPlateClicked();
+    void fillWellClicked();
+    void wellPlateColumnClicked();
+
+signals:
+    void rowTemplateSignal();
+    void gridPetriSignal();
+    void fillWellSignal();
+    void gridPlateSignal();
+    void wellPlateColumnSignal();
 
 
 };

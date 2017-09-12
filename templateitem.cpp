@@ -7,5 +7,5 @@ TemplateItem::TemplateItem()
 void TemplateItem::mouseDoubleClickEvent(QMouseEvent *)
 {
     emit switchPage(1);
-    emit rowPrint();
+    emit activateTemplate();
 }

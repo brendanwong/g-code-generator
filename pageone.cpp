@@ -3,7 +3,7 @@
 #include "templateitem.h"
 #include "customtemplate.h"
 #include "constants.h"
-#include <QScrollArea>
+
 
 PageOne::PageOne(QWidget *parent) : QWidget(parent)
 {
@@ -22,7 +22,6 @@ PageOne::PageOne(QWidget *parent) : QWidget(parent)
     tabWidget->tabBar()->setStyleSheet("QTabBar::tab:selected{ color:#ffffff}");
 
     tabWidget->setMinimumSize(400, 350);
-
 }
 
 
@@ -126,13 +125,20 @@ void PageOne::templateTab(QTabWidget *tabWidget)
     QHBoxLayout *secondRowLayout = new QHBoxLayout;
 
     //paths to be changed once icons are finalized
-    buildCustomTemplate(firstRowLayout, "Custom" , "/Users/brendanwong/Desktop/custom-template.png");
-    buildTemplateItem(firstRowLayout, "Row Print" , "/Users/brendanwong/Desktop/template-1.png", SLOT(onRowTemplateClicked()));
-    buildTemplateItem(firstRowLayout, "3x3 CaCl2" , "/Users/brendanwong/Desktop/template-2.png", SLOT(templateTwo()));
+    buildCustomTemplate(firstRowLayout, "Custom" ,
+                        "/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/custom-template.png");
 
-    buildTemplateItem(secondRowLayout, "Fill Well Plate" , "/Users/brendanwong/Desktop/template-3.png", SLOT(fillWell()));
-    buildTemplateItem(secondRowLayout, "Template 4" , "/Users/brendanwong/Desktop/template-4.png", SLOT(templateTwo()));
-    buildTemplateItem(secondRowLayout, "Template 5" , "/Users/brendanwong/Desktop/template-5.png", SLOT(templateTwo()));
+    buildTemplateItem(firstRowLayout, "Row Print" ,
+                      "/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/template-1.png", SLOT(onRowTemplateClicked()));
+    buildTemplateItem(firstRowLayout, "3x3 Petri Dish" ,
+                      "/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/template-2.png", SLOT(gridPetriClicked()));
+
+    buildTemplateItem(secondRowLayout, "3x3 Well Plate" ,
+                      "/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/template-3.png", SLOT(gridPlateClicked()));
+    buildTemplateItem(secondRowLayout, "Well Plate Column" ,
+                      "/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/template-4.png", SLOT(wellPlateColumnClicked()));
+    buildTemplateItem(secondRowLayout, "Fill Well Plate" ,
+                      "/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/template-5.png", SLOT(fillWellClicked()));
 
     //put together each row
     QVBoxLayout *vlayout = new QVBoxLayout;
@@ -209,12 +215,11 @@ void PageOne::buildTemplateItem(QHBoxLayout *hlayout, QString title, QString ico
     item->setLayout(vlayout);
 
     //adds functionality, switching the tab and changing appropriate settings
-    QObject::connect(item, SIGNAL(rowPrint()), this, slot);
+    QObject::connect(item, SIGNAL(activateTemplate()), this, slot);
     QObject::connect(item, SIGNAL(switchPage(int)), parent(), SLOT(setCurrentIndex(int)));
 
     hlayout->addWidget(item);
 }
-
 
 
 
@@ -270,29 +275,29 @@ void PageOne::onPetriRadioClicked()
 
 void PageOne::onRowTemplateClicked()
 {
-    //slot for row print settings
-    wellPlateRadio->click();
-    widthEdit->setValue(12);
-    heightEdit->setValue(1);
+    emit rowTemplateSignal();
 }
 
 
-void PageOne::templateTwo()
+void PageOne::gridPetriClicked()
 {
-    //slot for 3x3 CaCl2 prints
-   petriRadio->click();
-   widthEdit->setValue(3);
-   heightEdit->setValue(3);
-
+    emit gridPetriSignal();
 }
 
 
-void PageOne::fillWell()
+void PageOne::fillWellClicked()
 {
-    //slot to fill entire well plate
-    wellPlateRadio->click();
-    widthEdit->setValue(12);
-    heightEdit->setValue(8);
+    emit fillWellSignal();
 }
 
 
+void PageOne::gridPlateClicked()
+{
+    emit gridPlateSignal();
+}
+
+
+void PageOne::wellPlateColumnClicked()
+{
+    emit wellPlateColumnSignal();
+}

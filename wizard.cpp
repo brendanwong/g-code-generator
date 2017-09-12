@@ -1,5 +1,7 @@
 #include "wizard.h"
 
+
+
 Wizard::Wizard() : QDialog()
 {
     //create navigation buttons
@@ -32,6 +34,7 @@ Wizard::Wizard() : QDialog()
     previous->setMinimumWidth(100);
     cancel->setMinimumWidth(100);
     cancel->setFocusPolicy(Qt::NoFocus);
+    previous->setDisabled(true);
 
     //adding buttons to layout
     buttonLayout->addWidget(cancel, 0, Qt::AlignLeft);
@@ -55,18 +58,24 @@ Wizard::Wizard() : QDialog()
 
     //create forms/output pages
     pages->addWidget(pageOne = new PageOne(pages));
-    pages->addWidget(anotherOne = new TemplateEdit(pages));
+    pages->addWidget(templateEdit = new TemplateEdit(pages));
     pages->addWidget(pageTwo = new PageTwo(pages));
 
     //adding button functionality
-    connect(next, SIGNAL(clicked()), this, SLOT(doNext()));
-    connect(previous, SIGNAL(clicked()), this, SLOT(doPrev()));
-    connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
 
     connect(next, SIGNAL(clicked(bool)), this, SLOT(saveFormInfo()));
     connect(this, SIGNAL(emitOutput(QString)), pageTwo, SLOT(updateOutput(QString)));
     connect(this, SIGNAL(emitTitle(QString)), pageTwo, SLOT(updateTitle(QString)));
 
+    connect(next, SIGNAL(clicked()), this, SLOT(doNext()));
+    connect(previous, SIGNAL(clicked()), this, SLOT(doPrev()));
+    connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
+
+    QObject::connect(pageOne, SIGNAL(rowTemplateSignal()), templateEdit, SLOT(rowTemplate()));
+    QObject::connect(pageOne, SIGNAL(gridPetriSignal()), templateEdit, SLOT(gridPetriSlot()));
+    QObject::connect(pageOne, SIGNAL(wellPlateColumnSignal()), templateEdit, SLOT(wellPlateColumnSlot()));
+    QObject::connect(pageOne, SIGNAL(gridPlateSignal()), templateEdit, SLOT(gridPlateSlot()));
+    QObject::connect(pageOne, SIGNAL(fillWellSignal()), templateEdit, SLOT(fillWellSlot()));
 }
 
 
@@ -122,7 +131,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
 
     //sidebar settings
     sidebar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-    sidebar->setStyleSheet("background-color:#252525");
+    sidebar->setStyleSheet("background-color: #252525");
     sidebar->setMinimumWidth(220);
     sidebar->setMaximumWidth(220);
 
@@ -194,34 +203,71 @@ void Wizard::addDivider(QVBoxLayout *sidebarLayout)
 
 void Wizard::saveFormInfo()
 {
-    //Save information from text fields, invoked when next button is clicked
-    nameInput = pageOne->nameEdit->text();
-    yearInput = pageOne->dateEdit->date().year();
-    monthInput = pageOne->dateEdit->date().month();
-    dayInput = pageOne->dateEdit->date().day();
-    heightInput = pageOne->heightEdit->value();
-    widthInput = pageOne->widthEdit->value();
-    positionInput = pageOne->positionEdit->value();
-    materialInput = pageOne->materialEdit->currentIndex();
-    extrusionAmount = pageOne->amountEdit->value();
+    //write in code to only go through this when you are on the first or third page
+    if (pages->currentIndex() == 0)
+    {
+        //Save information from text fields, invoked when next button is clicked
+        nameInput = pageOne->nameEdit->text();
+        yearInput = pageOne->dateEdit->date().year();
+        monthInput = pageOne->dateEdit->date().month();
+        dayInput = pageOne->dateEdit->date().day();
+        heightInput = pageOne->heightEdit->value();
+        widthInput = pageOne->widthEdit->value();
+        positionInput = pageOne->positionEdit->value();
+        materialInput = pageOne->materialEdit->currentIndex();
+        extrusionAmount = pageOne->amountEdit->value();
 
-    if (pageOne->petriRadio->isChecked())
-        printType = 0;
-    if (pageOne->wellPlateRadio->isChecked())
-        printType = 1;
+        yearString = QString::number(yearInput);
+        monthString = QString::number(monthInput);
+        dayString = QString::number(dayInput);
 
-    yearString = QString::number(yearInput);
-    monthString = QString::number(monthInput);
-    dayString = QString::number(dayInput);
+        //build title based off of selections
+        buildTitle();
 
-    //build title based off of selections
-    buildTitle();
+        if (pageOne->petriRadio->isChecked())
+        {
+            printType = 0;
+            generatePetriArray();
+        }
+        if (pageOne->wellPlateRadio->isChecked())
+        {
+            printType = 1;
+            generatePlateArray();
+        }
+    }
 
-    if (printType == 0)
-        generatePetriArray();
-    if (printType == 1)
-        generatePlateArray();
+    if (pages->currentIndex() == 1)
+    {
+        nameInput = templateEdit->nameEdit->text();
+        yearInput = templateEdit->dateEdit->date().year();
+        monthInput = templateEdit->dateEdit->date().month();
+        dayInput = templateEdit->dateEdit->date().day();
+        heightInput = templateEdit->heightEdit->value();
+        widthInput = templateEdit->widthEdit->value();
+        positionInput = templateEdit->positionEdit->value();
+        materialInput = templateEdit->materialEdit->currentIndex();
+        extrusionAmount = templateEdit->amountEdit->value();
+
+        yearString = QString::number(yearInput);
+        monthString = QString::number(monthInput);
+        dayString = QString::number(dayInput);
+
+        //build title based off of selections
+        buildTitle();
+
+        if (templateEdit->petriRadio->isChecked())
+        {
+            printType = 0;
+            generatePetriArray();
+        }
+        if (templateEdit->wellPlateRadio->isChecked())
+        {
+            printType = 1;
+            generatePlateArray();
+        }
+    }
 }
+
 
 
 
@@ -286,7 +332,7 @@ void Wizard::generatePetriArray()
         materialString = "HPR";
         break;
     case 2:
-        materialString =  "ABTS";
+        materialString = "ABTS";
         break;
     }
 
@@ -649,11 +695,20 @@ void Wizard::generatePlateArray()
 //window navigation
 void Wizard::doNext()
 {
+    previous->setEnabled(true);
    if (pageOne->tabWidget->currentIndex() == 0)
+   {
        pages->setCurrentIndex(2);
+       selection = 0;
+   }
    else
+   {
        pages->setCurrentIndex(pages->currentIndex() + 1);
+       selection = 1;
+   }
 
+   if (pages->currentIndex() == 2)
+      next->setDisabled(true);
 }
 
 
@@ -662,11 +717,25 @@ void Wizard::doNext()
 
 void Wizard::doPrev()
 {
+    next->setEnabled(true);
+    if (selection == 0)
+        pages->setCurrentIndex(0);
+    if (selection == 1)
+        pages->setCurrentIndex(pages->currentIndex() - 1);
 
+    if (pages->currentIndex() == 0)
+    {
+        templateEdit->petriRadio->setEnabled(true);
+        templateEdit->wellPlateRadio->setEnabled(true);
+        templateEdit->widthEdit->setEnabled(true);
+        templateEdit->heightEdit->setEnabled(true);
 
-    //move to previous page
-    pages->setCurrentIndex(pages->currentIndex() - 1);
+    }
+    if (pages->currentIndex() == 0)
+        previous->setDisabled(true);
+
 }
+
 
 
 
