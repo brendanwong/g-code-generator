@@ -9,9 +9,11 @@ class PositionEdit : public QSpinBox
 public:
     PositionEdit();
     void mouseMoveEvent(QMouseEvent *);
+    void leaveEvent(QEvent *);
 
 signals:
     void positionHoverSignal();
+    void leftPositionSignal();
 
 };
 

@@ -4,6 +4,7 @@
 #include "customtemplate.h"
 #include "constants.h"
 
+
 PageOne::PageOne(QWidget *parent) : QWidget(parent)
 {
     //create widget to hold tabs
@@ -77,13 +78,16 @@ void PageOne::customTab(QTabWidget *tabWidget)
     formLayout->addRow("&Extrusion Amount (μl):", amountEdit);
 
     positionGraphic = new QLabel;
+    QPixmap icon("/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/petri-template.png");
+    icon.setDevicePixelRatio(devicePixelRatio());
+    positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
+    positionGraphic->hide();
 
     formLayout->addRow("", positionGraphic);
 
-    connect(positionEdit, SIGNAL(positionHoverSignal()), this, SLOT(placeholder()));
-
-
-
+    connect(positionEdit, SIGNAL(positionHoverSignal()), this, SLOT(positionHoverSlot()));
+    connect(positionEdit, SIGNAL(leftPositionSignal()), this, SLOT(leftPositionSlot()));
 
     //add custom tab to the main tab widget
     QWidget *customWindow = new QWidget;
@@ -119,8 +123,8 @@ void PageOne::buildPrintSelection()
     groupBoxLayout->setContentsMargins(0, 0, 0, 0);
 
     //connect buttons to appropriate slots
-    QObject::connect(wellPlateRadio, SIGNAL(clicked(bool)), this, SLOT(onWellPlateRadioClicked()));
-    QObject::connect(petriRadio, SIGNAL(clicked(bool)), this, SLOT(onPetriRadioClicked()));
+    connect(wellPlateRadio, SIGNAL(clicked(bool)), this, SLOT(onWellPlateRadioClicked()));
+    connect(petriRadio, SIGNAL(clicked(bool)), this, SLOT(onPetriRadioClicked()));
 }
 
 
@@ -306,7 +310,6 @@ void PageOne::gridPetriClicked()
 {
     emit gridPetriSignal();
     emit nextPage();
-
 }
 
 
@@ -318,7 +321,6 @@ void PageOne::fillWellClicked()
 {
     emit fillWellSignal();
     emit nextPage();
-
 }
 
 
@@ -331,7 +333,6 @@ void PageOne::gridPlateClicked()
 {
     emit gridPlateSignal();
     emit nextPage();
-
 }
 
 
@@ -343,15 +344,23 @@ void PageOne::wellPlateColumnClicked()
 {
     emit wellPlateColumnSignal();
     emit nextPage();
-
 }
 
 
 
-void PageOne::placeholder()
+
+//when positionEdit widget is hovered, show the graphic
+void PageOne::positionHoverSlot()
 {
-    QPixmap icon("/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/petri-template.png");
-    icon.setDevicePixelRatio(devicePixelRatio());
-    positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    positionGraphic->show();
+    positionGraphic->update();
+}
+
+
+
+//when positionEdit is no longer in focus, remove graphic
+void PageOne::leftPositionSlot()
+{
+    positionGraphic->hide();
     positionGraphic->update();
 }

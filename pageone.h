@@ -20,6 +20,8 @@
 #include <QListWidget>
 #include <QListWidgetItem>
 
+#include <QDebug>
+
 class PageOne : public QWidget
 {
     Q_OBJECT
@@ -61,7 +63,9 @@ private slots:
     void gridPlateClicked();
     void fillWellClicked();
     void wellPlateColumnClicked();
-    void placeholder();
+    void positionHoverSlot();
+    void leftPositionSlot();
+
 
 signals:
     void rowTemplateSignal();
@@ -70,6 +74,7 @@ signals:
     void gridPlateSignal();
     void wellPlateColumnSignal();
     void nextPage();
+
 
 };
 

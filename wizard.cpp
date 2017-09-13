@@ -760,3 +760,4 @@ void Wizard::mouseMoveEvent(QMouseEvent *event)
     move(event->globalX()-x_coord,
          event->globalY()-y_coord);
 }
+
