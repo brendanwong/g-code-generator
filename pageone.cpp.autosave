@@ -256,7 +256,7 @@ void PageOne::onWellPlateRadioClicked()
         firstMessage = false;
     }
 
-    //new max value for well plate
+    //new max width for well plate
     widthEdit->setRange(1, 12);
     widthEdit->update();
 
@@ -267,7 +267,6 @@ void PageOne::onWellPlateRadioClicked()
     //enabling variable extrusion amount
     amountEdit->setEnabled(true);
     amountEdit->update();
-
 }
 
 
@@ -294,8 +293,59 @@ void PageOne::onPetriRadioClicked()
 
 
 
+//when positionEdit widget is hovered, show the graphic
+void PageOne::positionHoverSlot()
+{
+    QPoint globalPos = positionEdit->mapToGlobal(QPoint(0,0));
+
+    int x = globalPos.x();
+    int y = globalPos.y();
+
+    x += 100;
+    positionGraphic->move(x, y);
+
+    if(petriRadio->isChecked())
+    {
+        QPixmap icon("://temp resources/petri-template.png");
+        icon.setDevicePixelRatio(devicePixelRatio());
+        positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
+
+    if(wellPlateRadio->isChecked())
+    {
+        QPixmap icon("://temp resources/well-plate-template.png");
+        icon.setDevicePixelRatio(devicePixelRatio());
+        positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
+
+    positionGraphic->show();
+    positionGraphic->update();
+}
 
 
+
+
+
+//when positionEdit is no longer in focus, remove graphic
+void PageOne::leftPositionSlot()
+{
+    positionGraphic->hide();
+    positionGraphic->update();
+}
+
+
+
+
+
+
+
+/*
+ * 
+ * 
+ * template signals/slots
+ * 
+ * 
+ */
 void PageOne::onRowTemplateClicked()
 {
     emit rowTemplateSignal();
@@ -349,40 +399,3 @@ void PageOne::wellPlateColumnClicked()
 
 
 
-//when positionEdit widget is hovered, show the graphic
-void PageOne::positionHoverSlot()
-{
-    QPoint globalPos = positionEdit->mapToGlobal(QPoint(0,0));
-
-    int x = globalPos.x();
-    int y = globalPos.y();
-
-    x += 100;
-    positionGraphic->move(x, y);
-
-    if(petriRadio->isChecked())
-    {
-        QPixmap icon("://temp resources/petri-template.png");
-        icon.setDevicePixelRatio(devicePixelRatio());
-        positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    }
-
-    if(wellPlateRadio->isChecked())
-    {
-        QPixmap icon("://temp resources/well-plate-template.png");
-        icon.setDevicePixelRatio(devicePixelRatio());
-        positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    }
-
-    positionGraphic->show();
-    positionGraphic->update();
-}
-
-
-
-//when positionEdit is no longer in focus, remove graphic
-void PageOne::leftPositionSlot()
-{
-    positionGraphic->hide();
-    positionGraphic->update();
-}
