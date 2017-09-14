@@ -10,6 +10,9 @@
 #include <QRadioButton>
 #include <QLabel>
 #include <QMessageBox>
+#include <QFormLayout>
+#include <QHBoxLayout>
+
 #include "positionedit.h"
 
 

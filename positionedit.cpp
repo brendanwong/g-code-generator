@@ -1,6 +1,4 @@
 #include "positionedit.h"
-#include <QDebug>
-#include <QMouseEvent>
 
 PositionEdit::PositionEdit()
 {
@@ -17,5 +15,10 @@ void PositionEdit::mouseMoveEvent(QMouseEvent *)
 void PositionEdit::leaveEvent(QEvent *)
 {
    emit leftPositionSignal();
+}
+
+void PositionEdit::mouseReleaseEvent(QMouseEvent *)
+{
+    emit positionHoverSignal();
 }
 

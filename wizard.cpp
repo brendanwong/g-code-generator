@@ -1,7 +1,5 @@
 #include "wizard.h"
 
-
-
 Wizard::Wizard() : QDialog()
 {
     //create navigation buttons

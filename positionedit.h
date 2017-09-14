@@ -2,6 +2,7 @@
 #define POSITIONEDIT_H
 
 #include <QSpinBox>
+#include <QMouseEvent>
 
 class PositionEdit : public QSpinBox
 {
@@ -10,6 +11,7 @@ public:
     PositionEdit();
     void mouseMoveEvent(QMouseEvent *);
     void leaveEvent(QEvent *);
+    void mouseReleaseEvent(QMouseEvent *);
 
 signals:
     void positionHoverSignal();

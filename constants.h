@@ -51,4 +51,6 @@ static const QString VISIT_LINK = "https://www.se3d.com/";
 static const QString CONTACT_LINK = "https://www.se3d.com/connect";
 static const QString SUPPLY_LINK = "https://google.com";
 
+static const int OFFSET = 100;
+
 #endif // CONSTANTS_H

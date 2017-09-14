@@ -1,6 +1,4 @@
 #include "templateedit.h"
-#include <QHBoxLayout>
-#include <QFormLayout>
 
 TemplateEdit::TemplateEdit(QWidget *parent) : QWidget(parent)
 {

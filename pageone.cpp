@@ -4,7 +4,6 @@
 #include "customtemplate.h"
 #include "constants.h"
 
-
 PageOne::PageOne(QWidget *parent) : QWidget(parent)
 {
     //create widget to hold tabs
@@ -77,15 +76,15 @@ void PageOne::customTab(QTabWidget *tabWidget)
     formLayout->addRow("&Position:", positionEdit);
     formLayout->addRow("&Extrusion Amount (μl):", amountEdit);
 
+    //build reference graphic for positions, set hidden by default
     positionGraphic = new QLabel;
-    QPixmap icon("/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/petri-template.png");
-    icon.setDevicePixelRatio(devicePixelRatio());
-    positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-
     positionGraphic->hide();
 
-    formLayout->addRow("", positionGraphic);
+    //set frameless and non intrusive
+    positionGraphic->setWindowFlag(Qt::FramelessWindowHint);
+    positionGraphic->setAttribute(Qt::WA_ShowWithoutActivating);
 
+    //connect appropriate show/hide slots for position reference graphic
     connect(positionEdit, SIGNAL(positionHoverSignal()), this, SLOT(positionHoverSlot()));
     connect(positionEdit, SIGNAL(leftPositionSignal()), this, SLOT(leftPositionSlot()));
 
@@ -328,7 +327,6 @@ void PageOne::fillWellClicked()
 
 
 
-
 void PageOne::gridPlateClicked()
 {
     emit gridPlateSignal();
@@ -352,6 +350,28 @@ void PageOne::wellPlateColumnClicked()
 //when positionEdit widget is hovered, show the graphic
 void PageOne::positionHoverSlot()
 {
+    QPoint globalPos = positionEdit->mapToGlobal(QPoint(0,0));
+
+    int x = globalPos.x();
+    int y = globalPos.y();
+
+    x += 100;
+    positionGraphic->move(x, y);
+
+    if(petriRadio->isChecked())
+    {
+        QPixmap icon("/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/petri-template.png");
+        icon.setDevicePixelRatio(devicePixelRatio());
+        positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
+
+    if(wellPlateRadio->isChecked())
+    {
+        QPixmap icon("/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/well-plate-template.png");
+        icon.setDevicePixelRatio(devicePixelRatio());
+        positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
+
     positionGraphic->show();
     positionGraphic->update();
 }

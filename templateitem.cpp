@@ -1,5 +1,4 @@
 #include "templateitem.h"
-#include <QDebug>
 
 TemplateItem::TemplateItem()
 {
