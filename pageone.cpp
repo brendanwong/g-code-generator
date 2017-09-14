@@ -54,12 +54,12 @@ void PageOne::customTab(QTabWidget *tabWidget)
     materialEdit->addItem("Substrate Solution");
     dateEdit->setDate(QDate::currentDate());
 
+    amountEdit->setValue(25);
+    amountEdit->setDisabled(true);
+
     //to enable mouse tracking and pop up for bed pos
     positionEdit->setAttribute(Qt::WA_Hover);
     positionEdit->setMouseTracking(true);
-
-    amountEdit->setValue(25);
-    amountEdit->setDisabled(true);
 
     //builds the print selection row (petri vs well plate)
     buildPrintSelection();
@@ -236,6 +236,7 @@ void PageOne::buildTemplateItem(QHBoxLayout *hlayout, QString title, QString ico
     QObject::connect(item, SIGNAL(activateTemplate()), this, slot);
 
     hlayout->addWidget(item);
+
 }
 
 

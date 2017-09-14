@@ -3,7 +3,7 @@
 Wizard::Wizard() : QDialog()
 {
     //create navigation buttons
-    cancel = new QPushButton(tr("Cancel"));
+    cancel = new QPushButton(tr("Quit"));
     next = new QPushButton(tr("Next"));
     previous = new QPushButton(tr("Previous"));
     pages = new QStackedWidget();

@@ -5,7 +5,7 @@ CustomTemplate::CustomTemplate(QWidget *parent) : QWidget(parent)
 
 }
 
-void CustomTemplate::mouseDoubleClickEvent(QMouseEvent *)
+void CustomTemplate::mouseReleaseEvent(QMouseEvent *)
 {
     //signal to switch to custom tab
     emit switchTabs(0);

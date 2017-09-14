@@ -9,7 +9,7 @@ class CustomTemplate : public QWidget
 public:
     explicit CustomTemplate(QWidget *parent = nullptr);
 
-    void mouseDoubleClickEvent(QMouseEvent *);
+    void mouseReleaseEvent(QMouseEvent *);
 
 signals:
     void switchTabs(int);

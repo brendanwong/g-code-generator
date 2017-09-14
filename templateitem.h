@@ -12,8 +12,7 @@ class TemplateItem : public QWidget
     Q_OBJECT
 public:
     TemplateItem();
-    void mouseDoubleClickEvent(QMouseEvent *);
-
+    void mouseReleaseEvent(QMouseEvent *);
 signals:
     void switchPage(int);
     void activateTemplate();

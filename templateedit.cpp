@@ -8,6 +8,8 @@ TemplateEdit::TemplateEdit(QWidget *parent) : QWidget(parent)
 }
 
 
+
+
 void TemplateEdit::buildTemplateEdit()
 {
     title = new QLabel;
@@ -21,7 +23,9 @@ void TemplateEdit::buildTemplateEdit()
 
     //standard two digit width for uniformity
     heightEdit->setMinimumWidth(42);
+    heightEdit->setMaximumWidth(42);
     widthEdit->setMinimumWidth(42);
+    widthEdit->setMaximumWidth(42);
     positionEdit->setMinimumWidth(42);
 
     //set properties for each form
@@ -43,6 +47,10 @@ void TemplateEdit::buildTemplateEdit()
     positionEdit->setAttribute(Qt::WA_Hover);
     positionEdit->setMouseTracking(true);
 
+    //to enable mouse tracking and pop up for bed pos
+    positionEdit->setAttribute(Qt::WA_Hover);
+    positionEdit->setMouseTracking(true);
+
     buildPrintSelection();
 
     QFormLayout *formLayout = new QFormLayout;
@@ -55,17 +63,28 @@ void TemplateEdit::buildTemplateEdit()
     formLayout->addRow("&Position:", positionEdit);
     formLayout->addRow("&Extrusion Amount (μl):", amountEdit);
 
+    //build reference graphic for positions, set hidden by default
+    positionGraphic = new QLabel;
+    positionGraphic->hide();
+
+    //set frameless and non intrusive
+    positionGraphic->setWindowFlag(Qt::FramelessWindowHint);
+    positionGraphic->setAttribute(Qt::WA_ShowWithoutActivating);
+
+    connect(positionEdit, SIGNAL(positionHoverSignal()), this, SLOT(positionHoverSlot()));
+    connect(positionEdit, SIGNAL(leftPositionSignal()), this, SLOT(leftPositionSlot()));
+
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(title);
 
     layout->addLayout(formLayout);
     templateEdit->setLayout(layout);
 
-    QObject::connect(wellPlateRadio, SIGNAL(clicked(bool)), this, SLOT(onWellPlateRadioClicked()));
-    QObject::connect(petriRadio, SIGNAL(clicked(bool)), this, SLOT(onPetriRadioClicked()));
+
 
 
 }
+
 
 
 
@@ -84,6 +103,9 @@ void TemplateEdit::buildPrintSelection()
     groupBox->setLayout(groupBoxLayout);
     groupBox->setStyleSheet("border: 0");
     groupBoxLayout->setContentsMargins(0, 0, 0, 0);
+
+    QObject::connect(wellPlateRadio, SIGNAL(clicked(bool)), this, SLOT(onWellPlateRadioClicked()));
+    QObject::connect(petriRadio, SIGNAL(clicked(bool)), this, SLOT(onPetriRadioClicked()));
 }
 
 
@@ -139,7 +161,6 @@ void TemplateEdit::rowTemplate()
     wellPlateRadio->setDisabled(true);
     widthEdit->setDisabled(true);
     heightEdit->setDisabled(true);
-
 }
 
 void TemplateEdit::gridPetriSlot()
@@ -198,4 +219,42 @@ void TemplateEdit::wellPlateColumnSlot()
     wellPlateRadio->setDisabled(true);
     widthEdit->setDisabled(true);
     heightEdit->setDisabled(true);
+}
+
+
+void TemplateEdit::positionHoverSlot()
+{
+    QPoint globalPos = positionEdit->mapToGlobal(QPoint(0,0));
+
+    int x = globalPos.x();
+    int y = globalPos.y();
+
+    x += 100;
+    positionGraphic->move(x, y);
+
+    if(petriRadio->isChecked())
+    {
+        QPixmap icon("/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/petri-template.png");
+        icon.setDevicePixelRatio(devicePixelRatio());
+        positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
+
+    if(wellPlateRadio->isChecked())
+    {
+        QPixmap icon("/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/well-plate-template.png");
+        icon.setDevicePixelRatio(devicePixelRatio());
+        positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
+
+    positionGraphic->show();
+    positionGraphic->update();
+}
+
+
+
+//when positionEdit is no longer in focus, remove graphic
+void TemplateEdit::leftPositionSlot()
+{
+    positionGraphic->hide();
+    positionGraphic->update();
 }

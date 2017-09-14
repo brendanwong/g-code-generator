@@ -36,6 +36,7 @@ public:
     PositionEdit *positionEdit;
     QComboBox *materialEdit;
     QSpinBox *amountEdit;
+    QLabel *positionGraphic;
 
     QGroupBox *groupBox;
     QRadioButton *petriRadio;
@@ -48,6 +49,8 @@ public:
 private slots:
     void onWellPlateRadioClicked();
     void onPetriRadioClicked();
+    void positionHoverSlot();
+    void leftPositionSlot();
 
 public slots:
     void rowTemplate();

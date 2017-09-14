@@ -9,7 +9,6 @@ PositionEdit::PositionEdit()
 void PositionEdit::mouseMoveEvent(QMouseEvent *)
 {
     emit positionHoverSignal();
-
 }
 
 void PositionEdit::leaveEvent(QEvent *)
@@ -21,4 +20,3 @@ void PositionEdit::mouseReleaseEvent(QMouseEvent *)
 {
     emit positionHoverSignal();
 }
-
