@@ -49,7 +49,7 @@ static const QString VERSION = "1.1.0";
 static const QString PORTAL_LINK = "http://portal.se3d.com";
 static const QString VISIT_LINK = "https://www.se3d.com/";
 static const QString CONTACT_LINK = "https://www.se3d.com/connect";
-static const QString SUPPLY_LINK = "https://google.com";
+static const QString SUPPLY_LINK = "https://www.se3d.com/connect";
 
 static const int OFFSET = 100;
 
