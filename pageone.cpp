@@ -142,19 +142,19 @@ void PageOne::templateTab(QTabWidget *tabWidget)
 
     //paths to be changed once icons are finalized
     buildCustomTemplate(firstRowLayout, "Custom" ,
-                        "/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/custom-template.png");
+                        "://resources/custom-template.png");
 
     buildTemplateItem(firstRowLayout, "Row Print" ,
-                      "/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/template-1.png", SLOT(onRowTemplateClicked()));
+                      "://resources/template-1.png", SLOT(onRowTemplateClicked()));
     buildTemplateItem(firstRowLayout, "3x3 Petri Dish" ,
-                      "/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/template-2.png", SLOT(gridPetriClicked()));
+                      "://resources/template-2.png", SLOT(gridPetriClicked()));
 
     buildTemplateItem(secondRowLayout, "3x3 Well Plate" ,
-                      "/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/template-3.png", SLOT(gridPlateClicked()));
+                      "://resources/template-3.png", SLOT(gridPlateClicked()));
     buildTemplateItem(secondRowLayout, "Well Plate Column" ,
-                      "/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/template-4.png", SLOT(wellPlateColumnClicked()));
+                      "://resources/template-4.png", SLOT(wellPlateColumnClicked()));
     buildTemplateItem(secondRowLayout, "Fill Well Plate" ,
-                      "/Users/brendanwong/Documents/Qt projects/gcg-gui/temp resources/template-5.png", SLOT(fillWellClicked()));
+                      "://resources/template5.png", SLOT(fillWellClicked()));
 
     //put together each row
     QVBoxLayout *vlayout = new QVBoxLayout;
@@ -305,14 +305,14 @@ void PageOne::positionHoverSlot()
 
     if(petriRadio->isChecked())
     {
-        QPixmap icon("://temp resources/petri-template.png");
+        QPixmap icon("://resources/petri-template.png");
         icon.setDevicePixelRatio(devicePixelRatio());
         positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
 
     if(wellPlateRadio->isChecked())
     {
-        QPixmap icon("://temp resources/well-plate-template.png");
+        QPixmap icon("://resources/well-plate-template.png");
         icon.setDevicePixelRatio(devicePixelRatio());
         positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }

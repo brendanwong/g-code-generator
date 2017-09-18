@@ -79,10 +79,6 @@ void TemplateEdit::buildTemplateEdit()
 
     layout->addLayout(formLayout);
     templateEdit->setLayout(layout);
-
-
-
-
 }
 
 
@@ -235,14 +231,14 @@ void TemplateEdit::positionHoverSlot()
 
     if(petriRadio->isChecked())
     {
-        QPixmap icon("://temp resources/petri-template.png");
+        QPixmap icon("://resources/petri-template.png");
         icon.setDevicePixelRatio(devicePixelRatio());
         positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
 
     if(wellPlateRadio->isChecked())
     {
-        QPixmap icon("://temp resources/well-plate-template.png");
+        QPixmap icon("://resources/well-plate-template.png");
         icon.setDevicePixelRatio(devicePixelRatio());
         positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }

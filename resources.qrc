@@ -4,7 +4,14 @@
         <file>Resources/se3d-circle-logo.svg</file>
         <file>resources/rebel-logo-normal.svg</file>
         <file>resources/science-logo.svg</file>
-        <file>temp resources/well-plate-template.png</file>
-        <file>temp resources/petri-template.png</file>
+        <file>resources/eye.svg</file>
+        <file>resources/template-1.png</file>
+        <file>resources/template-2.png</file>
+        <file>resources/template-3.png</file>
+        <file>resources/template-4.png</file>
+        <file>resources/template5.png</file>
+        <file>resources/custom-template.png</file>
+        <file>resources/petri-template.png</file>
+        <file>resources/well-plate-template.png</file>
     </qresource>
 </RCC>

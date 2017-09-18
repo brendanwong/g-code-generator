@@ -39,7 +39,6 @@ Wizard::Wizard() : QDialog()
     buttonLayout->addWidget(previous, 0, Qt::AlignRight);
     buttonLayout->addWidget(next, 0, Qt::AlignRight);
 
-
     buildSideBar(mainLayout);
 
     //adding widgets to right side
@@ -52,7 +51,6 @@ Wizard::Wizard() : QDialog()
     //adding widgets to main layout
     mainLayout->addWidget(rightWidget);
     mainLayout->setContentsMargins(0, 0, 0, 0);
-
 
     //create forms/output pages
     pages->addWidget(pageOne = new PageOne(pages));
@@ -122,7 +120,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     buildSidebarLink(sidebarLayout, PORTAL_LINK, "://resources/rebel-logo-normal.svg",
                         "SE3D Portal", "find tutorials and curriculum");
     addDivider(sidebarLayout);
-    buildSidebarLink(sidebarLayout, CONTACT_LINK, "/Users/brendanwong/Documents/Qt projects/gcg-gui/resources/eye.svg",
+    buildSidebarLink(sidebarLayout, CONTACT_LINK, "://resources/eye.svg",
                         "Troubleshooting", "Questions? Let us know");
     addDivider(sidebarLayout);
     buildSidebarLink(sidebarLayout, SUPPLY_LINK, "://resources/science-logo.svg",
@@ -732,7 +730,6 @@ void Wizard::doPrev()
     }
     if (pages->currentIndex() == 0)
         previous->setDisabled(true);
-
 }
 
 
