@@ -1,6 +1,8 @@
 #ifndef TEMPLATEEDIT_H
 #define TEMPLATEEDIT_H
 
+#include "positionedit.h"
+
 #include <QWidget>
 #include <QLineEdit>
 #include <QDateEdit>
@@ -12,11 +14,6 @@
 #include <QMessageBox>
 #include <QFormLayout>
 #include <QHBoxLayout>
-
-#include "positionedit.h"
-
-
-
 
 class TemplateEdit : public QWidget
 {

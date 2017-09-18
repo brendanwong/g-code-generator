@@ -121,7 +121,7 @@ void TemplateEdit::onWellPlateRadioClicked()
         firstMessage = false;
     }
 
-    //new max value for well plate
+    //new max width for well plate
     widthEdit->setRange(1, 12);
     widthEdit->update();
 

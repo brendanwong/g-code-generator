@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.3.1, 2017-09-13T23:08:45. -->
+<!-- Written by QtCreator 4.3.1, 2017-09-16T04:49:20. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -583,8 +583,8 @@
      <value type="int" key="type">0</value>
     </valuemap>
     <value type="QString" key="Ios.run_arguments"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Run on *unknown*3</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Run gcg-gui on *unknown*3</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Run on iOS Device</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Run gcg-gui on iOS Device</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.IosRunConfiguration:/Users/brendanwong/Documents/Qt projects/gcg-gui/gcg-gui.pro</value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>

@@ -1,18 +1,18 @@
 #ifndef WIZARD_H
 #define WIZARD_H
 
+#include "pageone.h"
+#include "pagetwo.h"
+#include "link.h"
+#include "constants.h"
+#include "templateedit.h"
+
 #include <QGridLayout>
 #include <QPushButton>
 #include <QDialog>
 #include <QStackedWidget>
 #include <QMessageBox>
 #include <QMouseEvent>
-
-#include "pageone.h"
-#include "pagetwo.h"
-#include "link.h"
-#include "constants.h"
-#include "templateedit.h"
 
 class Wizard : public QDialog
 {

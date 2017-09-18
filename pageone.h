@@ -20,8 +20,6 @@
 #include <QListWidget>
 #include <QListWidgetItem>
 
-#include <QDebug>
-
 class PageOne : public QWidget
 {
     Q_OBJECT
