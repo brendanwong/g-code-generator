@@ -3,6 +3,7 @@
 
 #include <QString>
 
+//Extrusion constants
 static const QString FR_EXTRUDE = "200";
 static const QString DWELL = "1000";
 static const QString Z_FEEDRATE = "400";
@@ -44,7 +45,8 @@ static const int X_BORDER = 40;
 static const int Y_BORDER = 40;
 static const int DISH_DIAMETER = 100;
 
-static const QString VERSION = "1.1.0";
+//GUI Constants
+static const QString VERSION = "1.2.0";
 
 static const QString PORTAL_LINK = "http://portal.se3d.com";
 static const QString VISIT_LINK = "https://www.se3d.com/";
@@ -60,12 +62,14 @@ static const int SIDEBAR_WIDTH = 220;
 static const int LINK_HEIGHT = 30;
 static const int LINK_ICON_DIMS = 60;
 static const int SIDEBAR_LOGO_DIMS = 280;
-static const int ARRAY_MIN = 1;
-static const int ARRAY_MAX = 8;
+static const int PETRI_MIN = 1;
+static const int PETRI_MAX = 8;
 static const int POSITION_MIN = 1;
 static const int POSITION_MAX = 4;
 static const int EXTRUSION_MIN = 10;
 static const int EXTRUSION_MAX = 150;
+static const int TEMPLATE_DIMS = 200;
+static const int HOVER_GRAPHIC_DIMS = 200;
 
 
 #endif // CONSTANTS_H

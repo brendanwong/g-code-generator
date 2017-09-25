@@ -45,8 +45,8 @@ void PageOne::customTab(QTabWidget *tabWidget)
     positionEdit->setMinimumWidth(INT_FORM_WIDTH);
 
     //set properties for each form
-    heightEdit->setRange(ARRAY_MIN, ARRAY_MAX);
-    widthEdit->setRange(ARRAY_MIN, ARRAY_MAX);
+    heightEdit->setRange(PETRI_MIN, PETRI_MAX);
+    widthEdit->setRange(PETRI_MIN, PETRI_MAX);
     positionEdit->setRange(POSITION_MIN, POSITION_MAX);
     amountEdit->setRange(EXTRUSION_MIN, EXTRUSION_MAX);
     materialEdit->addItem("Calcium Chloride");
@@ -300,21 +300,23 @@ void PageOne::positionHoverSlot()
     int x = globalPos.x();
     int y = globalPos.y();
 
-    x += 100;
+    x += OFFSET;
     positionGraphic->move(x, y);
 
     if(petriRadio->isChecked())
     {
         QPixmap icon("://resources/petri-template.png");
         icon.setDevicePixelRatio(devicePixelRatio());
-        positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        positionGraphic->setPixmap(icon.scaled(HOVER_GRAPHIC_DIMS, HOVER_GRAPHIC_DIMS,
+                                               Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
 
     if(wellPlateRadio->isChecked())
     {
         QPixmap icon("://resources/well-plate-template.png");
         icon.setDevicePixelRatio(devicePixelRatio());
-        positionGraphic->setPixmap(icon.scaled(200, 200, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        positionGraphic->setPixmap(icon.scaled(HOVER_GRAPHIC_DIMS, HOVER_GRAPHIC_DIMS,
+                                               Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
 
     positionGraphic->show();

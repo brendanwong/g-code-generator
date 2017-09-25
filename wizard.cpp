@@ -160,6 +160,10 @@ void Wizard::buildSidebarLink(QVBoxLayout *sidebarLayout, QString inLink, QStrin
     label->setText(inLabel);
     label->setStyleSheet("color: #ffffff");
 
+    //Constraints to prevent text cutoff
+    VLayout->setSizeConstraint(QLayout::SetMinimumSize);
+    HLayout->setSizeConstraint(QLayout::SetMinimumSize);
+
     //build description
     QLabel *description = new QLabel;
     description->setText(inDescr);
