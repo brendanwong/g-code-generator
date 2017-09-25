@@ -53,4 +53,19 @@ static const QString SUPPLY_LINK = "https://www.se3d.com/connect";
 
 static const int OFFSET = 100;
 
+static const int WINDOW_WIDTH = 700;
+static const int BUTTON_WIDTH = 100;
+static const int INT_FORM_WIDTH = 42;
+static const int SIDEBAR_WIDTH = 220;
+static const int LINK_HEIGHT = 30;
+static const int LINK_ICON_DIMS = 60;
+static const int SIDEBAR_LOGO_DIMS = 280;
+static const int ARRAY_MIN = 1;
+static const int ARRAY_MAX = 8;
+static const int POSITION_MIN = 1;
+static const int POSITION_MAX = 4;
+static const int EXTRUSION_MIN = 10;
+static const int EXTRUSION_MAX = 150;
+
+
 #endif // CONSTANTS_H

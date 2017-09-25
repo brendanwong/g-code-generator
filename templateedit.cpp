@@ -22,19 +22,19 @@ void TemplateEdit::buildTemplateEdit()
     amountEdit = new QSpinBox;
 
     //standard two digit width for uniformity
-    heightEdit->setMinimumWidth(42);
-    heightEdit->setMaximumWidth(42);
-    widthEdit->setMinimumWidth(42);
-    widthEdit->setMaximumWidth(42);
-    positionEdit->setMinimumWidth(42);
+    heightEdit->setMinimumWidth(INT_FORM_WIDTH);
+    heightEdit->setMaximumWidth(INT_FORM_WIDTH);
+    widthEdit->setMinimumWidth(INT_FORM_WIDTH);
+    widthEdit->setMaximumWidth(INT_FORM_WIDTH);
+    positionEdit->setMinimumWidth(INT_FORM_WIDTH);
 
     //set properties for each form
     title->setText("Template Edit");
     title->setAlignment(Qt::AlignCenter);
-    heightEdit->setRange(1, 8);
-    widthEdit->setRange(1, 8);
-    positionEdit->setRange(1, 4);
-    amountEdit->setRange(10, 150);
+    heightEdit->setRange(ARRAY_MIN, ARRAY_MAX);
+    widthEdit->setRange(ARRAY_MIN, ARRAY_MAX);
+    positionEdit->setRange(POSITION_MIN, POSITION_MAX);
+    amountEdit->setRange(EXTRUSION_MIN, EXTRUSION_MAX);
     materialEdit->addItem("Calcium Chloride");
     materialEdit->addItem("Biomolecule in 1% Alginate");
     materialEdit->addItem("Substrate Solution");

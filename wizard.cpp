@@ -28,9 +28,9 @@ Wizard::Wizard() : QDialog()
     pageLayout->addWidget(pages);
 
     //bottom right layout, navigation buttons
-    next->setMinimumWidth(100);
-    previous->setMinimumWidth(100);
-    cancel->setMinimumWidth(100);
+    next->setMinimumWidth(BUTTON_WIDTH);
+    previous->setMinimumWidth(BUTTON_WIDTH);
+    cancel->setMinimumWidth(BUTTON_WIDTH);
     cancel->setFocusPolicy(Qt::NoFocus);
     previous->setDisabled(true);
 
@@ -90,7 +90,8 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     logo->setText("SE3D Logo");
     QPixmap image(":/Resources/se3d-circle-logo.svg");
     image.setDevicePixelRatio(devicePixelRatio());
-    logo->setPixmap(image.scaled(280, 280,Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    logo->setPixmap(image.scaled(SIDEBAR_LOGO_DIMS, SIDEBAR_LOGO_DIMS,
+                                 Qt::KeepAspectRatio, Qt::SmoothTransformation));
     logo->setAlignment(Qt::AlignCenter);
 
     //title logo instantiation + properties
@@ -118,7 +119,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
                         "Visit SE3D", "Check out our website ");
     addDivider(sidebarLayout);
     buildSidebarLink(sidebarLayout, PORTAL_LINK, "://resources/rebel-logo-normal.svg",
-                        "SE3D Portal", "find tutorials and curriculum");
+                        "SE3D Portal", "Find tutorials and curriculum");
     addDivider(sidebarLayout);
     buildSidebarLink(sidebarLayout, CONTACT_LINK, "://resources/eye.svg",
                         "Troubleshooting", "Questions? Let us know");
@@ -129,8 +130,8 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     //sidebar settings
     sidebar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     sidebar->setStyleSheet("background-color: #252525");
-    sidebar->setMinimumWidth(220);
-    sidebar->setMaximumWidth(220);
+    sidebar->setMinimumWidth(SIDEBAR_WIDTH);
+    sidebar->setMaximumWidth(SIDEBAR_WIDTH);
 
     sidebar->setLayout(sidebarLayout);
     mainLayout->addWidget(sidebar);
@@ -144,14 +145,14 @@ void Wizard::buildSidebarLink(QVBoxLayout *sidebarLayout, QString inLink, QStrin
 {
     //Custom link widget to encapsulate everything and provide clickability
     Link *linkWidget = new Link(inLink);
-    linkWidget->setMaximumHeight(30);
+    linkWidget->setMaximumHeight(LINK_HEIGHT);
 
     //Horizontal layout to hold icon and vertical layout
     QHBoxLayout *HLayout = new QHBoxLayout;
     QLabel *iconLabel = new QLabel;
     QPixmap icon(location);
     icon.setDevicePixelRatio(devicePixelRatio());
-    iconLabel->setPixmap(icon.scaled(60, 60, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    iconLabel->setPixmap(icon.scaled(LINK_ICON_DIMS, LINK_ICON_DIMS, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     //Vertical layout to hold title and description
     QVBoxLayout *VLayout = new QVBoxLayout;
@@ -337,7 +338,7 @@ void Wizard::generatePetriArray()
 
     //G-Code commented confirmation of inputs
     if (nameInput != "")
-        output += ";Name: " + nameInput + " ;\n";
+        output += "; Name: " + nameInput + " ;\n";
     switch(printType)
     {
     case 0:
@@ -583,9 +584,9 @@ void Wizard::generatePlateArray()
     {
             //CaCl2 print
         case 0:
-            for (int row = 0; row < heightInput; row++)
+            for (int row = 0; row < widthInput; row++)
             {
-                for (int col = 0; col < (widthInput - 1); col++)
+                for (int col = 0; col < (heightInput - 1); col++)
                 {
                     output += "G1 E" + QString::number(extrusionAmount) + " F" + FR_EXTRUDE + "\n";
                     output += "G4 P" + DWELL + "\n";
@@ -602,7 +603,7 @@ void Wizard::generatePlateArray()
                 output += "G4 P" + DWELL + "\n";
                 output += "G1 Z" + QString::number(z_move) + " F" + Z_FEEDRATE + "\n";
 
-                if (row < heightInput - 1)
+                if (row < widthInput - 1)
                 {
                     output += "G1 Y" + QString::number(PLATE_XY_MOVE) + " F" + FR_MOVE_XY + "\n";
                     output += "G1 Z-" + QString::number(z_move) + " F" + Z_FEEDRATE + "\n\n";
@@ -619,9 +620,9 @@ void Wizard::generatePlateArray()
 
             // 1% HPR Alginate Mixture
         case 1:
-            for (int row = 0; row < heightInput; row++)
+            for (int row = 0; row < widthInput; row++)
             {
-                for (int col = 0; col < (widthInput - 1); col++)
+                for (int col = 0; col < (heightInput - 1); col++)
                 {
                     output += "G1 E" + QString::number(extrusionAmount) + " F" + FR_EXTRUDE + "\n";
                     output += "G1 E-" + ALG_EXT_REV + " F" + FR_EXTRUDE + "\n";
@@ -637,7 +638,7 @@ void Wizard::generatePlateArray()
                 output +=  "G1 E-" + ALG_EXT_REV + " F" + FR_EXTRUDE + "\n";
                 output += "G4 P" + ALG_DWELL + "\n";
 
-                if (row < heightInput - 1)
+                if (row < widthInput - 1)
                     output += "G1 Y" + QString::number(PLATE_XY_MOVE) + " F" + FR_MOVE_XY + "\n\n";
                 else
                     output += "\n\n";
@@ -651,9 +652,9 @@ void Wizard::generatePlateArray()
 
             //ABTS Substrate -- assay print
         case 2:
-            for (int row = 0; row < heightInput; row++)
+            for (int row = 0; row < widthInput; row++)
             {
-                for (int col = 0; col < (widthInput - 1); col++)
+                for (int col = 0; col < (heightInput - 1); col++)
                 {
                     output += "G1 E" + QString::number(extrusionAmount) + " F" + FR_EXTRUDE + "\n";
                     output += "G1 E-" + ABTS_EXT_REV + " F" + FR_ABTS_EXT + "\n";
@@ -669,7 +670,7 @@ void Wizard::generatePlateArray()
                 output += "G1 E-" + ABTS_EXT_REV + " F" + FR_ABTS_EXT + "\n";
                 output += "G4 P" + DWELL + "\n";
 
-                if (row < heightInput - 1)
+                if (row < widthInput - 1)
                     output += "G1 Y" + QString::number(PLATE_XY_MOVE) + " F" + FR_MOVE_XY + "\n\n";
                 else
                     output += "\n\n";

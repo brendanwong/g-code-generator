@@ -1,6 +1,7 @@
 #ifndef TEMPLATEEDIT_H
 #define TEMPLATEEDIT_H
 
+#include "constants.h"
 #include "positionedit.h"
 
 #include <QWidget>
