@@ -10,14 +10,14 @@ int main(int argc, char *argv[])
     app.setWindowIcon(QIcon(":/Resources/se3d-circle-logo.svg"));
 
     //window adjustments
-    wizardWindow.setWindowFlags(Qt::FramelessWindowHint);
+//    wizardWindow.setWindowFlags(Qt::FramelessWindowHint);
     wizardWindow.setMinimumWidth(WINDOW_WIDTH);
 
     //round the window
-    QPainterPath path;
-    path.addRoundedRect(wizardWindow.rect(), 5, 5);
-    QRegion mask = QRegion(path.toFillPolygon().toPolygon());
-    wizardWindow.setMask(mask);
+//    QPainterPath path;
+//    path.addRoundedRect(wizardWindow.rect(), 5, 5);
+//    QRegion mask = QRegion(path.toFillPolygon().toPolygon());
+//    wizardWindow.setMask(mask);
 
     wizardWindow.show();
 
