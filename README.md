@@ -30,8 +30,9 @@ Selectable text with .gcode file output
   
 ## How to run from the compiled program
 1. Download the [latest release](https://github.com/brendanwong/gcg-gui/releases).
-2. Double click the downloaded .exe or .app file. If this results in an error, run as administrator or open the application via Security & Privacy within System Preferences.
-3. If issues persist, create an [issue](https://github.com/brendanwong/gcg-gui/issues).
+2. Extract the compressed file.
+3. Double click the downloaded .exe or .app file. If this results in an error, run as administrator or open the application via Security & Privacy within System Preferences.
+4. If issues persist, create an [issue](https://github.com/brendanwong/gcg-gui/issues).
 
 ## How to run from the source code
 1. Make sure all required dependencies are installed
