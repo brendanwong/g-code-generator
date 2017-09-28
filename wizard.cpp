@@ -88,7 +88,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     //main logo instantiation + properties
     QLabel *logo = new QLabel;
     logo->setText("SE3D Logo");
-    QPixmap image(":/Resources/se3d-circle-logo.svg");
+    QPixmap image("://Resources/se3d-circle-logo.svg");
     image.setDevicePixelRatio(devicePixelRatio());
     logo->setPixmap(image.scaled(SIDEBAR_LOGO_DIMS, SIDEBAR_LOGO_DIMS,
                                  Qt::KeepAspectRatio, Qt::SmoothTransformation));
