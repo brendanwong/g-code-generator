@@ -1,6 +1,6 @@
 # G-Code Generator
 ## Overview
-This is a G-Code generation progra, created during my summer internship with SE3D. It receives user input and interpolates the data into G-Code compatible with SE3D's r3bEL X and r3bEL mini bioprinters. Use with other bioprinters is possible, but extrusion should only take place on appropriately sized petri dishes (at least 100mm), or the [Greiner 650161 96-Well Microplate](https://shop.gbo.com/en/row/products/bioscience/microplates/96-well-microplates/96-well-microplates-clear/650161.html).
+This is a G-Code generation program, created during my summer internship with SE3D. The program receives user input and interpolates the data into G-Code compatible with SE3D's r3bEL X and r3bEL mini bioprinters. Use with other bioprinters is possible, but extrusion should only take place on appropriately sized petri dishes (at least 100mm), or the [Greiner 650161 96-Well Microplate](https://shop.gbo.com/en/row/products/bioscience/microplates/96-well-microplates/96-well-microplates-clear/650161.html).
 
 ### Supported Materials
 * Calcium Chloride Solution
