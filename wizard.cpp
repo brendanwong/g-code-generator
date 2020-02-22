@@ -101,7 +101,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     title->setStyleSheet("color: #ffffff;"
                            "font: 20px;");
 
-    //version instantiation + properties. it looks more official :)
+    //version instantiation + properties
     QLabel *version = new QLabel;
     version->setText("Version " + VERSION);
     version->setAlignment(Qt::AlignCenter);
@@ -132,6 +132,7 @@ void Wizard::buildSideBar(QHBoxLayout *mainLayout)
     sidebar->setStyleSheet("background-color: #252525");
     sidebar->setMinimumWidth(SIDEBAR_WIDTH);
     sidebar->setMaximumWidth(SIDEBAR_WIDTH);
+
 
     sidebar->setLayout(sidebarLayout);
     mainLayout->addWidget(sidebar);
